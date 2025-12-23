@@ -45,7 +45,7 @@ function App() {
         <div className="app-container">
             <div className="app-content">
                 <header className={`app-header ${isSearching ? 'searching' : ''}`}>
-                    <h1>📰 AI 뉴스 검색 시스템</h1>
+                    <h1>AI 뉴스 검색 시스템</h1>
                     <p>Neo4j GraphRAG 기반 지능형 뉴스 검색</p>
                 </header>
 

@@ -131,7 +131,12 @@ npm run dev
 ```
 → http://localhost:3000 에서 실행
 
+→ http://localhost:3000 에서 실행
+
 ## API 엔드포인트
+
+![Search Screen](docs/images/search_screen.png)
+![Result Screen](docs/images/result_screen.png)
 
 ### POST /search
 검색 쿼리 처리

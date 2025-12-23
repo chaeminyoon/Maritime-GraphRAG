@@ -55,6 +55,38 @@ graph TD
 - **마우스 호버 툴팁** - 상세 정보 팝업
 - **로딩 & 에러 핸들링**
 
+### 데이터 흐름도
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant React as Frontend
+    participant FastAPI as Backend
+    participant RAG as GraphRAG
+    participant Neo4j as Database
+    participant OpenAI as LLM (GPT-4o)
+
+    User->>React: 검색어 입력 (예: "경제 뉴스")
+    React->>FastAPI: POST /search {query}
+    FastAPI->>RAG: search(query)
+    
+    par Retrieval Phase
+        RAG->>Neo4j: 벡터 검색 (Vector)
+        RAG->>Neo4j: 관계 기반 검색 (Cypher)
+        RAG->>Neo4j: 자연어 쿼리 변환 (Text2Cypher)
+    end
+    
+    Neo4j-->>RAG: 검색된 문서군 (Context)
+    
+    RAG->>OpenAI: Prompt + Context 전송
+    OpenAI-->>RAG: 구조화된 JSON 응답
+    
+    RAG-->>FastAPI: 정제된 결과 데이터
+    FastAPI-->>React: Response {sections, sources}
+    React-->>User: 애니메이션과 함께 결과 표시
+```
+
+
 ## 설치 방법
 
 ### 1. 백엔드 의존성 설치
@@ -169,34 +201,3 @@ RAG_SYS/
 - **Database**: Neo4j Graph Database
 - **LLM**: OpenAI GPT-4o
 - **Embeddings**: text-embedding-3-small
-
-### 데이터 흐름도
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant React as Frontend
-    participant FastAPI as Backend
-    participant RAG as GraphRAG
-    participant Neo4j as Database
-    participant OpenAI as LLM (GPT-4o)
-
-    User->>React: 검색어 입력 (예: "경제 뉴스")
-    React->>FastAPI: POST /search {query}
-    FastAPI->>RAG: search(query)
-    
-    par Retrieval Phase
-        RAG->>Neo4j: 벡터 검색 (Vector)
-        RAG->>Neo4j: 관계 기반 검색 (Cypher)
-        RAG->>Neo4j: 자연어 쿼리 변환 (Text2Cypher)
-    end
-    
-    Neo4j-->>RAG: 검색된 문서군 (Context)
-    
-    RAG->>OpenAI: Prompt + Context 전송
-    OpenAI-->>RAG: 구조화된 JSON 응답
-    
-    RAG-->>FastAPI: 정제된 결과 데이터
-    FastAPI-->>React: Response {sections, sources}
-    React-->>User: 애니메이션과 함께 결과 표시
-```

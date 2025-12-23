@@ -1,4 +1,10 @@
-# FastAPI + React GraphRAG 뉴스 검색 시스템
+# AI News Search System: GraphRAG Engine
+
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=white)
+![Neo4j](https://img.shields.io/badge/Neo4j-Graph_DB-008CC1?logo=neo4j&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-LLM-412991?logo=openai&logoColor=white)
 
 Neo4j 지식 그래프 기반 RAG 검색 시스템 (FastAPI 백엔드 + React 프론트엔드)
 

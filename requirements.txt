@@ -1,0 +1,21 @@
+# Maritime GraphRAG — backend & benchmark
+
+# Graph + RAG
+neo4j>=5.20
+neo4j-graphrag[openai]>=1.4
+
+# LLM / embeddings
+openai>=1.40
+
+# API
+fastapi>=0.110
+uvicorn>=0.29
+pydantic>=2.5
+
+# Data / evaluation
+pandas>=2.0
+numpy>=1.24
+matplotlib>=3.6
+
+# Config
+python-dotenv>=1.0

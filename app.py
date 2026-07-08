@@ -18,7 +18,7 @@ URI = os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687")
 AUTH = ("neo4j", os.getenv("NEO4J_PASSWORD", "12345678"))
 INDEX_NAME = "content_vector_index"
 
-app = FastAPI(title="RAG Search API")
+app = FastAPI(title="Maritime GraphRAG API")
 
 # CORS 설정
 app.add_middleware(
@@ -158,14 +158,17 @@ def initialize_graphrag():
     WITH node AS content, score
     MATCH (content)<-[:HAS_CHUNK]-(article:Article)
     OPTIONAL MATCH (article)-[:BELONGS_TO]->(category:Category)
-    OPTIONAL MATCH (media:Media)-[:PUBLISHED]->(article)
-    OPTIONAL MATCH (category)<-[:BELONGS_TO]-(related_article:Article)
-    WHERE related_article <> article
-
+    OPTIONAL MATCH (article)-[:PUBLISHED_BY]->(media:Media)
+    OPTIONAL MATCH (article)-[:MENTIONS]->(entity)
+    OPTIONAL MATCH (entity)-[rel:OPERATES|CALLS_AT|APPLIES_TO|INVOLVED_IN|OCCURRED_AT]-(neighbor)
+    WITH content, score, article, category, media,
+        collect(DISTINCT coalesce(entity.name, entity.incident_id)) AS mentioned_entities,
+        collect(DISTINCT CASE WHEN neighbor IS NULL THEN NULL ELSE
+            coalesce(entity.name, entity.incident_id) + ' -' + type(rel) + '- ' +
+            coalesce(neighbor.name, neighbor.incident_id) END) AS entity_facts
     RETURN
         content.content_id AS content_id,
         content.chunk AS chunk,
-        content.title AS content_title,
         article.article_id AS article_id,
         article.title AS article_title,
         article.url AS article_url,
@@ -173,12 +176,8 @@ def initialize_graphrag():
         category.name AS category_name,
         media.name AS media_name,
         score AS similarity_score,
-        collect(DISTINCT {
-            article_id: related_article.article_id,
-            title: related_article.title,
-            url: related_article.url,
-            published_date: related_article.published_date
-        })[0..5] AS related_articles
+        [m IN mentioned_entities WHERE m IS NOT NULL] AS mentioned_entities,
+        [f IN entity_facts WHERE f IS NOT NULL] AS entity_facts
     """
     
     vector_cypher_retriever = VectorCypherRetriever(
@@ -188,28 +187,54 @@ def initialize_graphrag():
         embedder=embedder
     )
 
-    # Text2Cypher Retriever
-    neo4j_schema = get_schema(driver)
+    # Text2Cypher Retriever — curated schema (auto-extracted schema produced
+    # malformed Cypher and empty retrievals; this text is what the benchmark validated)
+    neo4j_schema = """
+Nodes:
+  Article {article_id, title, url, published_date}
+  Content {content_id, chunk}
+  Media {name}, Category {name}
+  Vessel {name, type}   # type: 컨테이너선|유조선|LNG운반선|벌크선
+  Company {name}, Port {name}
+  Regulation {name, applies_to_type, description}
+  Incident {incident_id, description}
+Naming rules:
+  - 선박 이름 뒤의 '호'는 저장된 name에 포함되지 않는다 (질문의 '대양스피릿호' -> Vessel name '대양스피릿')
+  - RETURN 절에는 답이 되는 값과 함께 그 주체의 이름(v.name 등)도 반환하라
+Relationships:
+  (Article)-[:HAS_CHUNK]->(Content)
+  (Article)-[:PUBLISHED_BY]->(Media)
+  (Article)-[:BELONGS_TO]->(Category)
+  (Article)-[:MENTIONS]->(Vessel|Company|Port|Regulation|Incident)
+  (Company)-[:OPERATES]->(Vessel)
+  (Vessel)-[:CALLS_AT]->(Port)
+  (Regulation)-[:APPLIES_TO]->(Vessel)
+  (Vessel)-[:INVOLVED_IN]->(Incident)
+  (Incident)-[:OCCURRED_AT]->(Port)
+"""
     
     examples = [
         """
-        USER INPUT: 경제 분야의 최신 뉴스 알려주세요
+        USER INPUT: 한서파이오니어호를 운영하는 선사는 어디인가요?
         CYPHER QUERY:
-        MATCH (a:Article)-[:BELONGS_TO]->(c:Category {name: "경제"})
-        RETURN a.article_id, a.title, a.url, a.published_date
-        ORDER BY a.published_date DESC
-        LIMIT 10
+        MATCH (c:Company)-[:OPERATES]->(v:Vessel {name: "한서파이오니어"})
+        RETURN c.name
         """,
         """
-        USER INPUT: 매일경제에서 나온 최신 뉴스 3개 보여주세요
+        USER INPUT: 부산항에 기항하는 컨테이너선을 운영하는 선사를 알려주세요
         CYPHER QUERY:
-        MATCH (m:Media {name: "매일경제"})-[:PUBLISHED]->(a:Article)
-        RETURN a.article_id, a.title, a.url, a.published_date
-        ORDER BY a.published_date DESC
-        LIMIT 3
+        MATCH (c:Company)-[:OPERATES]->(v:Vessel {type: "컨테이너선"})-[:CALLS_AT]->(:Port {name: "부산항"})
+        RETURN DISTINCT c.name, v.name
         """,
         """
-        USER INPUT: 카테고리별 기사 개수를 알려주세요
+        USER INPUT: 울산항에서 발생한 사고와 관련 기사를 알려주세요
+        CYPHER QUERY:
+        MATCH (i:Incident)-[:OCCURRED_AT]->(:Port {name: "울산항"})
+        OPTIONAL MATCH (a:Article)-[:MENTIONS]->(i)
+        RETURN i.incident_id, i.description, a.title, a.url
+        """,
+        """
+        USER INPUT: 규제/환경 분야 기사 개수를 알려주세요
         CYPHER QUERY:
         MATCH (a:Article)-[:BELONGS_TO]->(c:Category)
         RETURN c.name as category, count(a) as article_count
@@ -227,15 +252,15 @@ def initialize_graphrag():
     # Tools Setup
     vector_tool = vector_retriever.convert_to_tool(
         name="vector_retriever",
-        description="벡터 기반 검색으로 뉴스기사에 등장하는 내용 텍스트를 기반으로 검색할 때 사용합니다."
+        description="벡터 기반 검색. 해양 뉴스 본문 내용(사건 경위, 정책 설명 등)을 의미 기반으로 찾을 때 사용합니다."
     )
     vector_cypher_tool = vector_cypher_retriever.convert_to_tool(
         name="vectorcypher_retriever",
-        description="벡터 검색으로 찾아진 Content와 연결된 Article을 기준으로, 그 기사의 상세한 정보는 물론 같은 카테고리의 다른 기사들을 함께 반환합니다."
+        description="벡터 검색 결과 기사에 언급된 엔티티(선박/선사/항만/규제/사고)와 그 관계(운영, 기항, 적용, 사고)를 함께 반환합니다. 관계를 따라가야 하는 질문에 사용합니다."
     )
     text2cypher_tool = text2cypher_retriever.convert_to_tool(
         name="text2cypher_retriever",
-        description="text2cypher 검색 기반으로 언론사, 분야별 기사 등 엔티티 혹은 속성을 기반으로 정보를 찾을 때 사용합니다."
+        description="자연어를 Cypher로 변환해 그래프를 직접 질의합니다. 선사-선박-항만-규제-사고를 잇는 멀티홉 질문이나 개수 집계에 사용합니다."
     )
 
     tools_retriever = ToolsRetriever(
@@ -246,7 +271,7 @@ def initialize_graphrag():
 
     # GraphRAG Setup
     prompt_template = RagTemplate(
-        template="""당신은 뉴스 기사 정보를 제공하는 전문 어시스턴트입니다.
+        template="""당신은 해양 산업(해운·항만·규제) 정보를 제공하는 전문 어시스턴트입니다.
 
 질문: {query_text}
 
@@ -254,11 +279,12 @@ def initialize_graphrag():
 {context}
 
 지침:
-1. 제공된 검색 결과에서 **최소 10개 이상**의 뉴스 기사를 선택하여 답변하세요.
-2. **섹션을 나누지 말고** 모든 뉴스를 하나의 리스트로 제공하세요.
-3. 각 뉴스마다 제목, URL, 발행일, 카테고리, 언론사, 요약(2-3문장)을 반드시 포함하세요.
-4. 검색 결과에 없는 내용은 추측하지 마세요.
-5. 다음 JSON 형식으로만 답변하세요 (마크다운 코드 블록 없이):
+1. 제공된 검색 결과에 근거해 질문에 직접 답한 뒤, 근거 기사를 함께 제시하세요.
+2. 답의 근거가 되는 엔티티(선사/선박/항만/규제)를 명시하세요.
+3. 각 근거 기사마다 제목, URL, 발행일, 카테고리, 언론사, 요약(1-2문장)을 포함하세요.
+4. 검색 결과에 없는 내용은 절대 추측하거나 지어내지 마세요. 출처(제목/URL/날짜)를 창작하는 것은 금지됩니다.
+5. 검색 결과가 비어 있거나 질문과 무관하면 content에 "관련 정보를 찾을 수 없습니다"라고 쓰고 sources는 빈 배열로 두세요.
+6. 다음 JSON 형식으로만 답변하세요 (마크다운 코드 블록 없이):
 
 {{
   "sections": [

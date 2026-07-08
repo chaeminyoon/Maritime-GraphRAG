@@ -17,7 +17,7 @@ function SearchBar({ onSearch, loading }) {
                 <input
                     type="text"
                     className="search-input"
-                    placeholder="궁금한 뉴스를 검색해보세요... (예: 경제 분야 최신 소식)"
+                    placeholder="해양 산업 질문을 입력하세요... (예: 사고 이력이 있는 선박의 운영 선사는?)"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     disabled={loading}

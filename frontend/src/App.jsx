@@ -46,8 +46,8 @@ function App() {
         <div className="app-container">
             <div className="app-content">
                 <header className={`app-header ${isSearching ? 'searching' : ''}`}>
-                    <h1>AI 뉴스 검색 시스템</h1>
-                    <p>Neo4j GraphRAG 기반 지능형 뉴스 검색</p>
+                    <h1>Maritime GraphRAG</h1>
+                    <p>Neo4j 지식그래프 기반 해양 산업(해운·항만·규제) 질의응답</p>
                 </header>
 
                 <div className={isSearching ? 'searching' : ''}>
@@ -85,14 +85,14 @@ function App() {
 
                 {!results && !loading && !error && (
                     <div className="welcome-message">
-                        <h2>환영합니다! 👋</h2>
-                        <p>궁금한 내용을 검색해보세요.</p>
+                        <h2>해양 지식그래프 검색</h2>
+                        <p>선사·선박·항만·규제·사고를 잇는 관계 질문에 답합니다.</p>
                         <div className="example-queries">
                             <p>예시 질문:</p>
                             <ul>
-                                <li>경제 분야 최신 뉴스</li>
-                                <li>IT/과학 관련 소식</li>
-                                <li>정치 동향은?</li>
+                                <li>부산항에 기항하는 컨테이너선을 운영하는 선사는?</li>
+                                <li>울산항에서 사고를 낸 선박에 적용되는 환경 규제는?</li>
+                                <li>한서해운 선대가 기항하는 항만을 모두 알려줘</li>
                             </ul>
                         </div>
                     </div>

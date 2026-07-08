@@ -33,4 +33,5 @@ MANIFEST
 # Data
 *.xlsx
 *.csv
+!data/corpus/*.csv
 *.log

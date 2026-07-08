@@ -1,0 +1,180 @@
+[
+  {
+    "question": "한서파이오니어호를 운영하는 선사는 어디인가?",
+    "gold_entities": [
+      "한서해운"
+    ],
+    "hops": 1,
+    "note": ""
+  },
+  {
+    "question": "대양스피릿호는 어떤 종류의 선박인가?",
+    "gold_entities": [
+      "LNG운반선"
+    ],
+    "hops": 1,
+    "note": ""
+  },
+  {
+    "question": "남명선라이즈호의 사고는 어느 항만에서 발생했나?",
+    "gold_entities": [
+      "울산항"
+    ],
+    "hops": 1,
+    "note": ""
+  },
+  {
+    "question": "선박평형수관리협약(BWM)은 어떤 선종에 적용되나?",
+    "gold_entities": [
+      "벌크선"
+    ],
+    "hops": 1,
+    "note": ""
+  },
+  {
+    "question": "청림익스프레스호가 기항하는 항만은 어디인가?",
+    "gold_entities": [
+      "싱가포르항",
+      "인천항"
+    ],
+    "hops": 1,
+    "note": ""
+  },
+  {
+    "question": "부산항에서 접안 중 사고를 낸 선박은?",
+    "gold_entities": [
+      "한서파이오니어"
+    ],
+    "hops": 1,
+    "note": ""
+  },
+  {
+    "question": "황산화물(SOx) 배출 규제의 적용 대상 선종은?",
+    "gold_entities": [
+      "유조선"
+    ],
+    "hops": 1,
+    "note": ""
+  },
+  {
+    "question": "동주컨테이너라인이 운영하는 선박을 모두 나열하라.",
+    "gold_entities": [
+      "동주비전",
+      "동주하모니"
+    ],
+    "hops": 1,
+    "note": ""
+  },
+  {
+    "question": "IMO 탄소집약도지표(CII) 규제의 영향을 받는 선박 중 로테르담항에 기항하는 선박은?",
+    "gold_entities": [
+      "대양챔피언",
+      "파도블루",
+      "한서파이오니어"
+    ],
+    "hops": 2,
+    "note": "APPLIES_TO -> vessel type -> CALLS_AT"
+  },
+  {
+    "question": "부산항에 컨테이너선을 기항시키는 선사를 모두 나열하라.",
+    "gold_entities": [
+      "대양상선",
+      "동주컨테이너라인",
+      "청림로지스틱스",
+      "한서해운"
+    ],
+    "hops": 2,
+    "note": "CALLS_AT -> type filter -> OPERATES"
+  },
+  {
+    "question": "사고 이력이 있는 선박을 운영하는 선사를 모두 나열하라.",
+    "gold_entities": [
+      "남명탱커",
+      "대양상선",
+      "동주컨테이너라인",
+      "청림로지스틱스",
+      "파도글로벌해운",
+      "한서해운"
+    ],
+    "hops": 2,
+    "note": "INVOLVED_IN -> OPERATES"
+  },
+  {
+    "question": "울산항에서 사고를 낸 선박에 적용되는 환경 규제는 무엇인가?",
+    "gold_entities": [
+      "황산화물(SOx) 배출 규제"
+    ],
+    "hops": 3,
+    "note": "OCCURRED_AT -> vessel -> type -> APPLIES_TO"
+  },
+  {
+    "question": "한서해운 선대가 기항하는 항만을 모두 나열하라.",
+    "gold_entities": [
+      "광양항",
+      "로테르담항",
+      "부산항",
+      "싱가포르항",
+      "인천항"
+    ],
+    "hops": 2,
+    "note": "OPERATES -> CALLS_AT"
+  },
+  {
+    "question": "싱가포르항에서 사고가 발생한 선박들의 운영 선사는?",
+    "gold_entities": [
+      "대양상선",
+      "동주컨테이너라인"
+    ],
+    "hops": 2,
+    "note": "OCCURRED_AT -> vessel -> OPERATES"
+  },
+  {
+    "question": "LNG 벙커링 안전기준의 적용을 받는 선박을 운영하는 선사는?",
+    "gold_entities": [
+      "대양상선"
+    ],
+    "hops": 2,
+    "note": "APPLIES_TO -> type -> OPERATES"
+  },
+  {
+    "question": "파도글로벌해운 선대에 적용되는 환경 규제를 모두 나열하라.",
+    "gold_entities": [
+      "IMO 탄소집약도지표(CII) 규제",
+      "선박평형수관리협약(BWM)"
+    ],
+    "hops": 2,
+    "note": "OPERATES -> type -> APPLIES_TO"
+  },
+  {
+    "question": "대양상선이 운영하는 선박은 총 몇 척인가?",
+    "gold_entities": [
+      "3"
+    ],
+    "hops": 1,
+    "note": "count"
+  },
+  {
+    "question": "울산항에서 발생한 사고는 총 몇 건인가?",
+    "gold_entities": [
+      "1"
+    ],
+    "hops": 1,
+    "note": "count"
+  },
+  {
+    "question": "컨테이너선은 전체 선대에서 몇 척인가?",
+    "gold_entities": [
+      "8"
+    ],
+    "hops": 1,
+    "note": "count"
+  },
+  {
+    "question": "가장 많은 선박이 기항하는 항만은 어디인가?",
+    "gold_entities": [
+      "부산항"
+    ],
+    "hops": 2,
+    "note": "argmax over CALLS_AT"
+  }
+]

@@ -1,212 +1,144 @@
-# AI News Search System: GraphRAG Engine
+<p align="center">
+  <a href="README.md">English</a> | <a href="README.ko.md">한국어</a>
+</p>
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white)
-![React](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=white)
-![Neo4j](https://img.shields.io/badge/Neo4j-Graph_DB-008CC1?logo=neo4j&logoColor=white)
-![OpenAI](https://img.shields.io/badge/OpenAI-LLM-412991?logo=openai&logoColor=white)
+<h1 align="center">Maritime GraphRAG</h1>
 
-Neo4j 지식 그래프 기반 RAG 검색 시스템 (FastAPI 백엔드 + React 프론트엔드)
+<p align="center">A Neo4j knowledge-graph RAG engine for the maritime domain — vessels, operators, ports, regulations and incidents — with a ground-truth multi-hop retrieval benchmark (strict accuracy: vector 0.70 → graph query 0.85)</p>
 
-## 시스템 구성
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white" alt="Python 3.10+">
+  <img src="https://img.shields.io/badge/Neo4j-Knowledge_Graph-008CC1?logo=neo4j&logoColor=white" alt="Neo4j">
+  <img src="https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white" alt="FastAPI">
+  <img src="https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=black" alt="React">
+  <img src="https://img.shields.io/badge/Benchmark-0.70%E2%86%920.85-green.svg" alt="Benchmark">
+</p>
 
-### 백엔드 (FastAPI)
-- **Neo4j GraphRAG** - 3가지 검색 방법 통합
-  - VectorRetriever: 벡터 유사도 검색
-  - VectorCypherRetriever: 벡터 + 그래프 쿼리
-  - Text2CypherRetriever: 자연어 → Cypher 쿼리
-- **OpenAI GPT-4o** - LLM 추론
-- **자동 벡터 인덱스 생성**
+Maritime questions are relational by nature: *"Which operators call container ships
+at Busan?"* joins operator→vessel→port; *"Which environmental rule applies to the
+ship that had the Ulsan incident?"* chains incident→vessel→type→regulation. Pure
+vector search retrieves documents about each entity but cannot join them.
+This project builds a two-layer Neo4j graph (documents + typed entities) over
+maritime news, serves it through an agentic retriever router (FastAPI + React),
+and **measures** how much the graph actually helps.
 
-### 시스템 아키텍처
+## Retrieval benchmark — does the graph earn its keep?
 
-```mermaid
-graph TD
-    subgraph "Frontend (React :3001)"
-        UI[User Interface]
-        SB[SearchBar]
-        RS[ResultSection]
-        UI --> SB
-        UI --> RS
-    end
+Real news gives no ground truth, so the repo ships a **synthetic maritime world**
+(6 fictional operators, 14 vessels, 6 ports, 4 regulations, 6 incidents) where every
+relation is known by construction. 42 news-style articles express those relations in
+prose; 20 QA pairs are derived from the relation tables — including multi-hop
+questions **whose answer appears in no single article**. A no-retrieval control
+proves the fictional entities cannot be answered from GPT-4o's parametric memory.
 
-    subgraph "Backend (FastAPI :8000)"
-        API[API Server]
-        RAG[GraphRAG Manager]
-        LLM[OpenAI GPT-4o]
-        
-        API --> RAG
-        RAG --> LLM
-        
-        subgraph "Retrievers"
-            VR[Vector]
-            VCR[Vector+Cypher]
-            T2C[Text2Cypher]
-        end
-        
-        RAG --> VR & VCR & T2C
-    end
+Same LLM (gpt-4o, temp 0), same answer prompt; only retrieval varies.
+Score = gold entities present in the generated answer. Reproduce with
+`python evaluation/retrieval_benchmark.py`:
 
-    subgraph "Database (Neo4j)"
-        DB[(Graph DB)]
-    end
+| Retrieval | Entity recall | Strict acc | 1-hop (n=11) | 2-hop (n=8) | 3-hop (n=1) |
+|---|---|---|---|---|---|
+| No retrieval (control) | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| Vector (top-5 chunks) | 0.73 | 0.70 | 0.91 | 0.38 | 1.00 |
+| Graph expansion (VectorCypher) | 0.82 | 0.75 | 0.91 | 0.50 | 1.00 |
+| **Text2Cypher (direct graph query)** | **0.85** | **0.85** | **1.00** | **0.75** | 0.00 |
 
-    API <--> UI
-    VR & VCR & T2C <--> DB
+![Retrieval benchmark](docs/analysis/retrieval_benchmark.png)
+
+**What the numbers say:**
+
+- **Vector search collapses on multi-hop** (0.91 → 0.38 strict accuracy going from
+  1-hop to 2-hop): the joined answer set exists in no retrievable chunk.
+- **Graph expansion recovers part of it** (0.50): appending entity facts
+  (`X -OPERATES- Y`) from mentioned entities to each retrieved chunk lets the LLM
+  do some joins in-context.
+- **Direct graph querying wins overall** (0.85 strict, 1.00 on 1-hop) — when the
+  question maps to a Cypher pattern, the join happens in the database, not the LLM.
+- **But Text2Cypher is brittle on complex chains**: the 3-hop question and one
+  2-hop variant produced valid-looking but empty Cypher (score 0 where the cheaper
+  retrievers succeeded). No single retriever dominates — which is the empirical
+  justification for the app's **agentic router** (`ToolsRetriever`) that picks a
+  strategy per question.
+
+Found along the way (fixed and kept honest): grounding Text2Cypher answers requires
+returning the *subject* alongside the value (`RETURN v.name, v.type` — a bare
+`v.type` row made the answer LLM refuse), and the auto-extracted Neo4j schema
+produced malformed Cypher — the curated schema text in `app.py` is what the
+benchmark validated.
+
+## Graph schema
+
+```
+Document layer   (Article)-[:HAS_CHUNK]->(Content {embedding})
+                 (Article)-[:PUBLISHED_BY]->(Media)   (Article)-[:BELONGS_TO]->(Category)
+                 (Article)-[:MENTIONS]->(entity)
+Knowledge layer  (Company)-[:OPERATES]->(Vessel {type})
+                 (Vessel)-[:CALLS_AT]->(Port)
+                 (Regulation)-[:APPLIES_TO]->(Vessel)
+                 (Vessel)-[:INVOLVED_IN]->(Incident)-[:OCCURRED_AT]->(Port)
 ```
 
-### 프론트엔드 (React + Vite)
-- **검색 UI** - 실시간 검색
-- **인라인 출처 배지** - 문장 끝에 [출처명] 표시
-- **마우스 호버 툴팁** - 상세 정보 팝업
-- **로딩 & 에러 핸들링**
+For the bundled corpus the knowledge layer loads from ground-truth tables
+(`data/corpus/entities.json`); for real documents `ingest/extract_entities.py`
+produces the same structure with an LLM extractor.
 
-### 데이터 흐름도
+## Application
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant React as Frontend
-    participant FastAPI as Backend
-    participant RAG as GraphRAG
-    participant Neo4j as Database
-    participant OpenAI as LLM (GPT-4o)
+FastAPI backend with three retrievers behind an LLM router
+(`ToolsRetriever` picks vector / graph-expansion / Text2Cypher per question),
+answering in a citation-grounded JSON contract rendered by a React frontend:
 
-    User->>React: 검색어 입력 (예: "경제 뉴스")
-    React->>FastAPI: POST /search {query}
-    FastAPI->>RAG: search(query)
-    
-    par Retrieval Phase
-        RAG->>Neo4j: 벡터 검색 (Vector)
-        RAG->>Neo4j: 관계 기반 검색 (Cypher)
-        RAG->>Neo4j: 자연어 쿼리 변환 (Text2Cypher)
-    end
-    
-    Neo4j-->>RAG: 검색된 문서군 (Context)
-    
-    RAG->>OpenAI: Prompt + Context 전송
-    OpenAI-->>RAG: 구조화된 JSON 응답
-    
-    RAG-->>FastAPI: 정제된 결과 데이터
-    FastAPI-->>React: Response {sections, sources}
-    React-->>User: 애니메이션과 함께 결과 표시
-```
+| Search | Multi-hop answer |
+|---|---|
+| ![Search screen](docs/images/search_screen.png) | ![Result screen](docs/images/result_screen.png) |
 
+## Quick start
 
-## 설치 방법
-
-### 1. 백엔드 의존성 설치
 ```bash
-pip install fastapi uvicorn python-dotenv neo4j neo4j-graphrag openai
+# 0. Neo4j
+docker run -d --name maritime-neo4j -p 7474:7474 -p 7687:7687 \
+  -e NEO4J_AUTH=neo4j/maritime123 neo4j:5
+
+# 1. Python env + keys
+pip install -r requirements.txt
+cp .env.example .env            # set OPENAI_API_KEY, NEO4J_PASSWORD
+
+# 2. Generate the synthetic corpus and build the graph (embeds 42 chunks)
+python ingest/generate_corpus.py
+python graph/build_graph.py
+
+# 3. Run the benchmark
+python evaluation/retrieval_benchmark.py
+
+# 4. Serve
+uvicorn app:app --port 8001            # backend
+cd frontend && npm install && npm run dev   # frontend at localhost:5173
 ```
 
-### 2. 프론트엔드 의존성 설치
-```bash
-cd frontend
-npm install
-```
+## Repository layout
 
-### 3. 환경 변수 설정
-`.env` 파일 생성:
-```
-NEO4J_URI=neo4j://127.0.0.1:7687
-NEO4J_PASSWORD=your_password
-OPENAI_API_KEY=your_api_key
-```
+| Path | Contents |
+|---|---|
+| `ingest/generate_corpus.py` | Synthetic maritime corpus + relation tables + QA benchmark (deterministic) |
+| `ingest/extract_entities.py` | LLM entity/relation extractor for real documents (same output schema) |
+| `graph/build_graph.py` | Two-layer Neo4j build: documents, chunks, embeddings, typed entities |
+| `evaluation/retrieval_benchmark.py` | 4-way retrieval comparison with gold-entity scoring |
+| `app.py` | FastAPI + agentic retriever router + citation-grounded generation |
+| `frontend/` | React (Vite) search UI |
+| `data/` | Committed corpus, entity tables, QA benchmark |
 
-## 실행 방법
+## Limitations
 
-### 1. 백엔드 서버 시작
-```bash
-# 루트 디렉토리에서
-python app.py
-```
-→ http://localhost:8000 에서 실행
+- The benchmark corpus is synthetic and small (42 articles, 20 QA); numbers compare
+  retrieval strategies under identical conditions rather than estimate absolute
+  production quality. Articles are templated prose — real news adds paraphrase and
+  noise that would lower all rows, likely vector most.
+- Scores are a single run at temperature 0; Text2Cypher failures in particular vary
+  with prompt wording.
+- The knowledge layer for the demo comes from ground truth, isolating retrieval
+  quality from extraction noise. With `extract_entities.py` on real data, extraction
+  errors compound on top of these numbers.
 
-### 2. 프론트엔드 개발 서버 시작
-```bash
-# frontend 디렉토리에서
-cd frontend
-npm run dev
-```
-→ http://localhost:3000 에서 실행
+## Related projects
 
-## API 엔드포인트
-
-![Search Screen](docs/images/search_screen.png)
-![Result Screen](docs/images/result_screen.png)
-
-### POST /search
-검색 쿼리 처리
-
-**Request:**
-```json
-{
-  "query": "경제 분야 최신 뉴스"
-}
-```
-
-**Response:**
-```json
-{
-  "sections": [
-    {
-      "title": "주요 동향",
-      "content": "...",
-      "sourceIds": [1, 2]
-    }
-  ],
-  "sources": [
-    {
-      "id": 1,
-      "shortName": "매일경제",
-      "title": "기사 제목",
-      "category": "경제",
-      "date": "2025-12-23",
-      "url": "https://...",
-      "summary": "...",
-      "icon": "💼"
-    }
-  ]
-}
-```
-
-### GET /health
-헬스 체크
-
-## 프로젝트 구조
-```
-RAG_SYS/
-├── app.py                    # FastAPI 백엔드
-├── Tools_Retriever.py        # GraphRAG 검색 로직
-├── Graph_Build.py            # Neo4j 그래프 구축
-├── Data_Scrapping.py         # 데이터 수집
-├── .env                      # 환경 변수
-└── frontend/
-    ├── package.json
-    ├── vite.config.js
-    ├── index.html
-    └── src/
-        ├── App.js            # 메인 앱
-        ├── App.css
-        ├── index.js
-        └── components/
-            ├── SearchBar.js      # 검색창
-            ├── ResultSection.js  # 결과 섹션
-            └── SourceTooltip.js  # 출처 툴팁
-```
-
-## 주요 기능
-
-- **지능형 검색** - Neo4j GraphRAG 기반 하이브리드 검색
-- **인라인 출처** - 문장 끝에 출처명 배지 표시
-- **대화형 툴팁** - 마우스 호버 시 상세 정보
-- **실시간 UI** - React 기반 동적 인터페이스
-- **에러 핸들링** - 검색 실패 시 사용자 친화적 메시지
-
-## 기술 스택
-- **Backend**: FastAPI, Neo4j, OpenAI GPT-4o
-- **Frontend**: React 18, Vite
-- **Database**: Neo4j Graph Database
-- **LLM**: OpenAI GPT-4o
-- **Embeddings**: text-embedding-3-small
+- [Parse-Everything](https://github.com/chaeminyoon/Parse-Everything) — self-healing document parsing (upstream of any RAG corpus)
+- [Vehicle-Anomaly-Algorithm](https://github.com/chaeminyoon/Vehicle-Anomaly-Algorithm) · [AIS-Traffic-Model](https://github.com/chaeminyoon/AIS-Traffic-Model) · [cbm-anomaly-detection](https://github.com/chaeminyoon/cbm-anomaly-detection) — the maritime/transport AI line this project extends into knowledge retrieval

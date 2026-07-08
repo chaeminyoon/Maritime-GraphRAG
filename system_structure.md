@@ -1,6 +1,6 @@
-# AI 뉴스 검색 시스템 구조 시과화
+# Maritime GraphRAG 시스템 구조
 
-이 문서는 Neo4j GraphRAG 기반의 FastAPI 백엔드와 React 프론트엔드 시스템의 구조를 시각화하여 설명합니다.
+이 문서는 해양 지식그래프 RAG 시스템(FastAPI 백엔드 + React 프론트엔드)의 구조를 시각화하여 설명합니다.
 
 ## 1. 전체 아키텍처 (Architecture)
 

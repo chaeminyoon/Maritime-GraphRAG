@@ -4,7 +4,7 @@
 
 <h1 align="center">Maritime GraphRAG</h1>
 
-<p align="center">해양 도메인(선박·선사·항만·규제·사고) 특화 Neo4j 지식그래프 RAG 엔진 — 정답이 있는 멀티홉 검색 벤치마크 포함 (strict accuracy: 벡터 0.70 → 그래프 질의 0.85)</p>
+<p align="center">해양 도메인(선박·선사·항만·규제·사고) 특화 Neo4j 지식그래프 RAG 엔진 — 정답 있는 멀티홉 검색 벤치마크(벡터 0.70 → 그래프 질의 0.85) + 실제 해양안전심판 재결서 139건의 크로스 문서 원인 분석</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white" alt="Python 3.10+">
@@ -60,6 +60,43 @@
 **주체를 반환**해야 합니다(`RETURN v.name, v.type` — 값만 반환하면 답변 LLM이
 근거 불충분으로 거부). 또 Neo4j 자동 추출 스키마는 잘못된 Cypher를 유발해,
 `app.py`의 큐레이션된 스키마 텍스트가 벤치마크로 검증된 버전입니다.
+
+## 2부 — 실데이터: 해양안전심판 재결서 139건
+
+위의 합성 벤치마크가 *방법*을 검증했다면, 2부는 그 방법을 실제 문서에 적용해
+**이전에 존재하지 않던 지식**을 만듭니다. 중앙해양안전심판원(해심원)은 조사한
+모든 해양사고에 대해 재결서를 공개합니다 — 각 재결서는 한 사고의 선박, 장소,
+기상, **판시된 원인 사슬**, 처분을 서술합니다. 2025–2026년 전국 심판원의 재결서
+139건을 파싱(PDF/HWP/HWPX)하고, LLM으로 고정 원인 분류 체계에 정규화해 그래프로
+적재했습니다:
+
+```
+(Accident {type, night, weather})-[:INVOLVES]->(AVessel {type, tonnage})
+(Accident)-[:HAS_CAUSE]->(Cause)-[:OF_TYPE]->(CauseCategory)
+(Cause)-[:LEADS_TO]->(Cause)          # 판시된 원인 사슬
+(Accident)-[:IMPOSED]->(Sanction)     (Accident)-[:CITES]->(Law)
+```
+
+**각 재결서는 자기 사고만 설명합니다. 그래프는 어떤 단일 문서에도 없는 질문에
+답합니다:**
+
+| 크로스 문서 질문 | 그래프의 답 (139건) |
+|---|---|
+| 가장 많이 반복되는 원인 사슬은? | **"작업안전수칙 미준수 → 안전관리체제 미흡": 22건.** 개인 과실이 조직적 실패의 증상으로 반복 판시되고 있음. |
+| 충돌 사고를 지배하는 원인은? | 경계 소홀: 충돌 35건에서 원인 판시 44회 — 주간·야간 빈도가 같고(24 vs 24), 조선 부적절·기상 요인은 야간에 집중. |
+| 어선 vs 상선의 차이는? | 어선 사고가 경계 소홀(38 vs 14)과 정비·점검 소홀(13 vs 2)을 압도 — 뚜렷이 다른 리스크 프로필. |
+| 가장 무거운 처분을 부르는 원인은? | 적재·고박 불량: 평균 업무정지 6.6개월 (경계 소홀은 1.8개월). |
+
+![Accident insights](docs/analysis/accident_insights.png)
+
+재현: `ingest/fetch_kmst_verdicts.py` (또는 수동 다운로드한 재결서 파일을
+`data/kmst/manual/`에 넣고 `ingest/parse_manual_verdicts.py`) →
+`ingest/extract_accidents.py` → `graph/build_accident_graph.py` →
+`evaluation/accident_insights.py`. 추출된 구조화 레코드
+(`data/kmst/accidents_graph.json`)가 커밋되어 있어 재수집이나 OpenAI 키 없이도
+그래프와 분석을 재현할 수 있습니다. 원문서는 해양안전심판원의 공공저작물
+(공공누리)입니다. 사고 레이어는 앱의 Text2Cypher 스키마에도 연결되어,
+프론트엔드가 합성 코퍼스와 함께 실데이터 질문에도 답합니다.
 
 ## 그래프 스키마
 
@@ -117,6 +154,9 @@ cd frontend && npm install && npm run dev # 프론트엔드 (localhost:5173)
 | `ingest/extract_entities.py` | 실제 문서용 LLM 엔티티/관계 추출기 (동일 출력 스키마) |
 | `graph/build_graph.py` | 2계층 Neo4j 구축: 문서·청크·임베딩·타입 엔티티 |
 | `evaluation/retrieval_benchmark.py` | 4개 검색 전략 비교, 정답 엔티티 채점 |
+| `ingest/fetch_kmst_verdicts.py`, `ingest/parse_manual_verdicts.py` | 재결서 수집 (웹 + 수동 PDF/HWP/HWPX 파싱) |
+| `ingest/extract_accidents.py` | 원인 사슬을 고정 분류 체계로 LLM 추출 |
+| `graph/build_accident_graph.py`, `evaluation/accident_insights.py` | 사고 레이어 구축 + 크로스 문서 원인 분석 |
 | `app.py` | FastAPI + 에이전틱 검색기 라우터 + 인용 근거 생성 |
 | `frontend/` | React (Vite) 검색 UI |
 | `data/` | 커밋된 코퍼스, 엔티티 테이블, QA 벤치마크 |
@@ -129,6 +169,9 @@ cd frontend && npm install && npm run dev # 프론트엔드 (localhost:5173)
   하락할 가능성이 높습니다.
 - 수치는 temperature 0의 단일 실행입니다. 특히 Text2Cypher 실패는 프롬프트 표현에
   따라 변동합니다.
+- 2부는 LLM 추출(gpt-4o)에 의존합니다: 원인 분류가 사람 검증을 거치지 않았고,
+  코퍼스는 최근(2025–26) 139건으로 종단 표본이 아닙니다 — 인사이트는 그래프의
+  분석 능력 시연으로 읽어야 하며, 해양 안전 통계로 인용해선 안 됩니다.
 - 데모의 지식 계층은 정답 테이블에서 적재되어 검색 품질을 추출 노이즈와 분리해
   측정합니다. 실데이터에 `extract_entities.py`를 쓰면 추출 오류가 이 수치 위에
   더해집니다.

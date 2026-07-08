@@ -4,7 +4,7 @@
 
 <h1 align="center">Maritime GraphRAG</h1>
 
-<p align="center">A Neo4j knowledge-graph RAG engine for the maritime domain — vessels, operators, ports, regulations and incidents — with a ground-truth multi-hop retrieval benchmark (strict accuracy: vector 0.70 → graph query 0.85)</p>
+<p align="center">A Neo4j knowledge-graph RAG engine for the maritime domain — vessels, operators, ports, regulations and incidents — a ground-truth multi-hop retrieval benchmark (vector 0.70 → graph query 0.85), and cross-document causal insights from 139 real KMST casualty adjudications</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white" alt="Python 3.10+">
@@ -65,6 +65,45 @@ returning the *subject* alongside the value (`RETURN v.name, v.type` — a bare
 produced malformed Cypher — the curated schema text in `app.py` is what the
 benchmark validated.
 
+## Part 2 — Real data: 139 adjudicated marine casualties
+
+The synthetic benchmark above validates the *method*; this part applies it to
+real documents and creates knowledge that did not exist before. The Korean
+Maritime Safety Tribunal (KMST) publishes an adjudication report for every
+investigated marine casualty — each narrating a single accident's vessels,
+location, weather, **causal chain of findings**, and sanctions. 139 reports
+(2025–2026, all regional tribunals) were parsed (PDF/HWP/HWPX), extracted with
+an LLM onto a fixed cause taxonomy, and loaded as a graph:
+
+```
+(Accident {type, night, weather})-[:INVOLVES]->(AVessel {type, tonnage})
+(Accident)-[:HAS_CAUSE]->(Cause)-[:OF_TYPE]->(CauseCategory)
+(Cause)-[:LEADS_TO]->(Cause)          # the adjudicated causal chain
+(Accident)-[:IMPOSED]->(Sanction)     (Accident)-[:CITES]->(Law)
+```
+
+**Every report explains only its own accident. The graph answers questions that
+exist in no single document:**
+
+| Cross-document question | Answer from the graph (139 cases) |
+|---|---|
+| Which causal chain repeats the most? | **"Work-safety-rule violation → inadequate safety-management system": 22 accidents.** Individual errors are systematically adjudicated as symptoms of organizational failure. |
+| What dominates collision findings? | Lookout negligence: 44 cause findings across 35 collisions — equally frequent by day and night (24 vs 24), while ship-handling and weather causes cluster at night. |
+| Fishing vessels vs merchant ships? | Fishing-vessel accidents dominate lookout negligence (38 vs 14) and maintenance neglect (13 vs 2) — a materially different risk profile. |
+| Which causes draw the heaviest sanctions? | Cargo-securing failures: average 6.6 months of license suspension, vs 1.8 months for lookout negligence. |
+
+![Accident insights](docs/analysis/accident_insights.png)
+
+Reproduce: `ingest/fetch_kmst_verdicts.py` (or drop manually downloaded verdict
+files into `data/kmst/manual/` and run `ingest/parse_manual_verdicts.py`) →
+`ingest/extract_accidents.py` → `graph/build_accident_graph.py` →
+`evaluation/accident_insights.py`. The extracted structured records
+(`data/kmst/accidents_graph.json`) are committed, so the graph and analysis are
+reproducible without refetching or an OpenAI key. Source documents are
+public-sector works (KOGL) of the Korean Maritime Safety Tribunal. The accident
+layer is also wired into the app's Text2Cypher schema, so the frontend answers
+real-data questions alongside the synthetic corpus.
+
 ## Graph schema
 
 ```
@@ -122,6 +161,9 @@ cd frontend && npm install && npm run dev   # frontend at localhost:5173
 | `ingest/extract_entities.py` | LLM entity/relation extractor for real documents (same output schema) |
 | `graph/build_graph.py` | Two-layer Neo4j build: documents, chunks, embeddings, typed entities |
 | `evaluation/retrieval_benchmark.py` | 4-way retrieval comparison with gold-entity scoring |
+| `ingest/fetch_kmst_verdicts.py`, `ingest/parse_manual_verdicts.py` | KMST verdict collection (web + manual PDF/HWP/HWPX parsing) |
+| `ingest/extract_accidents.py` | LLM extraction of causal chains onto a fixed taxonomy |
+| `graph/build_accident_graph.py`, `evaluation/accident_insights.py` | Accident-layer build + cross-document causal analysis |
 | `app.py` | FastAPI + agentic retriever router + citation-grounded generation |
 | `frontend/` | React (Vite) search UI |
 | `data/` | Committed corpus, entity tables, QA benchmark |
@@ -134,6 +176,10 @@ cd frontend && npm install && npm run dev   # frontend at localhost:5173
   noise that would lower all rows, likely vector most.
 - Scores are a single run at temperature 0; Text2Cypher failures in particular vary
   with prompt wording.
+- Part 2 relies on LLM extraction (gpt-4o): cause-category assignment is not
+  human-validated, and the corpus is 139 recent cases (2025–26), not a
+  longitudinal sample — read the insights as demonstrations of the graph's
+  analytical reach, not as maritime-safety statistics.
 - The knowledge layer for the demo comes from ground truth, isolating retrieval
   quality from extraction noise. With `extract_entities.py` on real data, extraction
   errors compound on top of these numbers.

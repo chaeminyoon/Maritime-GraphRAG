@@ -35,3 +35,9 @@ MANIFEST
 *.csv
 !data/corpus/*.csv
 *.log
+
+# KMST raw verdict texts (refetch with ingest/fetch_kmst_verdicts.py)
+data/kmst/verdicts_raw.jsonl
+
+# manually downloaded verdict originals (KOGL, reproducible via fetch script)
+data/kmst/manual/

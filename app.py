@@ -211,6 +211,16 @@ Relationships:
   (Regulation)-[:APPLIES_TO]->(Vessel)
   (Vessel)-[:INVOLVED_IN]->(Incident)
   (Incident)-[:OCCURRED_AT]->(Port)
+
+KMST accident layer (실제 해양안전심판원 재결서에서 추출):
+  Accident {verdict_no, name, type, date, night, weather, human_factors, keywords}
+    # type: 충돌|접촉|좌초|전복|침몰|화재·폭발|기관손상|해양오염|인명사상|침수|운항저해|기타
+  AVessel {name, type, gross_tonnage}, ALocation {name}, Court {name}
+  Cause {description, order}, CauseCategory {name}, Sanction {type, months, target_role}, Law {name}
+  (Accident)-[:INVOLVES]->(AVessel)   (Accident)-[:OCCURRED_IN]->(ALocation)
+  (Accident)-[:ADJUDICATED_BY]->(Court)   (Accident)-[:HAS_CAUSE]->(Cause)
+  (Cause)-[:OF_TYPE]->(CauseCategory)   (Cause)-[:LEADS_TO]->(Cause)
+  (Accident)-[:IMPOSED]->(Sanction)   (Accident)-[:CITES]->(Law)
 """
     
     examples = [
@@ -232,6 +242,19 @@ Relationships:
         MATCH (i:Incident)-[:OCCURRED_AT]->(:Port {name: "울산항"})
         OPTIONAL MATCH (a:Article)-[:MENTIONS]->(i)
         RETURN i.incident_id, i.description, a.title, a.url
+        """,
+        """
+        USER INPUT: 충돌 사고에서 가장 흔한 원인 카테고리는 무엇인가요?
+        CYPHER QUERY:
+        MATCH (a:Accident {type: "충돌"})-[:HAS_CAUSE]->(:Cause)-[:OF_TYPE]->(cat:CauseCategory)
+        RETURN cat.name, count(*) AS n ORDER BY n DESC LIMIT 5
+        """,
+        """
+        USER INPUT: 경계 소홀이 원인인 사고들의 선박과 장소를 알려주세요
+        CYPHER QUERY:
+        MATCH (a:Accident)-[:HAS_CAUSE]->(:Cause)-[:OF_TYPE]->(:CauseCategory {name: "경계 소홀"})
+        MATCH (a)-[:INVOLVES]->(v:AVessel) OPTIONAL MATCH (a)-[:OCCURRED_IN]->(l:ALocation)
+        RETURN a.name, v.name, l.name LIMIT 10
         """,
         """
         USER INPUT: 규제/환경 분야 기사 개수를 알려주세요

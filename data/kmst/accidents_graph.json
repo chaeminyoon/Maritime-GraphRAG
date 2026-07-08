@@ -1,0 +1,7484 @@
+[
+ {
+  "accident": {
+   "name": "석유제품운반선 삼우7호 해양오염 사건",
+   "type": "해양오염",
+   "date": "2025-03-12",
+   "night": false,
+   "location": "부산 영도구 봉래동 물양장 인근 호안",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "삼우7호",
+    "type": "유조선",
+    "gross_tonnage": 35,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "기관장이 갑판 배수구를 막지 않고 홀로 폐유 이송작업을 수행",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "배출관과 이송호스를 제대로 연결하지 않음",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 3,
+    "description": "이송호스가 배출구로부터 분리되어 폐유가 갑판에 누출",
+    "category": "기기취급 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "기관장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "해양환경관리법 제22조"
+  ],
+  "keywords": [
+   "배수구 막음조치 불이행",
+   "인원배치 불이행",
+   "부적절한 호스연결",
+   "해양오염"
+  ],
+  "verdict_no": "BS2026008",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "어선제2성화호선원부상사건",
+   "type": "인명사상",
+   "date": "2025-01-21",
+   "night": false,
+   "location": "경상남도 통영시 내부지도 서방 약 1.5해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제2성화호",
+    "type": "어선",
+    "gross_tonnage": 36,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 어로설비인 이송기에 점검을 소홀히 함",
+    "category": "정비·점검 소홀"
+   },
+   {
+    "order": 2,
+    "description": "선내 작업에 대한 안전관리를 소홀히 함",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "어로설비 정비․점검 소홀",
+   "어로작업 관리․감독 소홀",
+   "선원 부상"
+  ],
+  "verdict_no": "BS2026010",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "포항해양3호·해동호 충돌 사건",
+   "type": "충돌",
+   "date": "2025-09-02",
+   "night": false,
+   "location": "포항항 구항",
+   "weather": "맑은 날씨, 시정 약 3마일, 남서풍 초속 4미터, 파고 0.5∼1미터"
+  },
+  "vessels": [
+   {
+    "name": "포항해양3호",
+    "type": "청항선",
+    "gross_tonnage": 85.0,
+    "role": "피해"
+   },
+   {
+    "name": "해동호",
+    "type": "어선",
+    "gross_tonnage": 4.08,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "해동호가 경계를 소홀히 하고 규정 속력을 초과하여 항행",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "포항해양3호가 경계를 소홀히 하고 항내 최고속력 규정을 준수하지 않음",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 3
+   },
+   {
+    "target_role": "선장",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "선박의 입항 및 출항 등에 관한 법률",
+   "해상교통안전법",
+   "포항항 선박안전운항관리규정"
+  ],
+  "keywords": [
+   "충돌",
+   "경계 소홀",
+   "속력 초과",
+   "포항항"
+  ],
+  "verdict_no": "DH2026005",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "어선 서양호·어선 수만호 충돌 사건",
+   "type": "충돌",
+   "date": "2024-11-15",
+   "night": true,
+   "location": "경상북도 영덕군 축산항 남방파제 근처",
+   "weather": "시정 8마일, 남남서풍 초속 1.1미터, 파고 0.4미터"
+  },
+  "vessels": [
+   {
+    "name": "서양호",
+    "type": "어선",
+    "gross_tonnage": 23,
+    "role": "가해"
+   },
+   {
+    "name": "수만호",
+    "type": "어선",
+    "gross_tonnage": 3.21,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "서양호가 경계를 소홀히 하고 항로를 가로질러 항행",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "수만호가 충돌을 피하기 위한 적절한 동작을 취하지 않음",
+    "category": "항행법규 위반"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "선장",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제70조",
+   "해상교통안전법 제71조",
+   "해상교통안전법 제72조",
+   "해상교통안전법 제73조",
+   "해상교통안전법 제99조"
+  ],
+  "keywords": [
+   "충돌",
+   "경계 소홀",
+   "항행법규 위반",
+   "어선"
+  ],
+  "verdict_no": "DH2026004",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "어선 제2고려호 선원 실종 사건",
+   "type": "인명사상",
+   "date": "2022-09-30",
+   "night": false,
+   "location": "전라북도 부안군 위도면 상왕등도 서쪽 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제2고려호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 부주의하게 닻줄이 나가는 쪽에서 작업",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 작업 안전 교육 및 안전 관리·감독 소홀",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "선박직원법 제11조"
+  ],
+  "keywords": [
+   "선원 부주의",
+   "작업 안전 교육 및 안전 관리·감독 소홀",
+   "선외 추락",
+   "선원 실종"
+  ],
+  "verdict_no": "IC2026005",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "예인선 광진107호 부두 접촉 사건",
+   "type": "접촉",
+   "date": "2024-11-27",
+   "night": false,
+   "location": "인천항 북항 SK인천석유화학 제4돌핀 전면 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "광진107호",
+    "type": "예인선",
+    "gross_tonnage": 220,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "GPS 플로터 등 이상 발생",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 2,
+    "description": "1등 항해사의 경계 및 선위 확인 소홀",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 3,
+    "description": "용선자의 선장 등 승무 정원 미배치",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "사업자",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "선위확인소홀",
+   "부적절한비상대응",
+   "법정승무정원미배치",
+   "부두시설접촉"
+  ],
+  "verdict_no": "IC2026003",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "낚시어선 금까마귀호 화재 사건",
+   "type": "화재·폭발",
+   "date": "2023-07-26",
+   "night": false,
+   "location": "충청남도 보령시 원산도 오봉산 해수욕장 남쪽 약 0.3해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "금까마귀호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 평소 점검을 소홀히 한 주기관 시동용 전기설비의 전기적 특이점",
+    "category": "정비·점검 소홀"
+   },
+   {
+    "order": 2,
+    "description": "기관실에서 화재 발생",
+    "category": "기타"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "A",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "전기설비 정비 점검 소홀",
+   "전기 누전",
+   "기관실 화재"
+  ],
+  "verdict_no": "IC2026002",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "어선 태성호의 계류줄 풀림으로 인한 대원호 충돌 사건",
+   "type": "충돌",
+   "date": "2024-11-27",
+   "night": true,
+   "location": "대천항",
+   "weather": "강풍"
+  },
+  "vessels": [
+   {
+    "name": "태성호",
+    "type": "어선",
+    "gross_tonnage": 29,
+    "role": "가해"
+   },
+   {
+    "name": "제200해성호",
+    "type": "어선",
+    "gross_tonnage": 24,
+    "role": "가해"
+   },
+   {
+    "name": "대원호",
+    "type": "어선",
+    "gross_tonnage": 33,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "태성호와 제200해성호 선장이 계류줄을 적절하게 고박하지 않음",
+    "category": "적재·고박 불량"
+   },
+   {
+    "order": 2,
+    "description": "계류줄이 계선주에서 벗겨짐",
+    "category": "적재·고박 불량"
+   },
+   {
+    "order": 3,
+    "description": "강풍에 의해 두 선박이 이동",
+    "category": "기상·해상 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   },
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [
+   "선박직원법 제11조"
+  ],
+  "keywords": [
+   "부적절한 계류줄 고박",
+   "계류줄 이탈",
+   "충돌"
+  ],
+  "verdict_no": "IC2026001",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "컨테이너운반선 요코하마트레이더·예인선 901조양의 피예인부선 세방20001 충돌사건",
+   "type": "충돌",
+   "date": "2025-06-18",
+   "night": false,
+   "location": "부산항 감만컨테이너부두 앞 제1항로 북쪽 경계선 부근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "요코하마트레이더",
+    "type": "화물선",
+    "gross_tonnage": 9944,
+    "role": "가해"
+   },
+   {
+    "name": "901조양",
+    "type": "예인선",
+    "gross_tonnage": 232,
+    "role": "피해"
+   },
+   {
+    "name": "세방20001",
+    "type": "부선",
+    "gross_tonnage": 8353,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "요코하마트레이더가 충돌 4분 전부터 증속하며 901조양 예인선열의 진로를 가로막음",
+    "category": "항행법규 위반"
+   },
+   {
+    "order": 2,
+    "description": "901조양 예인선열의 부적절한 항행",
+    "category": "항행법규 위반"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제103조"
+  ],
+  "keywords": [
+   "선원상무위반",
+   "급출발",
+   "부적절한 VHF 교신",
+   "충돌"
+  ],
+  "verdict_no": "BS2026009",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "낚시어선 삼흥호 승객 사망 사건",
+   "type": "인명사상",
+   "date": "2025-02-01",
+   "night": false,
+   "location": "경상북도 울진군 죽변항 동방파제 인근 해상",
+   "weather": "약간 흐림, 시정 5마일, 풍속 초속 6∼8미터, 파고 약 1미터"
+  },
+  "vessels": [
+   {
+    "name": "삼흥호",
+    "type": "어선",
+    "gross_tonnage": 4.57,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 승객들이 안전한 상태로 있는지 확인하지 않고 선박을 움직임",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "핸드레일 설치 규정 위반",
+    "category": "조선 부적절"
+   },
+   {
+    "order": 3,
+    "description": "부적절한 구조 행위",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 4,
+    "description": "승객이 난간 인근에서 안정되지 않은 자세로 낚시",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [
+   "해양사고의 조사 및 심판에 관한 법률",
+   "낚시관리 및 육성법",
+   "총톤수 10톤 미만 소형어선의 구조 및 설비기준"
+  ],
+  "keywords": [
+   "낚시어선",
+   "승객 사망",
+   "안전관리",
+   "핸드레일",
+   "구명부환"
+  ],
+  "verdict_no": "DH2026003",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "스텔라데이지 침몰 사건",
+   "type": "침몰",
+   "date": "2017-03-31",
+   "night": false,
+   "location": "남대서양 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "스텔라데이지",
+    "type": "화물선",
+    "gross_tonnage": 148431,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "개조 이후 취약해진 횡강도와 장기간 누적된 피로 손상",
+    "category": "선체·설비 결함"
+   },
+   {
+    "order": 2,
+    "description": "A의 안전 관리 소홀",
+    "category": "안전관리체제 미흡"
+   },
+   {
+    "order": 3,
+    "description": "너울성 파랑에 의한 비대칭 횡압력",
+    "category": "기상·해상 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선박운항자",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해양사고의 조사 및 심판에 관한 법률"
+  ],
+  "keywords": [
+   "침몰",
+   "스텔라데이지",
+   "안전관리",
+   "선체 결함"
+  ],
+  "verdict_no": "JA2026002",
+  "court": "중앙"
+ },
+ {
+  "accident": {
+   "name": "낚시어선 인성호․모터보트 윤진호 충돌 사건",
+   "type": "충돌",
+   "date": "2025-10-27",
+   "night": false,
+   "location": "경상남도 거제시 산달도 남서방 약 0.4해리 해상",
+   "weather": "시계 양호"
+  },
+  "vessels": [
+   {
+    "name": "인성호",
+    "type": "어선",
+    "gross_tonnage": 3,
+    "role": "피해"
+   },
+   {
+    "name": "윤진호",
+    "type": "기타",
+    "gross_tonnage": 2.53,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "낚시어선 인성호가 경계를 소홀히 하여 횡단 상태로 접근하는 모터보트를 뒤늦게 발견",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "모터보트 윤진호가 경계를 소홀히 하여 적절한 피항 협력 동작을 취하지 않음",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "인성호 선장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "윤진호 조종사",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제80조",
+   "해상교통안전법 제81조",
+   "해상교통안전법 제82조",
+   "해상교통안전법 제70조",
+   "해상교통안전법 제71조",
+   "해상교통안전법 제72조",
+   "해상교통안전법 제73조"
+  ],
+  "keywords": [
+   "횡단항법",
+   "경계소홀",
+   "피항동작미흡"
+  ],
+  "verdict_no": "BS2026007",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "어선 도진호·어선 진성호 충돌 사건",
+   "type": "충돌",
+   "date": "2024-12-01",
+   "night": true,
+   "location": "미포항 북방파제 등대 북동쪽 약 3.9해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "도진호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "가해"
+   },
+   {
+    "name": "진성호",
+    "type": "어선",
+    "gross_tonnage": 4.95,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "도진호 선장이 항행 중 경계를 소홀히 함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "진성호가 충분한 피항 협력 동작을 취하지 못함",
+    "category": "조선 부적절"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "도진호 선장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "진성호 선장",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제83조"
+  ],
+  "keywords": [
+   "경계 소홀",
+   "조기 피항 협력 동작 부적절",
+   "충돌"
+  ],
+  "verdict_no": "BS2026006",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "세월호 전복 사건",
+   "type": "전복",
+   "date": "2014-04-16",
+   "night": false,
+   "location": "전라남도 진도군 병풍도 등대 북쪽 약 4.0해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "세월호",
+    "type": "여객선",
+    "gross_tonnage": 6825,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "기준에 못 미치는 복원력을 가진 세월호가 승인받은 기준 이상의 화물을 싣고 항해",
+    "category": "적재·고박 불량"
+   },
+   {
+    "order": 2,
+    "description": "변침 과정에서 선회에 의한 경사 우력 정보다 작은 복원정으로 인해 급경사 발생",
+    "category": "기타"
+   },
+   {
+    "order": 3,
+    "description": "적재와 고박이 제대로 되지 않은 화물이 한쪽으로 쏠리면서 선회와 경사가 가중",
+    "category": "적재·고박 불량"
+   },
+   {
+    "order": 4,
+    "description": "해수가 선내로 유입되면서 복원성을 상실",
+    "category": "기타"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "면허 취소",
+    "months": null
+   },
+   {
+    "target_role": "1등 항해사",
+    "type": "면허 취소",
+    "months": null
+   },
+   {
+    "target_role": "2등 항해사",
+    "type": "면허 취소",
+    "months": null
+   },
+   {
+    "target_role": "3등 항해사",
+    "type": "면허 취소",
+    "months": null
+   },
+   {
+    "target_role": "1등 기관사",
+    "type": "업무 정지",
+    "months": 12
+   },
+   {
+    "target_role": "3등 기관사",
+    "type": "업무 정지",
+    "months": 12
+   },
+   {
+    "target_role": "당직 조타수",
+    "type": "업무 정지",
+    "months": 6
+   },
+   {
+    "target_role": "선박 소유자",
+    "type": "시정 명령",
+    "months": null
+   },
+   {
+    "target_role": "물류팀 차장",
+    "type": "시정 명령",
+    "months": null
+   },
+   {
+    "target_role": "사업자",
+    "type": "개선 권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해양사고의 조사 및 심판에 관한 법률"
+  ],
+  "keywords": [
+   "세월호",
+   "전복",
+   "복원력",
+   "화물 적재",
+   "해수 유입"
+  ],
+  "verdict_no": "JA20261",
+  "court": "중앙"
+ },
+ {
+  "accident": {
+   "name": "유선 충무공거북선호 ‧ 낚시어선 올레호 충돌 사건",
+   "type": "충돌",
+   "date": "2025-04-19",
+   "night": false,
+   "location": "경남 거제시 소재 구도등대 남동방 0.8마일 해상",
+   "weather": "안개, 시계 50m"
+  },
+  "vessels": [
+   {
+    "name": "충무공거북선호",
+    "type": "유선",
+    "gross_tonnage": 113,
+    "role": "피해"
+   },
+   {
+    "name": "올레호",
+    "type": "낚시어선",
+    "gross_tonnage": 3,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "안개로 시계가 제한된 상태에서 양 선박 모두 안전한 속력으로 감속하지 않음",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "양 선박 모두 무중신호를 울리지 않음",
+    "category": "항행법규 위반"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "올레호 선장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "충무공거북선호 선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제84조"
+  ],
+  "keywords": [
+   "횡단항법",
+   "경계소홀",
+   "피항협력동작"
+  ],
+  "verdict_no": "BS2026005",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "어선 제703유경호‧어선 세양호 충돌 사건",
+   "type": "충돌",
+   "date": "2024-05-02",
+   "night": true,
+   "location": "경상남도 통영시 사량도 부근 대섬 남방 약 2.4해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제703유경호",
+    "type": "어선",
+    "gross_tonnage": 29,
+    "role": "가해"
+   },
+   {
+    "name": "세양호",
+    "type": "어선",
+    "gross_tonnage": 2.83,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 음주 상태에서 경계를 소홀히 함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "세양호의 선장이 조업 중 상대 선박을 미리 발견하지 못함",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [
+   "음주"
+  ],
+  "sanctions": [
+   {
+    "target_role": "A (제703유경호 선장)",
+    "type": "업무정지",
+    "months": 3
+   },
+   {
+    "target_role": "B (세양호 선장)",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제70조",
+   "해상교통안전법 제72조",
+   "해상교통안전법 제73조",
+   "해상교통안전법 제81조",
+   "해상교통안전법 제83조"
+  ],
+  "keywords": [
+   "항해중인 동력선",
+   "조업중인 어선",
+   "음주운항",
+   "경계소홀"
+  ],
+  "verdict_no": "BS2025039",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "어선 동강2호 닻줄 손상 사건",
+   "type": "좌초",
+   "date": "2024-07-10",
+   "night": false,
+   "location": "전북 군산시 옥도면 선유도 남단 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "동강2호",
+    "type": "어선",
+    "gross_tonnage": 8.55,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "부적절한 피항지에 정박",
+    "category": "무리한 출항·운항"
+   },
+   {
+    "order": 2,
+    "description": "정박 당직 소홀",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 3,
+    "description": "닻줄이 끊어져 표류",
+    "category": "선체·설비 결함"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "선박직원법 제11조"
+  ],
+  "keywords": [
+   "부적절한 피항지 선정",
+   "정박 당직 소홀",
+   "좌초"
+  ],
+  "verdict_no": "IC2025038",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "어선 대건호 선원 부상 사건",
+   "type": "인명사상",
+   "date": "2023-04-23",
+   "night": true,
+   "location": "전라북도 부안군 상왕등도 서쪽 약 11.9해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "대건호",
+    "type": "어선",
+    "gross_tonnage": 13,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "닻자망 닻줄 절단으로 인한 반동",
+    "category": "기타"
+   },
+   {
+    "order": 2,
+    "description": "선장의 부적절한 선원 안전 관리",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "어망 닻줄 절단",
+   "안전 거리 미확보",
+   "선원 감독 소홀",
+   "선원 부상"
+  ],
+  "verdict_no": "IC2025035",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "어선 제2정훈호 선원 부상 사건",
+   "type": "인명사상",
+   "date": "2023-02-26",
+   "night": false,
+   "location": "목덕도 서쪽 약 5해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제2정훈호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선수롤러 조작 선원이 호이스트 줄을 장갑을 착용한 채 부주의하게 잡고 취급",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 선수롤러 조작 선원에 대한 안전관리를 부적절하게 함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "부적절한 로프 작업",
+   "선원 감독 소홀",
+   "선원 부상"
+  ],
+  "verdict_no": "IC2025040",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "모터보트 마린스포츠호 전복 사건",
+   "type": "전복",
+   "date": "2023-04-18",
+   "night": false,
+   "location": "인천광역시 옹진군 자월면 승봉리 사승봉도 남서방",
+   "weather": "흐린 날씨, 남동풍 초속 4-6m, 파고 1.56m, 시정 3해리"
+  },
+  "vessels": [
+   {
+    "name": "마린스포츠호",
+    "type": "수상레저기구",
+    "gross_tonnage": 0.73,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "해상 상태가 좋지 않고 선체가 좌현으로 기운 상태에서 후진 출항 시도",
+    "category": "기상·해상 불량"
+   },
+   {
+    "order": 2,
+    "description": "우현 횡파를 받아 선체가 좌현으로 급격히 기울어짐",
+    "category": "기상·해상 불량"
+   },
+   {
+    "order": 3,
+    "description": "승선객과 탑재물이 좌현으로 쏠리면서 경사 우력이 가중됨",
+    "category": "적재·고박 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [],
+  "laws": [],
+  "keywords": [
+   "복원력",
+   "전복",
+   "쇄파"
+  ],
+  "verdict_no": "IC2025037",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "어선 대영호 선원사망사건",
+   "type": "인명사상",
+   "date": "2023-09-17",
+   "night": false,
+   "location": "인천 해역",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "대영호",
+    "type": "어선",
+    "gross_tonnage": null,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "작업 중 안전수칙 미준수",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [],
+  "laws": [],
+  "keywords": [
+   "선원사망",
+   "어선",
+   "안전수칙"
+  ],
+  "verdict_no": "IC2025030",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "어선 제103부일호에 임시 승선한 제2007해양호 선원 사망 사건",
+   "type": "인명사상",
+   "date": "2023-10-30",
+   "night": true,
+   "location": "인천광역시 옹진군 덕적면 가덕도 동쪽 약 1해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제103부일호",
+    "type": "어선",
+    "gross_tonnage": 21,
+    "role": "피해"
+   },
+   {
+    "name": "제2007해양호",
+    "type": "어선",
+    "gross_tonnage": 15,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "제2007해양호 선원이 위험한 위치에서 작업",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "양 선박 선장이 선원에 대한 지휘·감독 소홀",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "제103부일호 선장",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "제2007해양호 선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "선박직원법 제11조"
+  ],
+  "keywords": [
+   "선원부주의",
+   "선원지휘감독소홀",
+   "선원사망"
+  ],
+  "verdict_no": "IC2025044",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "유류 및 액체화학품 산적운반선 제이엔아이리스․중국 모래운반선 저지아샨호 03650 충돌 사건",
+   "type": "충돌",
+   "date": "2023-12-13",
+   "night": false,
+   "location": "중국 양쯔강 바오산 수로",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제이앤아이리스",
+    "type": "화물선",
+    "gross_tonnage": 8242,
+    "role": "가해"
+   },
+   {
+    "name": "저지아샨호 03650",
+    "type": "기타",
+    "gross_tonnage": null,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "자동조타장치의 전기적 결함 발생",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 2,
+    "description": "조종 불능 상태로 우선회",
+    "category": "기기취급 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [],
+  "laws": [],
+  "keywords": [
+   "자동조타장치 고장",
+   "조타불능",
+   "충돌",
+   "전복",
+   "선원사망"
+  ],
+  "verdict_no": "IC2025043",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "어선 영주호ㆍ어선 일진2호 충돌 사건",
+   "type": "충돌",
+   "date": "2022-09-25",
+   "night": false,
+   "location": "충청남도 서천군 마량진항 남방파제 북쪽 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "영주호",
+    "type": "어선",
+    "gross_tonnage": 7.93,
+    "role": "피해"
+   },
+   {
+    "name": "일진2호",
+    "type": "어선",
+    "gross_tonnage": 6.65,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "일진2호가 감속 없이 방파제 구간 수로의 왼쪽으로 입항",
+    "category": "항행법규 위반"
+   },
+   {
+    "order": 2,
+    "description": "일진2호가 영주호 방향으로 좌현 변침",
+    "category": "항행법규 위반"
+   },
+   {
+    "order": 3,
+    "description": "영주호가 충돌을 피하기 위한 조치를 소홀히 함",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "일진2호 선장",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "영주호 선장",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해사안전법 제64조",
+   "해사안전법 제67조",
+   "해사안전법 제92조"
+  ],
+  "keywords": [
+   "과속운항",
+   "상대선쪽으로변침",
+   "충돌",
+   "선원부상"
+  ],
+  "verdict_no": "IC2025039",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "어선 명성호 선원부상사건",
+   "type": "인명사상",
+   "date": "2022-03-06",
+   "night": false,
+   "location": "굴업도 서쪽 약 10해리 해상",
+   "weather": "파고가 높은 상태"
+  },
+  "vessels": [
+   {
+    "name": "명성호",
+    "type": "어선",
+    "gross_tonnage": 8.55,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 파도가 높고 뻗침대가 휘어진 상태에서 위험 장소에 있는 선원을 보고도 양망을 진행",
+    "category": "무리한 출항·운항"
+   },
+   {
+    "order": 2,
+    "description": "부상선원이 부주의하게 위험 장소에 있었음",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "소형선박조종사",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "B",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "무리한 조업",
+   "선원 감독소홀",
+   "위험 구역 진입",
+   "선원 부상"
+  ],
+  "verdict_no": "XX2025-045",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "어선 오션파티호 폭발사건",
+   "type": "화재·폭발",
+   "date": "2024-11-10",
+   "night": true,
+   "location": "충청남도 태안군 영목항 동쪽 0.2해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "오션파티호",
+    "type": "어선",
+    "gross_tonnage": 6.5,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 조타실에서 기름 냄새를 맡았지만 환기하지 않음",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 라이터를 켜서 유증기 폭발 발생",
+    "category": "화기취급 부주의"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "연료유 유출",
+   "유증기 폭발",
+   "담뱃불 화재"
+  ],
+  "verdict_no": "XX2025-047",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "예인선 광진107호 부두 접촉 사건",
+   "type": "접촉",
+   "date": "2024-11-27",
+   "night": false,
+   "location": "인천항 북항 SK인천석유화학 제4돌핀 전면 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "광진107호",
+    "type": "예인선",
+    "gross_tonnage": 220,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "GPS 플로터 등 이상 발생",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 2,
+    "description": "1등 항해사의 경계 및 선위 확인 소홀",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 3,
+    "description": "용선자의 선장 등 승무 정원 미배치",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "사업자",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "선위확인소홀",
+   "부적절한비상대응",
+   "법정승무정원미배치",
+   "부두시설접촉"
+  ],
+  "verdict_no": "XX2026-003",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "어선 부성호 선원실종사건",
+   "type": "인명사상",
+   "date": "2024-10-21",
+   "night": true,
+   "location": "포항시 영일만 교석초 등표로부터 방위 약 039도 거리 약 8.6해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "부성호",
+    "type": "어선",
+    "gross_tonnage": 29,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 구명조끼 등 안전 장구를 착용하지 않은 채 개방된 현측문 주위에서 투망 작업 중 부주의하여 선외로 추락",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장의 선원에 대한 안전 관리·감독 소홀",
+    "category": "안전관리체제 미흡"
+   },
+   {
+    "order": 3,
+    "description": "익수자에 대한 부적절한 구조 행위",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "선원 부주의",
+   "안전 관리·감독 소홀",
+   "추락",
+   "익수"
+  ],
+  "verdict_no": "DH2026-001",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "예인선 효종호 선원사망사건",
+   "type": "인명사상",
+   "date": "2025-04-02",
+   "night": false,
+   "location": "삼척화력발전소 항만시설 케이슨 공사 부두 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "효종호",
+    "type": "예인선",
+    "gross_tonnage": 194.95,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "기관장이 예인용 권양기를 부주의하게 조작",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 2,
+    "description": "선장이 선원의 선내 작업에 대한 안전관리·감독 소홀",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "예인용 권양기",
+   "숙련",
+   "안전 장구",
+   "메신저 로프",
+   "목줄",
+   "예인줄"
+  ],
+  "verdict_no": "DH2026-002",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "어선 제53삼광호ㆍ어선 동일호 충돌사건",
+   "type": "충돌",
+   "date": "2024-06-11",
+   "night": false,
+   "location": "제주특별자치도 서귀포시 마라도 남쪽 약 237해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제53삼광호",
+    "type": "어선",
+    "gross_tonnage": 69,
+    "role": "피해"
+   },
+   {
+    "name": "동일호",
+    "type": "어선",
+    "gross_tonnage": 27,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "양 선박의 선장이 조타실에서 졸거나 수면을 취하는 등 서로 경계를 소홀히 함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "바람과 조류 등 외력에 의해 떠내려가면서 상대 선박에 접근",
+    "category": "기상·해상 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "A",
+    "type": "견책",
+    "months": null
+   },
+   {
+    "target_role": "B",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제70조",
+   "해상교통안전법 제72조",
+   "해상교통안전법 제73조"
+  ],
+  "keywords": [
+   "정류 중 경계 소홀",
+   "선체 손상",
+   "충돌"
+  ],
+  "verdict_no": "JA2025-005",
+  "court": "중앙"
+ },
+ {
+  "accident": {
+   "name": "일반화물선 통마오6 화물감정사 사망사건",
+   "type": "인명사상",
+   "date": "2024-02-28",
+   "night": true,
+   "location": "군산항 71번석 전면 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "통마오6",
+    "type": "화물선",
+    "gross_tonnage": 5642,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "현문 당직자가 안전망이 설치되지 않은 이동식 사다리의 고정줄을 풀어둔 채 현문을 비워둠",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 정박당직에 대한 관리·감독을 소홀히 함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "현문 이동식 사다리 미고정",
+   "안전망 미설치",
+   "현문 당직자 부재",
+   "관리·감독 소홀",
+   "승선자 추락",
+   "사망"
+  ],
+  "verdict_no": "JA2025-006",
+  "court": "중앙"
+ },
+ {
+  "accident": {
+   "name": "공사작업용부선 동방2005호 전복사건",
+   "type": "전복",
+   "date": "2023-09-13",
+   "night": true,
+   "location": "인천광역시 옹진군 신도 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "동방2005호",
+    "type": "부선",
+    "gross_tonnage": 423,
+    "role": "피해"
+   },
+   {
+    "name": "삼성5호",
+    "type": "예인선",
+    "gross_tonnage": 22,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선두가 계류줄 감시 등 업무를 소홀히 함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "계류줄이 풀리고 끊어져 표류함",
+    "category": "기타"
+   },
+   {
+    "order": 3,
+    "description": "공사 중인 교각에 부딪힘",
+    "category": "기타"
+   },
+   {
+    "order": 4,
+    "description": "부선 운항자와 예인선 선장이 안전관리를 소홀히 함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "사업자",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "계류",
+   "계류줄 감시 소홀",
+   "안전관리 소홀",
+   "계류줄 풀림",
+   "전복"
+  ],
+  "verdict_no": "JA2025-007",
+  "court": "중앙"
+ },
+ {
+  "accident": {
+   "name": "어선 제307풍성호·컨테이너운반선 에스아이티씨 얀타이 충돌사건",
+   "type": "충돌",
+   "date": "2024-06-13",
+   "night": true,
+   "location": "전라남도 신안군 만재도 인근 해상",
+   "weather": "시계 양호"
+  },
+  "vessels": [
+   {
+    "name": "제307풍성호",
+    "type": "어선",
+    "gross_tonnage": 33,
+    "role": "피해"
+   },
+   {
+    "name": "에스아이티씨 얀타이",
+    "type": "화물선",
+    "gross_tonnage": 9734,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "제307풍성호가 경계를 태만하여 에스아이티씨 얀타이를 피하지 않음",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "에스아이티씨 얀타이가 적절한 피항협력동작을 취하지 않음",
+    "category": "항행법규 위반"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [],
+  "laws": [
+   "해상교통안전법 제70조",
+   "해상교통안전법 제72조",
+   "해상교통안전법 제73조",
+   "해상교통안전법 제80조〜제82조"
+  ],
+  "keywords": [
+   "경계 태만",
+   "횡단하는 상태",
+   "유지선",
+   "피항선",
+   "충돌"
+  ],
+  "verdict_no": "JA2025-008",
+  "court": "중앙"
+ },
+ {
+  "accident": {
+   "name": "석유제품운반선 삼진1호 방파제접촉사건",
+   "type": "접촉",
+   "date": "2024-02-09",
+   "night": true,
+   "location": "부산신항 서방파제",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "삼진1호",
+    "type": "유조선",
+    "gross_tonnage": 890,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 선위 확인을 소홀히 하여 항로를 벗어남",
+    "category": "위치확인 소홀"
+   },
+   {
+    "order": 2,
+    "description": "선장이 단독으로 항해 당직을 수행",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [
+   "1인 당직"
+  ],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제43조",
+   "해상교통안전법 제70조",
+   "선원법 제21조",
+   "선박교통관제에 관한 법률 제14조"
+  ],
+  "keywords": [
+   "부산신항 입항",
+   "선위 확인 소홀",
+   "방파제 접촉"
+  ],
+  "verdict_no": "JA2025-009",
+  "court": "중앙"
+ },
+ {
+  "accident": {
+   "name": "석유제품운반선 태양호‧어선 제505한진호 충돌사건",
+   "type": "충돌",
+   "date": "2024-04-18",
+   "night": true,
+   "location": "부산광역시 영도구 영도등대 남서방 약 0.5해리 해상",
+   "weather": "시계 양호"
+  },
+  "vessels": [
+   {
+    "name": "태양호",
+    "type": "화물선",
+    "gross_tonnage": 248,
+    "role": "가해"
+   },
+   {
+    "name": "제505한진호",
+    "type": "어선",
+    "gross_tonnage": 47,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "태양호가 상대 선박의 진로 전방으로 변침",
+    "category": "항행법규 위반"
+   },
+   {
+    "order": 2,
+    "description": "제505한진호가 조타실을 이탈하여 충돌 회피 동작 미취함",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [
+   "1인 당직"
+  ],
+  "sanctions": [
+   {
+    "target_role": "A",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "B",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [
+   "선박의 입항 및 출항 등에 관한 법률 제16조"
+  ],
+  "keywords": [
+   "시계 상태",
+   "항해중인 동력선",
+   "우선피항선"
+  ],
+  "verdict_no": "JA2025-010",
+  "court": "중앙"
+ },
+ {
+  "accident": {
+   "name": "어선 대광호 전복사건",
+   "type": "전복",
+   "date": "2024-01-18",
+   "night": true,
+   "location": "충청남도 보령시 외장고도 남단 남서쪽 약 1.5해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "대광호",
+    "type": "어선",
+    "gross_tonnage": 21,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선체 하부가 거의 비어 있는 상태에서 중량의 안강망 어구와 닻을 상갑판 상부에 집중하여 적재",
+    "category": "적재·고박 불량"
+   },
+   {
+    "order": 2,
+    "description": "건현 변화 등 적절한 안전점검 없이 항해",
+    "category": "정비·점검 소홀"
+   },
+   {
+    "order": 3,
+    "description": "변침 과정에서 과도한 횡경사가 발생하여 복원되지 못함",
+    "category": "조선 부적절"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "소형선박조종사",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "갑판상 적재물",
+   "항해준비 소홀",
+   "복원력 상실",
+   "전복"
+  ],
+  "verdict_no": "JA2025-011",
+  "court": "중앙"
+ },
+ {
+  "accident": {
+   "name": "낚시어선 명진2호⋅어선 상진호 충돌사건",
+   "type": "충돌",
+   "date": "2023-09-12",
+   "night": true,
+   "location": "전라남도 여수시 상백도 인근 해상",
+   "weather": "시계 양호"
+  },
+  "vessels": [
+   {
+    "name": "명진2호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "피해"
+   },
+   {
+    "name": "상진호",
+    "type": "어선",
+    "gross_tonnage": 4.99,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "상진호가 경계를 소홀히 하고 피항동작을 취하지 않음",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "명진2호가 피항협력동작을 뒤늦게 취함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 3,
+    "description": "상진호 선장의 피로로 인해 충돌 위험성을 간과함",
+    "category": "피로"
+   }
+  ],
+  "human_factors": [
+   "피로"
+  ],
+  "sanctions": [
+   {
+    "target_role": "A",
+    "type": "견책",
+    "months": null
+   },
+   {
+    "target_role": "B",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "국제해상충돌예방규칙",
+   "해사안전법 제63조",
+   "해사안전법 제65조",
+   "해사안전법 제66조"
+  ],
+  "keywords": [
+   "정류 선박",
+   "충돌",
+   "경계 소홀",
+   "피항동작 미이행",
+   "피로"
+  ],
+  "verdict_no": "JA2025-012",
+  "court": "중앙"
+ },
+ {
+  "accident": {
+   "name": "어선 제102해진호 전복사건",
+   "type": "전복",
+   "date": "2024-03-14",
+   "night": true,
+   "location": "조업지",
+   "weather": "바람, 파랑"
+  },
+  "vessels": [
+   {
+    "name": "제102해진호",
+    "type": "어선",
+    "gross_tonnage": 139,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "어획물을 상갑판에 산적한 후 고박하지 않음",
+    "category": "적재·고박 불량"
+   },
+   {
+    "order": 2,
+    "description": "선체 횡동요에 의해 어획물이 한쪽으로 쏠림",
+    "category": "기상·해상 불량"
+   },
+   {
+    "order": 3,
+    "description": "선박소유자가 잘못된 조업 관행을 개선하지 않음",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선박소유자",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해사안전기본법 제5조"
+  ],
+  "keywords": [
+   "부적절한 어획물적재",
+   "갑판적 어획물이동",
+   "선박안전관리 소홀",
+   "복원성자료 미준수",
+   "전복"
+  ],
+  "verdict_no": "JA2025-013",
+  "court": "중앙"
+ },
+ {
+  "accident": {
+   "name": "어선 태건호 선원실종사건",
+   "type": "인명사상",
+   "date": "2024-03-20",
+   "night": false,
+   "location": "경상북도 울릉군 울릉읍 독도 남동방 약 40해리 해상",
+   "weather": "풍랑주의보 발효"
+  },
+  "vessels": [
+   {
+    "name": "태건호",
+    "type": "어선",
+    "gross_tonnage": 93,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장의 무리한 조업",
+    "category": "무리한 출항·운항"
+   },
+   {
+    "order": 2,
+    "description": "선원에 대한 안전관리 소홀",
+    "category": "안전관리체제 미흡"
+   },
+   {
+    "order": 3,
+    "description": "선원이 구명조끼를 입지 않고 작업",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 4,
+    "description": "선원의 부주의",
+    "category": "기타"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [
+   "어선안전조업법 제24조(구명조끼의 착용)"
+  ],
+  "keywords": [
+   "무리한 조업",
+   "선원안전관리 소홀",
+   "안전의식 결여",
+   "추락",
+   "선원실종"
+  ],
+  "verdict_no": "DH2025-009",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "예인선 7삼영호 침몰사건",
+   "type": "침몰",
+   "date": "2023-10-09",
+   "night": false,
+   "location": "경상북도 포항시 영일만항 역무선 부두 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "7삼영호",
+    "type": "예인선",
+    "gross_tonnage": 70,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 안전관리 인력을 지정하지 않고 선원 전원을 장시간 하선시킴",
+    "category": "안전관리체제 미흡"
+   },
+   {
+    "order": 2,
+    "description": "선미 우현 파공으로 인한 침수에 적절히 대처하지 못함",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 3,
+    "description": "노후 선체에 대한 점검과 정비 소홀",
+    "category": "정비·점검 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [
+   "선원법 시행규칙 제9조(선내순시 및 점검)"
+  ],
+  "keywords": [
+   "선원 부재",
+   "안전관리자 미지정",
+   "안전관리 소홀",
+   "파공",
+   "침수",
+   "침몰"
+  ],
+  "verdict_no": "DH2025-010",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "어선 제1만선호 선원부상사건",
+   "type": "인명사상",
+   "date": "2024-04-26",
+   "night": true,
+   "location": "경상북도 포항시 호미곶 북동방 약 6.4해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제1만선호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 부주의하여 신체가 양망기 사이드 롤러와 연결줄 사이에 끼임",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 작업 안전 관리·감독을 소홀히 함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "선원 부주의",
+   "안전 관리·감독 소홀"
+  ],
+  "verdict_no": "DH2025-011",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "어선 금천호·어선 한나루호 충돌사건",
+   "type": "충돌",
+   "date": "2024-02-04",
+   "night": true,
+   "location": "강원특별자치도 동해시 대진항 북방파제로부터 북동방 약 3.5해리 해상",
+   "weather": "시정 양호"
+  },
+  "vessels": [
+   {
+    "name": "금천호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "가해"
+   },
+   {
+    "name": "한나루호",
+    "type": "어선",
+    "gross_tonnage": 2.25,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "금천호가 경계를 소홀히 함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "한나루호가 피항 협력 동작을 소홀히 함",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "금천호 선장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "한나루호 선장",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제2조",
+   "해상교통안전법 제70조",
+   "해상교통안전법 제83조"
+  ],
+  "keywords": [
+   "경계 소홀",
+   "피항 협력 동작 소홀"
+  ],
+  "verdict_no": "DH2025-012",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "어선 청룡호 좌초사건",
+   "type": "좌초",
+   "date": "2022-11-14",
+   "night": true,
+   "location": "경상북도 울릉군 저동항 남방파제 등대로부터 0.58해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "청룡호",
+    "type": "어선",
+    "gross_tonnage": 29,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 술에 취한 상태에서 경계를 소홀히 함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "부적절하게 운항하여 예정 항로를 벗어남",
+    "category": "항행법규 위반"
+   }
+  ],
+  "human_factors": [
+   "음주"
+  ],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "면허 취소",
+    "months": null
+   }
+  ],
+  "laws": [
+   "구(舊) 해사안전법 제41조제1항 및 제5항",
+   "선박직원법 제9조제3항"
+  ],
+  "keywords": [
+   "음주 운항",
+   "좌초",
+   "경계 소홀"
+  ],
+  "verdict_no": "DH2025-013",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "어선 제2020유진호 선원실종사건",
+   "type": "인명사상",
+   "date": "2024-12-25",
+   "night": true,
+   "location": "울릉도 북동방 약 53해리 해상",
+   "weather": "풍랑주의보"
+  },
+  "vessels": [
+   {
+    "name": "제2020유진호",
+    "type": "어선",
+    "gross_tonnage": 53,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 안전 장구를 착용하지 않은 채 난간에 올라 작업",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 작업 안전 관리·감독 소홀",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "선원 부주의",
+   "안전 관리·감독 소홀"
+  ],
+  "verdict_no": "DH2025-014",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "어선 배양호 화재사건",
+   "type": "화재·폭발",
+   "date": "2024-11-07",
+   "night": false,
+   "location": "강릉시 주문진항 동방파제등대 동쪽 23.5해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "배양호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "기관실 전기설비 점검·정비 소홀로 전선 노후·경화",
+    "category": "정비·점검 소홀"
+   },
+   {
+    "order": 2,
+    "description": "선체 진동으로 전선 피복 벗겨져 절연 불량",
+    "category": "선체·설비 결함"
+   },
+   {
+    "order": 3,
+    "description": "단락으로 고온의 열과 불꽃 발생, 가연성 물질에 옮겨붙음",
+    "category": "화기취급 부주의"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "기관장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "선박직원법 제11조제2항"
+  ],
+  "keywords": [
+   "기관실 화재",
+   "단락",
+   "아크(Arc)",
+   "무인기관실용 자동소화장치",
+   "절연"
+  ],
+  "verdict_no": "DH2025-015",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "어선 제3명신호⋅어선 일출호 충돌사건",
+   "type": "충돌",
+   "date": "2024-03-24",
+   "night": true,
+   "location": "강원특별자치도 양양군 낙산항 북방파제 끝단 동방 약 10해리 해상",
+   "weather": "시계 양호"
+  },
+  "vessels": [
+   {
+    "name": "제3명신호",
+    "type": "어선",
+    "gross_tonnage": 89,
+    "role": "피해"
+   },
+   {
+    "name": "일출호",
+    "type": "어선",
+    "gross_tonnage": 4.99,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "제3명신호가 경계를 소홀히 하여 선수 우현 쪽에서 횡단하는 일출호를 피하지 못함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "일출호가 경계를 소홀히 하여 충분한 피항 협력을 하지 못함",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "A",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "B",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제80조(횡단하는 상태)"
+  ],
+  "keywords": [
+   "경계 소홀",
+   "횡단하는 상태",
+   "안전한 속력",
+   "충돌",
+   "피항선",
+   "유지선"
+  ],
+  "verdict_no": "DH2025-016",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "어선 청용호 잠수부사망사건",
+   "type": "인명사상",
+   "date": "2024-08-01",
+   "night": false,
+   "location": "공현진항 동방파제 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "청용호",
+    "type": "어선",
+    "gross_tonnage": 2.47,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "잠수작업 보조자 및 안전장비 미비 상태에서 잠수기 어업 수행",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 주기관을 부주의하게 사용하여 공기공급용 호스가 추진기에 감김",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 3,
+    "description": "선박 점검과 정비 소홀",
+    "category": "정비·점검 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "선원법 제2조"
+  ],
+  "keywords": [
+   "잠수부 사망",
+   "잠수작업 중 기관사용",
+   "공기공급용 호스 감김"
+  ],
+  "verdict_no": "DH2025-017",
+  "court": "동해"
+ },
+ {
+  "accident": {
+   "name": "어선 안진호 화재사건",
+   "type": "화재·폭발",
+   "date": "2023-09-07",
+   "night": true,
+   "location": "제주특별자치도 애월항 서방파제 등대로부터 300도 방향, 4.1해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "안진호",
+    "type": "어선",
+    "gross_tonnage": 6.22,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 전기설비 관리를 소홀히 하여 안정기가 느슨하게 고정됨",
+    "category": "정비·점검 소홀"
+   },
+   {
+    "order": 2,
+    "description": "느슨하게 고정된 안정기가 선체 동요로 배터리 위에 떨어짐",
+    "category": "정비·점검 소홀"
+   },
+   {
+    "order": 3,
+    "description": "전기적인 불꽃이 배터리 손상으로 방출된 수소가스와 접촉하여 화재 발생",
+    "category": "정비·점검 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "전기설비 관리 소홀",
+   "전기설비 고정 미흡",
+   "출항 전 점검 소홀",
+   "화재"
+  ],
+  "verdict_no": "MP2025-001",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 채민호 화재사건",
+   "type": "화재·폭발",
+   "date": "2023-03-08",
+   "night": true,
+   "location": "전라남도 진도군 의신면 구자도 남동방 약 1.4해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "채민호",
+    "type": "어선",
+    "gross_tonnage": 13,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 승선하지 않은 채 무자격자인 선원이 항해",
+    "category": "안전관리체제 미흡"
+   },
+   {
+    "order": 2,
+    "description": "기관실 좌현 천장에 설치된 전자마그네틱 스위치에 연결된 전선이 불상의 원인으로 합선",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 3,
+    "description": "선장이 안전관리를 소홀히 함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "전기 합선",
+   "선장 미승선",
+   "화재"
+  ],
+  "verdict_no": "MP2025-002",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "낚시어선 오션마스터호 좌초사건",
+   "type": "좌초",
+   "date": "2024-03-10",
+   "night": true,
+   "location": "전라남도 여수시 삼산면 소거문도 인근 대바위섬 동쪽 끝단",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "오션마스터호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "부적절하게 수립된 항로",
+    "category": "조선 부적절"
+   },
+   {
+    "order": 2,
+    "description": "선장의 피로에 의한 경계 소홀",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [
+   "피로"
+  ],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "부적절한 항해계획",
+   "피로 누적",
+   "경계 소홀",
+   "좌초"
+  ],
+  "verdict_no": "MP2025-003",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 광정15호 선원사망사건",
+   "type": "전복",
+   "date": "2021-09-20",
+   "night": false,
+   "location": "전라남도 진도군 의신면 하구자도 남방 약 1.8해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "광정15호",
+    "type": "어선",
+    "gross_tonnage": 0.9,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "부표에 연결된 줄에 장력이 강하게 걸린 상태에서 파도에 의해 선체가 과도하게 횡요됨",
+    "category": "기상·해상 불량"
+   },
+   {
+    "order": 2,
+    "description": "피해선원이 구명조끼를 착용하라는 지시와 부표 연결 중의 장력을 줄이라는 지시에 따르지 않음",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 3,
+    "description": "선장이 선원에 대한 적극적 안전감독을 행사하지 못함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "작업자 부주의",
+   "김발 분망작업",
+   "구명조끼 미착용",
+   "선원사망"
+  ],
+  "verdict_no": "MP2025-004",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "낚시어선 피싱랜드호 좌초사건",
+   "type": "좌초",
+   "date": "2023-10-18",
+   "night": false,
+   "location": "전라남도 진도군 임회면 서망항 북방파제 북쪽 해안",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "피싱랜드호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 장시간 근무로 피로한 상태에서 혼자서 당직을 수행하며 졸음 운항",
+    "category": "1인 당직"
+   },
+   {
+    "order": 2,
+    "description": "제때 변침하지 못하고 예정된 항로를 벗어남",
+    "category": "위치확인 소홀"
+   }
+  ],
+  "human_factors": [
+   "1인 당직",
+   "피로"
+  ],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "불충분한 휴식",
+   "졸음 운항",
+   "좌초"
+  ],
+  "verdict_no": "MP2025-005",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 수정호 화재사건",
+   "type": "화재·폭발",
+   "date": "2023-06-06",
+   "night": true,
+   "location": "전남 고흥군 도양읍 소록도 남단 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "수정호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 유증기의 상태를 알고서도 주의의무를 소홀히 함",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "크레인 조작 중 부주의로 스파크 발생",
+    "category": "기기취급 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "가두리양식장 그물코팅작업",
+   "유증기",
+   "스파크",
+   "화재",
+   "전손"
+  ],
+  "verdict_no": "MP2025-006",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "낚시어선 블랙이글호·모터보트 성진호 충돌사건",
+   "type": "충돌",
+   "date": "2023-11-01",
+   "night": false,
+   "location": "전라남도 여수시 돌산읍 취도 동단으로부터 054도, 0.2해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "블랙이글호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "가해"
+   },
+   {
+    "name": "성진호",
+    "type": "기타",
+    "gross_tonnage": 1.08,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "블랙이글호가 경계를 소홀히 하여 성진호를 피하지 못함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "성진호 조종자가 피항협력동작을 취하지 못함",
+    "category": "항행법규 위반"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "조종자",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "항해 중",
+   "정박선",
+   "선원의 상무",
+   "경계 소홀",
+   "충돌"
+  ],
+  "verdict_no": "MP2025-007",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "기타유조선 제3우진호 폭발사건",
+   "type": "화재·폭발",
+   "date": "2022-01-14",
+   "night": false,
+   "location": "여수신항 동방파제 등대 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제3우진호",
+    "type": "유조선",
+    "gross_tonnage": 149,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "훈증제 폐기물의 부적절한 보관으로 응축된 열과 가스에 의하여 폭발 발생",
+    "category": "적재·고박 불량"
+   },
+   {
+    "order": 2,
+    "description": "제3우진호의 선사가 정확한 위험정보 등을 파악하지 못하고 안전하지 못한 상태로 수거·보관",
+    "category": "안전관리체제 미흡"
+   },
+   {
+    "order": 3,
+    "description": "D(주)가 폐기물 정보를 정확히 제공하지 못함",
+    "category": "안전관리체제 미흡"
+   },
+   {
+    "order": 4,
+    "description": "선장이 위험성을 알면서도 선원이 작업하게 함",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "사업자",
+    "type": "개선권고",
+    "months": null
+   },
+   {
+    "target_role": "사업자",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해양환경관리법"
+  ],
+  "keywords": [
+   "소독 훈증제 폐기물",
+   "열과 가스 응축",
+   "폐기물 정보제공 소홀",
+   "선원 안전관리 소홀",
+   "폭발"
+  ],
+  "verdict_no": "MP2025-008",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 원성호 선원부상사건",
+   "type": "인명사상",
+   "date": "2024-05-12",
+   "night": false,
+   "location": "전남 여수시 삼산면 거문도 서도 남단에서 080도 방향 7.5해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "원성호",
+    "type": "어선",
+    "gross_tonnage": 4.99,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 안전수칙을 지키지 않고 복장을 정확히 착용하지 않은 상태에서 엉킨 줄을 풀려는 의도로 회전하는 장비에 손을 가까이함",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장의 사전 안전교육 미실시 등 선장으로서의 지휘·감독 소홀",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "안전교육 미실시",
+   "선원의 부주의",
+   "사이드롤러 끼임",
+   "선원부상"
+  ],
+  "verdict_no": "MP2025-009",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 제3입성호 선원실종사건",
+   "type": "인명사상",
+   "date": "2022-11-01",
+   "night": false,
+   "location": "제주도 제주시 차귀도 서방 약 45해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제3입성호",
+    "type": "어선",
+    "gross_tonnage": 33,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 선원에게 작업 방법과 안전사항을 교육하지 않음",
+    "category": "안전관리체제 미흡"
+   },
+   {
+    "order": 2,
+    "description": "선원이 구명조끼를 착용하지 않음",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 3,
+    "description": "선원이 발돌줄에 팔이 감겨 해상에 추락",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "작업 부주의",
+   "어구줄 감김",
+   "구명조끼 미착용",
+   "해상 추락",
+   "선원실종"
+  ],
+  "verdict_no": "MP2025-011",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 제2022대경호 선원부상사건",
+   "type": "인명사상",
+   "date": "2023-10-16",
+   "night": true,
+   "location": "제주도 북서 먼바다",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제2022대경호",
+    "type": "어선",
+    "gross_tonnage": 51,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 로프양망기에 낀 부표줄을 손으로 풀려다 손가락이 끼임",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 선원에 대한 안전관리·감독과 교육을 소홀히 함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "양망기 어구줄 끼임",
+   "안전교육 미이행",
+   "선원의 부주의한 대응",
+   "선원부상"
+  ],
+  "verdict_no": "MP2025-012",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 경덕호⋅모터보트 봄봄 충돌사건",
+   "type": "충돌",
+   "date": "2024-05-14",
+   "night": false,
+   "location": "제주특별자치도 제주시 김녕항 서방파제 등대 0.7해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "경덕호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "가해"
+   },
+   {
+    "name": "봄봄",
+    "type": "기타",
+    "gross_tonnage": 1.77,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "경덕호 선장이 항해 중 딴생각하느라 육안 및 레이더에 의한 경계를 소홀히 함",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제103조"
+  ],
+  "keywords": [
+   "육안 및 레이더 경계 소홀",
+   "선수들림 현상",
+   "충돌"
+  ],
+  "verdict_no": "MP2025-013",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 제66함성호 좌초사건",
+   "type": "좌초",
+   "date": "2024-01-31",
+   "night": false,
+   "location": "제주특별자치도 제주시 구좌읍 하도리 난도 서쪽 해안",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제66함성호",
+    "type": "어선",
+    "gross_tonnage": 31,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 항해 당직 중 졸음 운항",
+    "category": "기타"
+   }
+  ],
+  "human_factors": [
+   "졸음 운항",
+   "피로 누적"
+  ],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "졸음 운항",
+   "피로 누적",
+   "좌초",
+   "해양오염"
+  ],
+  "verdict_no": "MP2025-014",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "화물 및 카페리선 케이에스 헤르메스호⋅액화천연가스운반선 에스엠 제주 엘엔지1 충돌사건",
+   "type": "충돌",
+   "date": "2024-02-17",
+   "night": true,
+   "location": "전라남도 완도군 여서도 인근 해상",
+   "weather": "시계 양호"
+  },
+  "vessels": [
+   {
+    "name": "케이에스 헤르메스호",
+    "type": "화물선",
+    "gross_tonnage": 5901,
+    "role": "가해"
+   },
+   {
+    "name": "에스엠 제주 엘엔지1",
+    "type": "기타",
+    "gross_tonnage": 9370,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "케이에스 헤르메스호 선장이 감기약 복용 후 졸음 운항",
+    "category": "음주·복무기강 위반"
+   },
+   {
+    "order": 2,
+    "description": "에스엠 제주 엘엔지1 2등항해사가 경계를 소홀히 함",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [
+   "졸음 운항",
+   "휴대폰 사용"
+  ],
+  "sanctions": [
+   {
+    "target_role": "3급항해사",
+    "type": "업무정지",
+    "months": 3
+   },
+   {
+    "target_role": "안전관리회사",
+    "type": "시정권고",
+    "months": null
+   },
+   {
+    "target_role": "선박소유자",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제103조"
+  ],
+  "keywords": [
+   "졸음 운항",
+   "휴대폰 사용",
+   "선교 인력관리 소홀",
+   "충돌"
+  ],
+  "verdict_no": "MP2025-015",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 제17덕진호 선원사망사건",
+   "type": "인명사상",
+   "date": "2024-02-14",
+   "night": false,
+   "location": "전라남도 여수시 남면 우학리 우학선착장 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제17덕진호",
+    "type": "어선",
+    "gross_tonnage": 39,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 잠수작업의 안전관리·감독을 소홀히 함",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선박소유자의 잠수작업자 자격 미검증",
+    "category": "안전관리체제 미흡"
+   },
+   {
+    "order": 3,
+    "description": "잠수장비의 부실한 제공",
+    "category": "선체·설비 결함"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "사업자",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "표면공급식 잠수작업",
+   "잠수작업자 자격 미확인",
+   "안전관리·감독 소홀",
+   "잠수장비 부실한 제공",
+   "선원사망"
+  ],
+  "verdict_no": "MP2025-016",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 제102동해호⋅모터보트 청양호 충돌사건",
+   "type": "충돌",
+   "date": "2023-01-11",
+   "night": false,
+   "location": "전라남도 여수시 소두라도 대방파제 끝단으로부터 057도 방향, 0.15해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제102동해호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "가해"
+   },
+   {
+    "name": "청양호",
+    "type": "기타",
+    "gross_tonnage": 1.77,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "제102동해호 선장이 선원의 갑판작업을 감독하느라 경계를 소홀히 함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "청양호 조종자가 음향신호장치 관리를 소홀히 하여 주의환기신호를 울리지 않음",
+    "category": "기기취급 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "국제해상충돌예방규칙 제2조(책임)"
+  ],
+  "keywords": [
+   "경계 소홀",
+   "음향신호장치 관리를 소홀",
+   "충돌"
+  ],
+  "verdict_no": "MP2025-017",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 제302용선호 선원부상사건",
+   "type": "인명사상",
+   "date": "2023-01-11",
+   "night": false,
+   "location": "전라남도 완도군 소안도 남방 약 7해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제302용선",
+    "type": "어선",
+    "gross_tonnage": 20,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "기기의 점검과 관리를 소홀히 하여 부식을 예방하거나 인지하지 못함",
+    "category": "정비·점검 소홀"
+   },
+   {
+    "order": 2,
+    "description": "선원들이 위험한 위치에서 작업하는 것을 관리와 감독을 하지 못함",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "장비 관리 부적절",
+   "조업 중 위험한 위치",
+   "크레인 쓰러짐",
+   "선원부상"
+  ],
+  "verdict_no": "MP2025-018",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 제102동해호 화재사건",
+   "type": "화재·폭발",
+   "date": "2023-02-23",
+   "night": false,
+   "location": "전라남도 여수시 남면 배다서 등표로부터 286도 방향, 0.8해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제102동해호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "양승기용 유압펌프 점검 소홀",
+    "category": "정비·점검 소홀"
+   },
+   {
+    "order": 2,
+    "description": "과부하로 인한 과전류 발생",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 3,
+    "description": "전자클러치 전선 손상 및 불꽃 발생",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 4,
+    "description": "유압펌프 주변 연소물에 불꽃 옮겨붙음",
+    "category": "화기취급 부주의"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "과전류",
+   "설비 점검 소홀",
+   "화재"
+  ],
+  "verdict_no": "MP2025-020",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "원양어선 슐에스테701호 선원사망사건",
+   "type": "인명사상",
+   "date": "2023-12-30",
+   "night": true,
+   "location": "남대서양 조업지",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "슐에스테701호",
+    "type": "어선",
+    "gross_tonnage": 1612,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 구명조끼를 착용하지 않은 채 부주의하게 작업",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 선원들의 안전수칙 미준수를 인지하고도 시정하지 않음",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "작업 부주의",
+   "어구줄 감김",
+   "구명조끼 미착용",
+   "해상 추락",
+   "선원사망"
+  ],
+  "verdict_no": "MP2025-021",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 영진호 화재사건",
+   "type": "화재·폭발",
+   "date": "2024-10-08",
+   "night": false,
+   "location": "전라남도 고흥군 봉래면 사양리 사양도 남서방 0.9해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "영진호",
+    "type": "어선",
+    "gross_tonnage": 7.93,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "기관실 선미부의 배터리와 불상의 기기를 연결하는 전선에서 합선 등 전기적 특이점 발생",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 2,
+    "description": "선장의 안전관리 소홀",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "전선 합선",
+   "전기적 특이점",
+   "안전관리 소홀",
+   "화재"
+  ],
+  "verdict_no": "MP2025-023",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "일반화물선 썬 이스턴 도선사사망사건",
+   "type": "인명사상",
+   "date": "2023-04-02",
+   "night": false,
+   "location": "전라남도 여수시 오동도 남서방 약 2해리 W정박지 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "썬 이스턴",
+    "type": "화물선",
+    "gross_tonnage": 4562,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "도선사가 승선용 사다리에 오르려던 중 발이 미끄러져 해상으로 추락",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "도선사가 해상에 추락한 후 당황하여 제대로 호흡하지 못함",
+    "category": "기타"
+   },
+   {
+    "order": 3,
+    "description": "도선선 운영사가 충분한 인력을 배치하지 않아 비상대응 미흡",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [
+   "도선사 부주의",
+   "당황"
+  ],
+  "sanctions": [
+   {
+    "target_role": "도선선 운영자",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "도선사 부주의",
+   "도선선 인력배치 부적절",
+   "해상추락",
+   "도선사사망"
+  ],
+  "verdict_no": "MP2025-024",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "건설기계등록 준설선 해양오염사건",
+   "type": "침몰",
+   "date": "2022-07-11",
+   "night": false,
+   "location": "전라남도 무안군 칠산대교 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "준설선",
+    "type": "기타",
+    "gross_tonnage": 714,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선박소유자가 장기간 정박 중인 선박에 관리인을 두지 않음",
+    "category": "안전관리체제 미흡"
+   },
+   {
+    "order": 2,
+    "description": "노후 부식으로 생긴 선체 외판 균열부로 유입된 해수가 배출되지 않음",
+    "category": "선체·설비 결함"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선박소유자",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "선박관리 소홀",
+   "침수",
+   "해양오염"
+  ],
+  "verdict_no": "MP2025-025",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 해성호 선원사망사건",
+   "type": "인명사상",
+   "date": "2023-01-31",
+   "night": false,
+   "location": "전라남도 완도군 청산면 여서도 서쪽 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "해성호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 투하 중인 어구줄을 밟아 발목이 감겨 해상에 추락",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 선원에 대한 안전관리 감독 소홀",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "투승 중 선원 부주의",
+   "안전속력 미준수",
+   "안전장구 미착용",
+   "안전관리·감독 소홀",
+   "선원사망"
+  ],
+  "verdict_no": "MP2025-026",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "일반화물선 한진그린호 화재사건",
+   "type": "화재·폭발",
+   "date": "2023-07-02",
+   "night": true,
+   "location": "여수화력 석탄부두 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "한진그린호",
+    "type": "화물선",
+    "gross_tonnage": 9574,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "석탄 화물 화재 예방 관리 소홀",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "양하기 컨베이어 벨트의 잔탄 자연발화",
+    "category": "기타"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "1등항해사",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "운항자",
+    "type": "개선권고",
+    "months": null
+   },
+   {
+    "target_role": "안전관리자",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "석탄",
+   "석탄 화물 화재 예방 관리 소홀",
+   "잔탄",
+   "자연발화",
+   "화재"
+  ],
+  "verdict_no": "MP2025-027",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 제802덕해호 선원부상사건",
+   "type": "인명사상",
+   "date": "2024-08-05",
+   "night": false,
+   "location": "전라남도 여수시 돌산읍 돌산도 부속 볼무섬 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제802덕해호",
+    "type": "어선",
+    "gross_tonnage": 26,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 홋줄 작업 중 선체 움직임을 살피지 않음",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 선원의 상황별 업무분장을 미리 정해두지 않음",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "홋줄 작업 중 부주의",
+   "안전관리 소홀",
+   "선체 움직임",
+   "선원부상"
+  ],
+  "verdict_no": "MP2025-028",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 제27연정호 선원사망사건",
+   "type": "인명사상",
+   "date": "2022-04-22",
+   "night": false,
+   "location": "전라남도 여수시 삼산면 하백도 남동방 5.7해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제27연정호",
+    "type": "어선",
+    "gross_tonnage": 65,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "잠수작업 경험이나 자격이 없는 선원을 투입",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "신호줄 없이 작업 수행",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [
+   "산업안전보건에 관한 규칙"
+  ],
+  "keywords": [
+   "어선",
+   "추진기 부유물 감김",
+   "잠수작업",
+   "선원사망"
+  ],
+  "verdict_no": "MP2025-029",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "원양어선 세인 파이오니아호 선원사망사건",
+   "type": "인명사상",
+   "date": "2023-08-04",
+   "night": false,
+   "location": "남대서양 포클랜드제도 북쪽 약 470해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "세인 파이오니아호",
+    "type": "어선",
+    "gross_tonnage": 628,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 해상으로 투하 중인 부표줄을 손으로 잡음",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 어로작업 안전관리ㆍ감독 소홀",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "3급항해사",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "어구 투하작업 부주의",
+   "안전관리ㆍ감독 소홀",
+   "선원 사망"
+  ],
+  "verdict_no": "MP2025-030",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 용성호 화재사건",
+   "type": "화재·폭발",
+   "date": "2024-06-19",
+   "night": false,
+   "location": "전라남도 여수시 소뎅이항 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "용성호",
+    "type": "어선",
+    "gross_tonnage": 13,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "조타실 배전반 절연상태 점검 소홀",
+    "category": "정비·점검 소홀"
+   },
+   {
+    "order": 2,
+    "description": "배전반 내부 전선 단락으로 인한 불꽃 발생",
+    "category": "선체·설비 결함"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "배전반 전선 단락",
+   "절연상태 불량",
+   "전기설비 점검 소홀",
+   "화재"
+  ],
+  "verdict_no": "MP2025-033",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 209대청호 선원사망사건",
+   "type": "인명사상",
+   "date": "2024-04-10",
+   "night": true,
+   "location": "전라남도 신안군 흑산면 매물도 등대 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "209대청호",
+    "type": "어선",
+    "gross_tonnage": 15,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 구명조끼를 착용하지 않은 채 안전하지 않은 위치에서 작업",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 선원의 구명조끼 미착용을 제지하지 않음",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "구명조끼 미착용",
+   "작업 중 부주의",
+   "해상 추락",
+   "선원사망"
+  ],
+  "verdict_no": "MP2025-035",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 동광호 좌초사건",
+   "type": "좌초",
+   "date": "2022-11-23",
+   "night": false,
+   "location": "전라남도 진도군 조도면 갈도 남동쪽 0.1해리 해상",
+   "weather": "북동풍 초속 7∼11미터, 파고 1미터 내외"
+  },
+  "vessels": [
+   {
+    "name": "동광호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "항로 설정을 부적절히 하고, 주변 해역의 저수심대 및 세암을 확인하지 못함",
+    "category": "위치확인 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 3
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "세암",
+   "해도 미확인",
+   "항로 설정시 주의의무 소홀",
+   "좌초"
+  ],
+  "verdict_no": "MP2025-037",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 제31금영호 선원부상사건",
+   "type": "인명사상",
+   "date": "2022-12-31",
+   "night": true,
+   "location": "제주특별자치도 서귀포시 지귀도 남쪽 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제31금영호",
+    "type": "어선",
+    "gross_tonnage": 129,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 고박장치에 예인줄을 고정할 때 고박장치 체결 상태 확인 소홀",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "어로장과 선장이 고박장치 정비업무 관리와 고박장치 조작 선원에 대한 안전교육 소홀",
+    "category": "정비·점검 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "어로장",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "정비업무 관리 소홀",
+   "체결 확인 소홀",
+   "안전교육 소홀",
+   "선원부상"
+  ],
+  "verdict_no": "MP2025-038",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 세영7호⋅낚시어선 팀슈프림호 충돌사건",
+   "type": "충돌",
+   "date": "2024-04-06",
+   "night": false,
+   "location": "전라남도 완도군 금일읍 대병풍도 등대 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "세영7호",
+    "type": "어선",
+    "gross_tonnage": 14,
+    "role": "피해"
+   },
+   {
+    "name": "팀슈프림호",
+    "type": "낚시어선",
+    "gross_tonnage": 9.77,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "세영7호가 경계를 소홀히 하여 팀슈프림호를 뒤늦게 발견하고 피항협력동작을 제대로 취하지 않음",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "팀슈프림호가 경계를 소홀히 하여 세영7호를 충돌할 때까지 발견하지 못하고 피항동작을 취하지 않음",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제80조(횡단하는 상태)"
+  ],
+  "keywords": [
+   "횡단항법 위반",
+   "경계 소홀",
+   "레이더 미사용",
+   "충돌"
+  ],
+  "verdict_no": "MP2025-039",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 은성호 선원사망사건",
+   "type": "인명사상",
+   "date": "2023-11-25",
+   "night": false,
+   "location": "전라남도 신안군 암태면 당사도 동단의 동쪽 0.34해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "은성호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 조업 중 작업 인력 배치와 어구줄 장력 조종을 부적절하게 함",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "너울성 파도에 의해 순간적으로 강한 장력이 생긴 어구줄이 양망기에서 이탈",
+    "category": "기상·해상 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "어구줄 장력",
+   "어구줄 양망기 이탈",
+   "어구줄의 선원 가격",
+   "선원사망"
+  ],
+  "verdict_no": "MP2025-040",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "낚시어선 시온호⋅어선 97흥성호 충돌사건",
+   "type": "충돌",
+   "date": "2024-08-28",
+   "night": false,
+   "location": "전라남도 신안군 흑산면 호장도 등대 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "시온호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "피해"
+   },
+   {
+    "name": "97흥성호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "시온호가 97흥성호를 발견하고 미리 피항동작을 취하지 않음",
+    "category": "항행법규 위반"
+   },
+   {
+    "order": 2,
+    "description": "97흥성호가 경계를 소홀히 하여 시온호를 뒤늦게 발견하고 피항협력동작을 제대로 취하지 않음",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "A",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "B",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제83조"
+  ],
+  "keywords": [
+   "피항동작 미이행",
+   "경계 소홀",
+   "충돌"
+  ],
+  "verdict_no": "MP2025-041",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "예인선 대승105호의 피예인부선 대승2호 울돌목 조류발전소 접촉사건",
+   "type": "접촉",
+   "date": "2023-08-06",
+   "night": true,
+   "location": "전라남도 진도군 진도대교 인근 해상 울돌목 조류발전소",
+   "weather": "시계 양호"
+  },
+  "vessels": [
+   {
+    "name": "대승105호",
+    "type": "예인선",
+    "gross_tonnage": 157,
+    "role": "가해"
+   },
+   {
+    "name": "대승2호",
+    "type": "부선",
+    "gross_tonnage": 2234,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "항행정보 파악 소홀",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "무리한 운항",
+    "category": "무리한 출항·운항"
+   },
+   {
+    "order": 3,
+    "description": "강한 조류에 압류",
+    "category": "기상·해상 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "항행정보 파악 소홀",
+   "무리한 운항",
+   "강한 조류에 압류",
+   "해상구조물 접촉"
+  ],
+  "verdict_no": "MP2025-042",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 제11태화호 선원사망사건",
+   "type": "인명사상",
+   "date": "2023-04-01",
+   "night": false,
+   "location": "제주특별자치도 제주시 우도면 우도 등대 동쪽 23해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제11태화호",
+    "type": "어선",
+    "gross_tonnage": 40,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "트롤 윈치 조작자가 감는 줄에 걸린 장력 상태 확인 소홀",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "선장이 신호수가 배치되지 않은 상태에서 트롤 윈치로 어구줄을 감아 들이게 함",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "기관장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "C형 샤클 절단",
+   "줄 장력 확인 소홀",
+   "신호수 미배치",
+   "선원사망"
+  ],
+  "verdict_no": "MP2025-043",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 제2해신호 전복사건",
+   "type": "전복",
+   "date": "2024-03-08",
+   "night": true,
+   "location": "경상남도 통영시 욕지도 남방 약 34해리 해상",
+   "weather": "풍랑주의보"
+  },
+  "vessels": [
+   {
+    "name": "제2해신호",
+    "type": "어선",
+    "gross_tonnage": 20,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "풍랑주의보 발효 중 조업",
+    "category": "기상·해상 불량"
+   },
+   {
+    "order": 2,
+    "description": "좌현 급선회 후 속력을 높이며 우현 전타",
+    "category": "무리한 출항·운항"
+   },
+   {
+    "order": 3,
+    "description": "복원력 상실",
+    "category": "선체·설비 결함"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [],
+  "laws": [],
+  "keywords": [
+   "풍랑주의보",
+   "대각도 변침",
+   "복원력",
+   "침수",
+   "전복"
+  ],
+  "verdict_no": "MP2025-044",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "모터보트 로얄마린 수중레저활동자 사망사건",
+   "type": "인명사상",
+   "date": "2021-12-11",
+   "night": false,
+   "location": "제주특별자치도 서귀포시 문섬 북단으로부터 약 20m 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "로얄마린",
+    "type": "수상레저기구",
+    "gross_tonnage": 7.31,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "로얄마린 조종자가 규정에 부합하지 않은 스크류망을 설치하고 운항",
+    "category": "조선 부적절"
+   },
+   {
+    "order": 2,
+    "description": "출수 예정 위치를 유지하지 않고 선체 주변을 주의 깊게 확인하지 않음",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 3,
+    "description": "수중가이드가 조종자와 입수 및 하강 절차를 명확하게 정하지 않음",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "소형선박조종사",
+    "type": "업무정지",
+    "months": 6
+   },
+   {
+    "target_role": "수중가이드",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "수중레저 안전관리규정 제4조, 제5호, 제6호"
+  ],
+  "keywords": [
+   "스크류망 규정 미달",
+   "수중레저활동 안전관리 소홀",
+   "사망"
+  ],
+  "verdict_no": "MP2025-045",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 2008만선호 전복사건",
+   "type": "전복",
+   "date": "2024-03-01",
+   "night": false,
+   "location": "제주특별자치도 서귀포시 마라도 서방 11해리 해상",
+   "weather": "풍랑주의보"
+  },
+  "vessels": [
+   {
+    "name": "2008만선호",
+    "type": "어선",
+    "gross_tonnage": 33,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "풍랑주의보 발효 중 강한 파도가 좌현 측을 두 차례 강타",
+    "category": "기상·해상 불량"
+   },
+   {
+    "order": 2,
+    "description": "많은 양의 해수가 갑판에 유입되어 복원력 상실",
+    "category": "선체·설비 결함"
+   },
+   {
+    "order": 3,
+    "description": "선장의 안전운항의무 위반",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [],
+  "laws": [],
+  "keywords": [
+   "풍랑주의보",
+   "안전운항의무 위반",
+   "복원력 상실",
+   "전복"
+  ],
+  "verdict_no": "MP2025-046",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "카페리여객선 슬로아일랜드 해양오염사건",
+   "type": "해양오염",
+   "date": "2024-07-27",
+   "night": false,
+   "location": "전라남도 목포시 연안여객선터미널 앞 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "슬로아일랜드",
+    "type": "여객선",
+    "gross_tonnage": 223,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "기관장이 연료유 이송 중 현장을 이탈하여 갑판 작업을 병행",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "연료유가 연료유 저장 탱크에 가득 차고 공기관을 통해 갑판으로 넘침",
+    "category": "적재·고박 불량"
+   },
+   {
+    "order": 3,
+    "description": "선장과 기관장이 기름유출 발생 후 신고 및 방제조치를 취하지 않음",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "기관장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [
+   "해양환경관리법 제63조",
+   "해양환경관리법 제64조"
+  ],
+  "keywords": [
+   "연료유 이송 중 현장 이탈",
+   "신고 및 방제조치 미이행",
+   "해양오염"
+  ],
+  "verdict_no": "MP2025-047",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 유정호 선원사망사건",
+   "type": "인명사상",
+   "date": "2024-01-12",
+   "night": true,
+   "location": "제주도 서귀포시 마라도 남쪽 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "유정호",
+    "type": "어선",
+    "gross_tonnage": 46,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 부주의하여 부표줄에 발이 걸려 해상으로 추락",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 작업 안전에 관한 지도·감독을 소홀히 함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "투망 중 그물 엉킴",
+   "어구줄 감김",
+   "선원 해상추락",
+   "선원사망"
+  ],
+  "verdict_no": "MP2025-048",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 청보호 전복사건",
+   "type": "전복",
+   "date": "2023-02-04",
+   "night": true,
+   "location": "전라남도 신안군 임자면 대비치도 서방 약 9해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "청보호",
+    "type": "어선",
+    "gross_tonnage": 24,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "과도하게 많은 어구줄과 통발을 무리하게 적재하여 선박이 경사 발생",
+    "category": "적재·고박 불량"
+   },
+   {
+    "order": 2,
+    "description": "기관실 개구부의 설치가 규정에 맞지 않게 설치됨",
+    "category": "선체·설비 결함"
+   },
+   {
+    "order": 3,
+    "description": "선장이 항해당직 중 기관실 침수를 사전에 인지하지 못함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 4,
+    "description": "무리한 어구 적재로 복원성 상실 및 전복",
+    "category": "무리한 출항·운항"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선박소유자",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "전복",
+   "어구 적재",
+   "기관실 침수",
+   "복원성 상실"
+  ],
+  "verdict_no": "MP2025-049",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 경인3호 좌초사건",
+   "type": "좌초",
+   "date": "2024-02-27",
+   "night": false,
+   "location": "추자도 상추자항 방파제 인근 해상",
+   "weather": "기상악화"
+  },
+  "vessels": [
+   {
+    "name": "경인3호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "부적절한 항해계획 수립",
+    "category": "조선 부적절"
+   },
+   {
+    "order": 2,
+    "description": "선위 확인 소홀",
+    "category": "위치확인 소홀"
+   },
+   {
+    "order": 3,
+    "description": "부주의한 운항",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "관련 법규"
+  ],
+  "keywords": [
+   "부적절한 항해계획 수립",
+   "선위 확인 소홀",
+   "부주의한 운항",
+   "좌초"
+  ],
+  "verdict_no": "MP2025-050",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "어선 봉민호 선원사망사건",
+   "type": "인명사상",
+   "date": "2024-08-10",
+   "night": false,
+   "location": "전라남도 완도군 도각도 남쪽 끝단 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "봉민호",
+    "type": "어선",
+    "gross_tonnage": 7.31,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 투하되는 어구줄에 오른쪽 발목이 감겨 해상에 추락",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 선원에 대한 안전관리 감독을 소홀히 함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "안전장구 미착용",
+   "안전관리·감독 소홀",
+   "선원사망"
+  ],
+  "verdict_no": "MP2025-051",
+  "court": "목포"
+ },
+ {
+  "accident": {
+   "name": "시멘트운반선 수성에이스호·어선 1신창호 충돌사건",
+   "type": "충돌",
+   "date": "2024-03-08",
+   "night": true,
+   "location": "부산 소재 송정리등표로부터 방위 약 089도, 거리 약 11해리 해상",
+   "weather": "시계 양호"
+  },
+  "vessels": [
+   {
+    "name": "수성에이스호",
+    "type": "화물선",
+    "gross_tonnage": 4800,
+    "role": "가해"
+   },
+   {
+    "name": "1신창호",
+    "type": "어선",
+    "gross_tonnage": 55,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "수성에이스호가 경계 소홀과 뒤늦은 피항시도로 1신창호를 피하지 못함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "1신창호가 졸음운항으로 적기에 피항협력동작을 취하지 못함",
+    "category": "기타"
+   }
+  ],
+  "human_factors": [
+   "졸음 운항"
+  ],
+  "sanctions": [
+   {
+    "target_role": "1급 항해사",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "6급 항해사",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제80조"
+  ],
+  "keywords": [
+   "횡단 항법위반",
+   "졸음 운항",
+   "경계소홀",
+   "피항협력동작 소홀",
+   "충돌"
+  ],
+  "verdict_no": "BS2025-027",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "유류 및 액체화학품산적운반선 그레이스 해양오염사건",
+   "type": "해양오염",
+   "date": "2024-07-25",
+   "night": true,
+   "location": "울산항 내 온산항 S-Oil 4부두",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "그레이스",
+    "type": "유조선",
+    "gross_tonnage": 11259,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "기관부원 중 누군가 연료유 이송버튼을 의도치 않게 눌러 연료유가 탱크를 가득 채운 후 공기관을 통해 외부로 누출",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 2,
+    "description": "기관장이 경보장치 등에 대한 관리·감독을 소홀히 함",
+    "category": "정비·점검 소홀"
+   },
+   {
+    "order": 3,
+    "description": "안전관리회사가 넘침방지설비 등에 대한 관리를 부적절하게 함",
+    "category": "정비·점검 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "기관장",
+    "type": "견책",
+    "months": null
+   },
+   {
+    "target_role": "안전관리회사",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "연료유펌프 오작동",
+   "연료유 누출",
+   "연료유 공기관 넘침",
+   "해양오염"
+  ],
+  "verdict_no": "BS2025-030",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "컨테이너선 스카이 챌린지 방파제접촉사건",
+   "type": "접촉",
+   "date": "2024-07-28",
+   "night": true,
+   "location": "부산항 영도 조도 방파제 동쪽 끝단 해상",
+   "weather": "짙은 안개"
+  },
+  "vessels": [
+   {
+    "name": "스카이 챌린지",
+    "type": "화물선",
+    "gross_tonnage": 20738,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "갑작스러운 짙은 안개로 시야가 가려짐",
+    "category": "기상·해상 불량"
+   },
+   {
+    "order": 2,
+    "description": "좌현 급변침 후 조류 등의 영향으로 정상 침로 복귀 실패",
+    "category": "항행법규 위반"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [
+   "선박의 입항 및 출항 등에 관한 법률 제12조",
+   "선박의 입항 및 출항 등에 관한 법률 제17조",
+   "해상교통안전법 제103호"
+  ],
+  "keywords": [
+   "방파제 접촉",
+   "부산항 입항",
+   "짙은 안개",
+   "자력도선",
+   "선체압류"
+  ],
+  "verdict_no": "BS2025-031",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "석유제품운반선 목림부산·예인선 금오티3호 피예인부선 금오7001호 충돌사건",
+   "type": "충돌",
+   "date": "2024-07-05",
+   "night": true,
+   "location": "부산항 제1항로",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "목림부산",
+    "type": "화물선",
+    "gross_tonnage": 408,
+    "role": "가해"
+   },
+   {
+    "name": "금오7001호",
+    "type": "부선",
+    "gross_tonnage": 1292,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "목림부산의 경계 소홀",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "금오티3호 예인선열의 피항협력동작 소홀",
+    "category": "항행법규 위반"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [
+   "선박의 입항 및 출항 등에 관한 법률 제12조 등"
+  ],
+  "keywords": [
+   "무역항",
+   "항로항행선박 진로방해",
+   "경계 소홀",
+   "피항협력동작 소홀",
+   "충돌"
+  ],
+  "verdict_no": "BS2025-033",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "석유제품운반선 제9원양호 해양오염사건",
+   "type": "해양오염",
+   "date": "2025-02-07",
+   "night": true,
+   "location": "부산북항 제4부두 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제9원양호",
+    "type": "유조선",
+    "gross_tonnage": 132,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "유류이송배관의 용접이음 자리가 노후화로 파손",
+    "category": "선체·설비 결함"
+   },
+   {
+    "order": 2,
+    "description": "기관장이 펌프 용량에 비해 이송량이 적은 점을 늦게 발견하여 적절하게 대처하지 못함",
+    "category": "기기취급 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "기관장",
+    "type": "견책",
+    "months": null
+   },
+   {
+    "target_role": "사업자",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "선박안전법 제15조"
+  ],
+  "keywords": [
+   "기름이송",
+   "매뉴얼 미비",
+   "안전관리 소홀"
+  ],
+  "verdict_no": "BS2025-037",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "어선 제102영화호‧어선 광영호 충돌사건",
+   "type": "충돌",
+   "date": "2024-06-04",
+   "night": false,
+   "location": "경남 통영시 홍도 남방 10마일 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제102영화호",
+    "type": "어선",
+    "gross_tonnage": 29,
+    "role": "피해"
+   },
+   {
+    "name": "광영호",
+    "type": "어선",
+    "gross_tonnage": 24,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "광영호 선장이 묘박 중인 제102영화호를 발견하고도 주의를 기울이지 않음",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "제102영화호 선장이 주의환기신호를 울리지 않음",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "광영호 선장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "제102영화호 선장",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "정박선 충돌",
+   "주의환기신호",
+   "선박 사고"
+  ],
+  "verdict_no": "BS2025-040",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "어선 대양호 선원사망사건",
+   "type": "인명사상",
+   "date": "2025-03-14",
+   "night": true,
+   "location": "부산 남구 용호동 소재 오륙도 동방 약 18해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "대양호",
+    "type": "어선",
+    "gross_tonnage": 5.69,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 구명조끼를 착용하지 않은 채 어구줄을 밟아 다리가 감기면서 해상에 추락",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 구명조끼 착용 지시 등 적절한 안전관리를 소홀히 함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "선원 어구줄 감김",
+   "선원 관리소홀",
+   "선원 감독소홀",
+   "구명동의 미착용",
+   "선원 사망"
+  ],
+  "verdict_no": "BS2025-044",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "낚시어선 트레비스호 화재사건",
+   "type": "화재·폭발",
+   "date": "2024-04-07",
+   "night": false,
+   "location": "경남 남해군 미조남항 해경 남해파출소 계류장",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "트레비스호",
+    "type": "어선",
+    "gross_tonnage": 7.93,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "전선의 관리 소홀로 인한 단락 발생",
+    "category": "정비·점검 소홀"
+   },
+   {
+    "order": 2,
+    "description": "단락으로 인한 과전류로 화재 발생",
+    "category": "기기취급 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "어선 화재",
+   "전선 단락",
+   "관리 소홀"
+  ],
+  "verdict_no": "BS2025-045",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "예인선 태양25호 선원부상사건",
+   "type": "기타",
+   "date": "2024-10-25",
+   "night": false,
+   "location": "경상남도 고성군 동해면 SK오션플랜트 앞 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "태양25호",
+    "type": "예인선",
+    "gross_tonnage": 70,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 선원들이 안전한 위치에 있는지 확인하지 않고 선박을 조종",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "회사가 위험구역 설정 및 선원교육을 미리 조치하지 않음",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "사업자",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "예인줄 사고",
+   "안전·보건관리매뉴얼",
+   "위험성 평가"
+  ],
+  "verdict_no": "BS2026-001",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "예인선 제66동원호 침몰사건",
+   "type": "침몰",
+   "date": "2025-03-21",
+   "night": true,
+   "location": "통영시 동호동 소재 통영해경전용부두 옆 장좌부두",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제66동원호",
+    "type": "예인선",
+    "gross_tonnage": 23,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "부적절한 장소에 계류",
+    "category": "조선 부적절"
+   },
+   {
+    "order": 2,
+    "description": "다른 선박의 돌출된 닻과 접촉",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "부적절한 계류장소",
+   "닻에 의한 선체파공",
+   "선체 파공",
+   "침몰"
+  ],
+  "verdict_no": "BS2026-004",
+  "court": "부산"
+ },
+ {
+  "accident": {
+   "name": "여객선 북도고속페리호 운항저해사건",
+   "type": "운항저해",
+   "date": "2023-04-19",
+   "night": false,
+   "location": "인천광역시 중구 운서동 삼목선착장",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "북도고속페리호",
+    "type": "여객선",
+    "gross_tonnage": 642,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장의 조선 부주의",
+    "category": "조선 부적절"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [
+   "선원법 제2조",
+   "선박직원법 제11조"
+  ],
+  "keywords": [
+   "선장 조선 부주의",
+   "운항 저해"
+  ],
+  "verdict_no": "IC2025-048",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "여객선 북도고속페리호 좌초사건",
+   "type": "좌초",
+   "date": "2023-06-28",
+   "night": false,
+   "location": "신도선착장 인근 해상",
+   "weather": "바람 등 외력"
+  },
+  "vessels": [
+   {
+    "name": "북도고속페리호",
+    "type": "여객선",
+    "gross_tonnage": 642,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 부주의하여 외력의 영향에 의해 선체가 저수심 해역으로 압류됨",
+    "category": "조선 부적절"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [
+   "선원법 제2조",
+   "선박직원법 제11조"
+  ],
+  "keywords": [
+   "선장 조선 부주의",
+   "좌초"
+  ],
+  "verdict_no": "IC2025-049",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "여객선 북도고속페리호 정박 부표줄 감김사건",
+   "type": "기타",
+   "date": "2023-08-30",
+   "night": true,
+   "location": "인천광역시 중구 운서동 삼목선착장 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "북도고속페리호",
+    "type": "여객선",
+    "gross_tonnage": 642,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 전진 타력을 적절히 제어하지 못함",
+    "category": "조선 부적절"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [
+   "선원법 제2조",
+   "선박직원법 제11조"
+  ],
+  "keywords": [
+   "선장 조선 부주의",
+   "정박 부표줄 감김"
+  ],
+  "verdict_no": "IC2025-050",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "여객선 북도고속페리호 장봉도선착장 손상사건",
+   "type": "접촉",
+   "date": "2023-09-02",
+   "night": true,
+   "location": "장봉도선착장",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "북도고속페리호",
+    "type": "여객선",
+    "gross_tonnage": 642,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "출항 지연으로 선체가 선착장에 얹힘",
+    "category": "조선 부적절"
+   },
+   {
+    "order": 2,
+    "description": "선체가 충분히 부양되기 전 이안",
+    "category": "조선 부적절"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [
+   "선원법 제2조",
+   "선박직원법 제11조"
+  ],
+  "keywords": [
+   "선장 조선 부주의",
+   "선착장 얹힘"
+  ],
+  "verdict_no": "IC2025-051",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "여객선 북도고속페리호 좌초사건",
+   "type": "좌초",
+   "date": "2023-09-06",
+   "night": true,
+   "location": "인천광역시 중구 운서동 삼목선착장 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "북도고속페리호",
+    "type": "여객선",
+    "gross_tonnage": 642,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 조류 등 외력의 영향을 간과하고 부주의하게 조선",
+    "category": "조선 부적절"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [
+   "선원법 제2조",
+   "선박직원법 제11조"
+  ],
+  "keywords": [
+   "선장 조선 부주의",
+   "좌초"
+  ],
+  "verdict_no": "IC2025-052",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "유류 및 액체화학품산적운반선 뉴 브라이트 폭발사건",
+   "type": "화재·폭발",
+   "date": "2023-12-21",
+   "night": false,
+   "location": "중국 양쯔강 소통장강공로대교 서쪽 약 2.3㎞ 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "뉴 브라이트",
+    "type": "유조선",
+    "gross_tonnage": 8504,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "1항사가 화물창 해치를 미리 미세하게 개방하게 하는 등 부적절하게 업무를 지시하고 작업 관리·감독을 소홀히 함",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선원이 화물 공통 배관의 잔류물을 화물창으로 옮기기 위해 임의로 고무호스를 통해 압축공기를 공급함",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 3,
+    "description": "고무호스 끝단에서 분사되는 잔류물의 마찰 등으로 발생한 정전기에 의한 불꽃이 벤젠 잔류 가스에 착화됨",
+    "category": "기타"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "1항사",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "갑판장",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "부적절한 업무 지시",
+   "작업 관리·감독 소홀",
+   "부적절한 작업 수행",
+   "폭발"
+  ],
+  "verdict_no": "IC2025-053",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "어선 장미2호 선원사망사건",
+   "type": "인명사상",
+   "date": "2024-11-15",
+   "night": true,
+   "location": "충청남도 태안군 북격렬비도 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "장미2호",
+    "type": "어선",
+    "gross_tonnage": 35,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 작업 안전수칙을 지키지 않고 부주의하게 작업",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 선원에 대한 작업 안전교육 및 지도·감독을 소홀히 함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "선원법 제2조",
+   "선박직원법 제11조"
+  ],
+  "keywords": [
+   "작업안전 수칙 미준수",
+   "작업 안전교육 소홀",
+   "선원 지도·감독 소홀",
+   "선원 양망기 감김",
+   "선원 사망"
+  ],
+  "verdict_no": "IC2025-054",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "낚시어선 스마트2호⋅부선 제103백석호 충돌사건",
+   "type": "충돌",
+   "date": "2023-09-23",
+   "night": true,
+   "location": "인천항 검역 묘박지",
+   "weather": "시계 양호"
+  },
+  "vessels": [
+   {
+    "name": "스마트2호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "가해"
+   },
+   {
+    "name": "제103백석호",
+    "type": "부선",
+    "gross_tonnage": 2505,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "스마트2호의 경계 소홀",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "제103백석호의 야간 정박등 미표시",
+    "category": "항행법규 위반"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "사업자",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해사안전법 제63조",
+   "해사안전법 제88조",
+   "낚시 관리 및 육성법 제29조"
+  ],
+  "keywords": [
+   "경계 소홀",
+   "등화 미표시",
+   "충돌"
+  ],
+  "verdict_no": "IC2025-055",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "어선 장순호 선원사망사건",
+   "type": "인명사상",
+   "date": "2025-03-07",
+   "night": false,
+   "location": "인천광역시 옹진군 덕적도 북방 약 5해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "장순호",
+    "type": "어선",
+    "gross_tonnage": 7.93,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 작업 중 부주의하여 양망줄에서 발을 빼지 못함",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 작업 지휘·감독을 소홀히 함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "선박직원법 제11조"
+  ],
+  "keywords": [
+   "선원 부주의",
+   "작업 안전관리 및 지휘·감독 소홀",
+   "양망",
+   "죔줄",
+   "해상 추락",
+   "선원 사망"
+  ],
+  "verdict_no": "IC2025-057",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "어선 제136다누리호 전복사건",
+   "type": "전복",
+   "date": "2025-02-03",
+   "night": false,
+   "location": "동중국해 해상",
+   "weather": "강한 바람과 높은 파도"
+  },
+  "vessels": [
+   {
+    "name": "제136다누리호",
+    "type": "어선",
+    "gross_tonnage": 48,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "강한 바람과 높은 파도가 형성된 해상에 무리하게 정박",
+    "category": "무리한 출항·운항"
+   },
+   {
+    "order": 2,
+    "description": "정박당직 소홀로 해수 유입 상황을 뒤늦게 파악",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "무리한 정박대기",
+   "부적절한 정박당직",
+   "해수유입",
+   "전복"
+  ],
+  "verdict_no": "IC2025-059",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "예인선 해건티1호의 피예인부선 해건9001호 좌초사건",
+   "type": "좌초",
+   "date": "2022-10-08",
+   "night": true,
+   "location": "전라북도 군산시 옥도면 말도항 서방파제등대 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "해건티1호",
+    "type": "예인선",
+    "gross_tonnage": 107,
+    "role": "가해"
+   },
+   {
+    "name": "해건9001호",
+    "type": "부선",
+    "gross_tonnage": 1980,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "부선의 용선자가 해저면에 부선을 얹혀놓은 상태에서 사석을 적재하다가 발생한 좌현 선미 파공부를 불완전하게 수리한 후 임시검사를 받지 않고 출항",
+    "category": "선체·설비 결함"
+   },
+   {
+    "order": 2,
+    "description": "예인선 선장이 부선의 파공부 수리 및 임시검사 미수검 사실을 알고도 부선을 예인하여 항해",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "용선자",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "선박안전법 제10조"
+  ],
+  "keywords": [
+   "선체 관리소홀",
+   "선박 안전관리 소홀",
+   "검사 소홀",
+   "선체 손상",
+   "침수"
+  ],
+  "verdict_no": "IC2025-060",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "컨테이너선 홍콩 보이저 선원사망사건",
+   "type": "인명사상",
+   "date": "2024-11-01",
+   "night": true,
+   "location": "중국 상해항 동쪽 68해리 해상",
+   "weather": "악천후"
+  },
+  "vessels": [
+   {
+    "name": "홍콩 보이저",
+    "type": "화물선",
+    "gross_tonnage": 12545,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원이 주변 바다 상태를 제대로 살피지 않고 부주의하게 작업",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "선장이 작업 안전관리를 소홀히 함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [
+   "선원법 제2조",
+   "선박직원법 제11조"
+  ],
+  "keywords": [
+   "악천후",
+   "작업 부주의",
+   "작업 안전관리 소홀",
+   "파도 충격",
+   "선원 사망"
+  ],
+  "verdict_no": "IC2025-061",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "어선 제 창성호 선원실종사건2",
+   "type": "인명사상",
+   "date": "2022-06-16",
+   "night": false,
+   "location": "36 05 12N, 126 02 16E 해역",
+   "weather": "안개, 시계 2.7마일"
+  },
+  "vessels": [
+   {
+    "name": "제 창성호",
+    "type": "어선",
+    "gross_tonnage": 72,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원 실종",
+    "category": "기타"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [],
+  "laws": [],
+  "keywords": [
+   "선원 실종",
+   "어선",
+   "인명사상"
+  ],
+  "verdict_no": "IC2025-017",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "어선 반석호 선원사망사건",
+   "type": "인명사상",
+   "date": "2024-03-11",
+   "night": false,
+   "location": "36 29 18N 126 25 48E (서해)",
+   "weather": "맑음, 시계 1.5마일"
+  },
+  "vessels": [
+   {
+    "name": "반석호",
+    "type": "어선",
+    "gross_tonnage": 3.97,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선원 A의 안전수칙 미준수",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [],
+  "laws": [],
+  "keywords": [
+   "선원사망",
+   "안전수칙"
+  ],
+  "verdict_no": "IC2025-018",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "어선 도청호 어선 제 동양호 충돌사건",
+   "type": "충돌",
+   "date": "2023-09-03",
+   "night": true,
+   "location": "인천 해역",
+   "weather": "풍속 6-7, 시계 300m"
+  },
+  "vessels": [
+   {
+    "name": "도청호",
+    "type": "어선",
+    "gross_tonnage": 80,
+    "role": "가해"
+   },
+   {
+    "name": "제 동양호",
+    "type": "어선",
+    "gross_tonnage": 79,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "ARPA 미사용",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 2,
+    "description": "경계 소홀",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [],
+  "laws": [
+   "해사안전법"
+  ],
+  "keywords": [
+   "충돌",
+   "어선",
+   "인천 해역",
+   "야간"
+  ],
+  "verdict_no": "IC2025-026",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "컨테이너선 케이엠티씨 다롄 부두접촉사건",
+   "type": "접촉",
+   "date": "2025-02-12",
+   "night": false,
+   "location": "부두",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "케이엠티씨 다롄",
+    "type": "화물선",
+    "gross_tonnage": 27997,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [],
+  "human_factors": [],
+  "sanctions": [],
+  "laws": [],
+  "keywords": [],
+  "verdict_no": "IC2025-029",
+  "court": "인천"
+ },
+ {
+  "accident": {
+   "name": "액화천연가스운반선 에스엠 골든이글 좌초사건",
+   "type": "좌초",
+   "date": "2025-03-24",
+   "night": false,
+   "location": "인도네시아 사페해협 내 반타섬 남서쪽 약 6.4해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "에스엠 골든이글",
+    "type": "화물선",
+    "gross_tonnage": 114180,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "2등 항해사가 선저 여유 수심 확보 여부 미확인",
+    "category": "위치확인 소홀"
+   },
+   {
+    "order": 2,
+    "description": "1등 항해사의 당직 중 저수심 구역 주의 소홀",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 3,
+    "description": "선장이 항해계획 검토를 소홀히 함",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "1등 항해사",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "2등 항해사",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "부적절한 항해계획",
+   "해도검토 불충분",
+   "선저 여유수심 부족",
+   "좌초",
+   "선저외판 파손"
+  ],
+  "verdict_no": "XX2025-062",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "예인선 201해송의 피예인부선 마린1호 침수사건",
+   "type": "침수",
+   "date": "2022-10-05",
+   "night": true,
+   "location": "울산광역시 방어진 남동방 3.8해리 해상",
+   "weather": "파랑주의보"
+  },
+  "vessels": [
+   {
+    "name": "201해송",
+    "type": "예인선",
+    "gross_tonnage": 163.74,
+    "role": "피해"
+   },
+   {
+    "name": "마린1호",
+    "type": "부선",
+    "gross_tonnage": 2909.0,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "중화석고의 특성을 모른 채 무리하게 항행",
+    "category": "무리한 출항·운항"
+   },
+   {
+    "order": 2,
+    "description": "화물정보를 선박 측에 제대로 제공하지 않음",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "선주",
+    "type": "시정권고",
+    "months": null
+   },
+   {
+    "target_role": "용선주",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "침수",
+   "황천항해",
+   "화물특성 불고지"
+  ],
+  "verdict_no": "XX2025-002",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "산적화물선 엘스 하동항 부두 하역기 접촉사건",
+   "type": "접촉",
+   "date": "2022-10-26",
+   "night": true,
+   "location": "하동항 2부두",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "엘스",
+    "type": "화물선",
+    "gross_tonnage": null,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "계류설비 관리 및 계류 당직업무 소홀",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "계류줄이 길게 늘어진 상태에서 조류에 의해 선체가 부두로부터 멀어짐",
+    "category": "기상·해상 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [],
+  "laws": [],
+  "keywords": [
+   "계류",
+   "계류당직 소홀",
+   "계류줄 풀림",
+   "접촉"
+  ],
+  "verdict_no": "XX2025-003",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "낚시어선 그랜드호 화재사건",
+   "type": "화재·폭발",
+   "date": "2022-08-04",
+   "night": true,
+   "location": "여수시 남면 간여암 등대 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "그랜드호",
+    "type": "어선",
+    "gross_tonnage": 9.77,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "주기관 시동용 축전지의 접촉불량 부위에서 스파크 발생",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 2,
+    "description": "선장이 주기관 시동 전후로 기관실 점검 소홀",
+    "category": "정비·점검 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "기관실 화재",
+   "시동용 축전지",
+   "단자 접촉불량",
+   "전기화재"
+  ],
+  "verdict_no": "XX2025-006",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "예인선 에스에스 티3 화재사건",
+   "type": "화재·폭발",
+   "date": "2024-06-18",
+   "night": false,
+   "location": "경상남도 창원시 마창대교 남동방 약 0.8해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "에스에스 티3",
+    "type": "예인선",
+    "gross_tonnage": 288,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "조기수가 혼자 윤활유 냉각기의 온도계를 교체하다 윤활유 파이프에서 온도계가 통째로 빠지며 윤활유가 주기관의 과급기 고온부에 접촉",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "기관장이 당직중에 기관실을 비워 조기수에 대한 감독 소홀",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "기관장",
+    "type": "업무정지",
+    "months": 1
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "기관실 화재",
+   "윤활유 유출",
+   "과급기 고온부 보호"
+  ],
+  "verdict_no": "XX2025-009",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "어선 루이호·어선 현승호 충돌사건",
+   "type": "충돌",
+   "date": "2024-06-06",
+   "night": false,
+   "location": "통영시 소재 견유방파제 북동방 0.42 마일 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "루이호",
+    "type": "어선",
+    "gross_tonnage": 5.8,
+    "role": "가해"
+   },
+   {
+    "name": "현승호",
+    "type": "어선",
+    "gross_tonnage": 0.86,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "루이호 선장의 졸음운항",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "현승호 선장의 피항협력동작 미흡",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [
+   "피로"
+  ],
+  "sanctions": [
+   {
+    "target_role": "A",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "B",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제83조"
+  ],
+  "keywords": [
+   "경계소홀",
+   "어로에 종사하는 선박",
+   "충돌회피동작 지체"
+  ],
+  "verdict_no": "XX2025-010",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "예인선 태양21호 해양오염사건",
+   "type": "해양오염",
+   "date": "2023-11-25",
+   "night": false,
+   "location": "전라남도 여수시 삼우중공업 부두 앞 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "태양 21호",
+    "type": "예인선",
+    "gross_tonnage": 75,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "기관장이 기름이송펌프를 작동시킨 상태에서 기관실을 비움",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "연료유가 서비스탱크와 연결된 기름탱크까지 넘침",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "기관장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [
+   "해양환경관리법 제22조"
+  ],
+  "keywords": [
+   "해양유류오염",
+   "기름이송펌프",
+   "중유(Bunker-A)",
+   "공기관(Air-Vent)"
+  ],
+  "verdict_no": "XX2025-012",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "어선 제202경남호‧어선 경민호 충돌사건",
+   "type": "충돌",
+   "date": "2024-03-06",
+   "night": false,
+   "location": "경상남도 통영시 추도 서단 부근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제202경남호",
+    "type": "어선",
+    "gross_tonnage": 29,
+    "role": "가해"
+   },
+   {
+    "name": "경민호",
+    "type": "어선",
+    "gross_tonnage": 4.23,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "어선 밀집지역을 가로지르던 동력선이 경계를 소홀히 하여 정박중인 상대선을 미리 발견하지 못함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "정박중이던 어선의 선장이 식사 준비로 인해 피항협력동작을 취하지 못함",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "선장",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제70조",
+   "해상교통안전법 제72조",
+   "해상교통안전법 제103조"
+  ],
+  "keywords": [
+   "항해중인 동력선",
+   "정박중인 선박",
+   "경계소홀",
+   "선원의 상무"
+  ],
+  "verdict_no": "XX2025-013",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "어선 경림호‧압항예선 제101삼일호의 압항부선 제103삼일호 충돌사건",
+   "type": "충돌",
+   "date": "2024-01-13",
+   "night": true,
+   "location": "경남 거제시 양지암취등대 동방 3마일 해상",
+   "weather": "시계 양호"
+  },
+  "vessels": [
+   {
+    "name": "경림호",
+    "type": "어선",
+    "gross_tonnage": 4.99,
+    "role": "피해"
+   },
+   {
+    "name": "제101삼일호",
+    "type": "예인선",
+    "gross_tonnage": 302,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "압항예선열 제101삼일호의 당직항해사가 경계를 소홀히 함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "경림호 선장이 상대선이 선미로 피해갈 것이라고 예단하여 피항협력동작을 취하지 않음",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "B",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "A",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해사교통안전법 제80조",
+   "해사교통안전법 제81조",
+   "해사교통안전법 제82조"
+  ],
+  "keywords": [
+   "횡단항법",
+   "경계소홀",
+   "피항협력동작"
+  ],
+  "verdict_no": "XX2025-014",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "석유제품운반선 12삼부호‧어선 쌍둥이호 충돌사건",
+   "type": "충돌",
+   "date": "2024-09-12",
+   "night": true,
+   "location": "울산광역시 북구 신명항방파제등대 동방 약 4해리 해상",
+   "weather": "시정 양호"
+  },
+  "vessels": [
+   {
+    "name": "12삼부호",
+    "type": "화물선",
+    "gross_tonnage": 299,
+    "role": "가해"
+   },
+   {
+    "name": "쌍둥이호",
+    "type": "어선",
+    "gross_tonnage": 4.99,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "상대 선박의 진로를 횡단하던 12삼부호의 선장이 적기에 피항동작을 취하지 않음",
+    "category": "항행법규 위반"
+   },
+   {
+    "order": 2,
+    "description": "유지선인 쌍둥이호의 선장이 경계를 소홀히 하여 피항협력동작을 취하지 않음",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "A(12삼부호 선장)",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "B(쌍둥이호 선장)",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제70조",
+   "해상교통안전법 제72조",
+   "해상교통안전법 제80조",
+   "해상교통안전법 제81조",
+   "해상교통안전법 제82조"
+  ],
+  "keywords": [
+   "항해중인 동력선",
+   "경계소홀",
+   "횡단상태"
+  ],
+  "verdict_no": "XX2025-017",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "일반화물선 우현 호프·유류 및 액체화학품산적운반선 스카이케미 충돌사건",
+   "type": "충돌",
+   "date": "2023-05-17",
+   "night": true,
+   "location": "부산항 정박지",
+   "weather": "시계 제한"
+  },
+  "vessels": [
+   {
+    "name": "우현 호프",
+    "type": "화물선",
+    "gross_tonnage": 11481,
+    "role": "피해"
+   },
+   {
+    "name": "스카이케미",
+    "type": "유조선",
+    "gross_tonnage": 1772,
+    "role": "가해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "스카이케미가 경계를 소홀히 함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "우현 호프가 적기에 충분한 피항협력동작을 취하지 않음",
+    "category": "항행법규 위반"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "D",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "B",
+    "type": "견책",
+    "months": null
+   },
+   {
+    "target_role": "A",
+    "type": "견책",
+    "months": null
+   },
+   {
+    "target_role": "C",
+    "type": "견책",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제84조",
+   "해상교통안전법 제70조",
+   "선원법 제9조"
+  ],
+  "keywords": [
+   "제한시계",
+   "경계 소홀",
+   "조기 피항 불이행",
+   "선장의 직접 지휘 미이행",
+   "충돌"
+  ],
+  "verdict_no": "XX2025-019",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "예인선 울산705호의 피예인부선 울산10001호 송전선접촉사건",
+   "type": "접촉",
+   "date": "2024-08-20",
+   "night": false,
+   "location": "경상남도 남해군 미조면 육지와 조도 사이 해상",
+   "weather": "기상악화"
+  },
+  "vessels": [
+   {
+    "name": "울산705호",
+    "type": "예인선",
+    "gross_tonnage": 173,
+    "role": "가해"
+   },
+   {
+    "name": "울산10001호",
+    "type": "부선",
+    "gross_tonnage": 2604,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선체블록의 높이를 정확히 알지 못한 상태에서 항해",
+    "category": "위치확인 소홀"
+   },
+   {
+    "order": 2,
+    "description": "송전선의 안전통과 높이를 미리 확인하지 않음",
+    "category": "위치확인 소홀"
+   },
+   {
+    "order": 3,
+    "description": "기상악화로 항로를 변경하며 무리하게 항해",
+    "category": "무리한 출항·운항"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [
+   "선원법 제7조",
+   "해상교통안전법 제103호"
+  ],
+  "keywords": [
+   "항해계획",
+   "선체블록",
+   "화물의 높이",
+   "송전선 안전통과 높이",
+   "송전선 저촉"
+  ],
+  "verdict_no": "XX2025-023",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "광석운반선 시 차오페이뎬 선원사망사건",
+   "type": "인명사상",
+   "date": "2024-05-14",
+   "night": false,
+   "location": "중국 칭다오항 인근 해역",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "시 차오페이뎬",
+    "type": "화물선",
+    "gross_tonnage": null,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "덕트킬 검사작업 중 홀로 갑판에 대기하던 선원이 고중량의 해치커버에 깔림",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "안전관리회사",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "부적절한 중량물취급",
+   "질식",
+   "선원 사망"
+  ],
+  "verdict_no": "XX2025-026",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "컨테이너선 써니메이플호 좌초사건",
+   "type": "좌초",
+   "date": "2025-01-29",
+   "night": true,
+   "location": "일본 나가사키현 마쓰시마 남서쪽 2.5해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "써니메이플호",
+    "type": "화물선",
+    "gross_tonnage": 3981,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "2등항해사가 선박의 위치확인을 하지 않고 잘못 그려진 항해계기상의 항로에 의존하여 항해",
+    "category": "위치확인 소홀"
+   },
+   {
+    "order": 2,
+    "description": "선장의 항해당직자 업무 관리·감독 미흡",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   },
+   {
+    "target_role": "2등항해사",
+    "type": "업무정지",
+    "months": 6
+   }
+  ],
+  "laws": [
+   "선원법 제8조",
+   "해상교통안전법 제70조",
+   "해상교통안전법 제103호"
+  ],
+  "keywords": [
+   "선박 위치확인",
+   "해도상 선박위치 표시",
+   "Waypoint 입력 오류",
+   "저수심 구역"
+  ],
+  "verdict_no": "XX2025-028",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "낚시어선 챔프호 신거제대교 교각접촉사건",
+   "type": "접촉",
+   "date": null,
+   "night": null,
+   "location": "신거제대교 P9 교각",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "챔프호",
+    "type": "어선",
+    "gross_tonnage": null,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 항해계기를 활용하지 않고 육안에 의존하여 항해",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "선위 판단 착오",
+    "category": "위치확인 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "부적절한 항해계기 사용",
+   "선위 판단착오",
+   "접촉"
+  ],
+  "verdict_no": "XX2025-029",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "어선 제111대진호 해양오염사건",
+   "type": "해양오염",
+   "date": "2024-09-17",
+   "night": false,
+   "location": "부산광역시 다대포항 신우농수산 제2공장 앞 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "제111대진호",
+    "type": "운반선",
+    "gross_tonnage": 196,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "선장이 외국 선원에게 기관실 확인을 지시했으나, 외국 선원이 이를 잘못 이해함",
+    "category": "안전관리체제 미흡"
+   },
+   {
+    "order": 2,
+    "description": "외국 선원이 선저폐수를 선외로 배출",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [
+   "한국어 서툰 외국 선원"
+  ],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   },
+   {
+    "target_role": "기관부원",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해양환경관리법 제22조"
+  ],
+  "keywords": [
+   "해양오염",
+   "선저폐수",
+   "선원부주의"
+  ],
+  "verdict_no": "XX2025-032",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "낚시어선 용진호‧모터보트 빛나리독수리호",
+   "type": "충돌",
+   "date": "2025-01-05",
+   "night": false,
+   "location": "부산광역시 목도 북서방 약 1해리 해상",
+   "weather": "맑음"
+  },
+  "vessels": [
+   {
+    "name": "용진호",
+    "type": "어선",
+    "gross_tonnage": 4.99,
+    "role": "가해"
+   },
+   {
+    "name": "빛나리독수리호",
+    "type": "수상레저기구",
+    "gross_tonnage": 2.61,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "낚시어선 용진호의 선장이 경계를 소홀히 함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "정박 중이던 모터보트의 조종사가 피항협력동작을 하지 않음",
+    "category": "항행법규 위반"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 3
+   },
+   {
+    "target_role": "조종사",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제70조",
+   "해상교통안전법 제72조",
+   "해상교통안전법 제73조",
+   "해상교통안전법 제103조"
+  ],
+  "keywords": [
+   "항해중인 동력선",
+   "정류중인 선박",
+   "경계소홀"
+  ],
+  "verdict_no": "XX2025-034",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "원양어선 아드리아 화재사건",
+   "type": "화재·폭발",
+   "date": "2024-03-25",
+   "night": false,
+   "location": "인도양 마다카스카르 북쪽 약 415해리 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "아드리아",
+    "type": "어선",
+    "gross_tonnage": 1072,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "일등기관사가 배전반에 대한 절연저항 측정 등 점검을 소홀히 함",
+    "category": "정비·점검 소홀"
+   },
+   {
+    "order": 2,
+    "description": "회사가 노후 선박에 대한 전기계통 보수·정비 지원을 적절히 하지 않음",
+    "category": "안전관리체제 미흡"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "일등기관사",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "B",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "기관실 화재",
+   "전기화재",
+   "컨트롤룸 퓨즈박스 재생부품 사용",
+   "화재진압 부적절"
+  ],
+  "verdict_no": "XX2025-035",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "유류운반부선 은성 해양오염사건",
+   "type": "해양오염",
+   "date": "2024-11-30",
+   "night": true,
+   "location": "부산항 제4부두",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "은성",
+    "type": "부선",
+    "gross_tonnage": 180,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "임차인이 화물유펌프 클러치 레버를 확인하지 않고 발전기 기관을 작동",
+    "category": "기기취급 불량"
+   },
+   {
+    "order": 2,
+    "description": "화물유펌프가 가동되면서 기름이 갑판으로 누출",
+    "category": "기기취급 불량"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선박 임차인",
+    "type": "개선권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해양환경관리법 제22조"
+  ],
+  "keywords": [
+   "연결된 주변기기",
+   "레버 확인 소홀",
+   "저유황유 누출",
+   "해양오염"
+  ],
+  "verdict_no": "XX2025-036",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "어선 휘동호‧어선 동해26호 충돌사건",
+   "type": "충돌",
+   "date": "2025-03-08",
+   "night": true,
+   "location": "부산광역시 강서구 진목항 인근 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "휘동호",
+    "type": "어선",
+    "gross_tonnage": 2.74,
+    "role": "가해"
+   },
+   {
+    "name": "동해26호",
+    "type": "어선",
+    "gross_tonnage": 1.2,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "시정이 양호한 야간에 빠른 속력으로 출항하며 전방에 대한 경계를 소홀히 함",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "야간항해가 금지된 선박을 일출 전 무리하게 운항",
+    "category": "무리한 출항·운항"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "A",
+    "type": "시정권고",
+    "months": null
+   },
+   {
+    "target_role": "B",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [
+   "해상교통안전법 제70조",
+   "해상교통안전법 제71조",
+   "해상교통안전법 제72조",
+   "해상교통안전법 제103조"
+  ],
+  "keywords": [
+   "항해중인 동력선",
+   "안전한 속력",
+   "야간항해 금지",
+   "경계소홀",
+   "선원의 상무"
+  ],
+  "verdict_no": "XX2025-038",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "예인선 부경103호의 피예인부선 광진1501호·어선 신성호 충돌사건",
+   "type": "충돌",
+   "date": "2025-04-05",
+   "night": false,
+   "location": "경남 창원시 진해구 연도방파제 남방 해상",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "부경103호",
+    "type": "예인선",
+    "gross_tonnage": 72,
+    "role": "가해"
+   },
+   {
+    "name": "광진1501호",
+    "type": "부선",
+    "gross_tonnage": 745,
+    "role": "피해"
+   },
+   {
+    "name": "신성호",
+    "type": "어선",
+    "gross_tonnage": 1.76,
+    "role": "피해"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "예인선열 선장이 소형 어선을 발견하지 못하고 충돌",
+    "category": "경계 소홀"
+   },
+   {
+    "order": 2,
+    "description": "묘박 중인 소형 어선 선장이 경계를 소홀히 하여 주의환기신호를 울리지 않음",
+    "category": "경계 소홀"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "선장",
+    "type": "업무정지",
+    "months": 2
+   },
+   {
+    "target_role": "선장",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "예인선열의 충돌사고",
+   "경계태만",
+   "주의환기신호"
+  ],
+  "verdict_no": "XX2025-042",
+  "court": "미상"
+ },
+ {
+  "accident": {
+   "name": "석유제품운반선 아람 해양오염사건",
+   "type": "해양오염",
+   "date": "2024-05-09",
+   "night": false,
+   "location": "여수항 D-1 정박지",
+   "weather": null
+  },
+  "vessels": [
+   {
+    "name": "아람호",
+    "type": "급유선",
+    "gross_tonnage": 759,
+    "role": "단독"
+   }
+  ],
+  "cause_chain": [
+   {
+    "order": 1,
+    "description": "일등항해사가 고수위 경보장치를 켜지 않고 하역 작업 시작",
+    "category": "작업안전수칙 미준수"
+   },
+   {
+    "order": 2,
+    "description": "4번 우현 화물창의 유입밸브 고장으로 일부 열림",
+    "category": "선체·설비 결함"
+   },
+   {
+    "order": 3,
+    "description": "2번 화물창의 기름이 유입되면서 해양오염 발생",
+    "category": "작업안전수칙 미준수"
+   }
+  ],
+  "human_factors": [],
+  "sanctions": [
+   {
+    "target_role": "일등항해사",
+    "type": "업무정지",
+    "months": 1
+   },
+   {
+    "target_role": "선장",
+    "type": "견책",
+    "months": null
+   },
+   {
+    "target_role": "안전관리대행자",
+    "type": "시정권고",
+    "months": null
+   }
+  ],
+  "laws": [],
+  "keywords": [
+   "고수위 경보장치",
+   "기름 역류",
+   "안전관리 소홀"
+  ],
+  "verdict_no": "XX2025-043",
+  "court": "미상"
+ }
+]

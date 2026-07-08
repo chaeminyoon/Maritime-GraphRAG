@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SearchBar from './components/SearchBar.jsx';
 import ResultSection from './components/ResultSection.jsx';
+import GraphView from './components/GraphView.jsx';
 import './App.css';
 
 function App() {
@@ -47,7 +48,7 @@ function App() {
             <div className="app-content">
                 <header className={`app-header ${isSearching ? 'searching' : ''}`}>
                     <h1>Maritime GraphRAG</h1>
-                    <p>Neo4j 지식그래프 기반 해양 산업(해운·항만·규제) 질의응답</p>
+                    <p>해양안전심판원 재결서 139건의 지식그래프 기반 사고 분석 Q&A</p>
                 </header>
 
                 <div className={isSearching ? 'searching' : ''}>
@@ -80,19 +81,20 @@ function App() {
                                 sources={results.sources}
                             />
                         ))}
+                        <GraphView graph={results.graph} />
                     </div>
                 )}
 
                 {!results && !loading && !error && (
                     <div className="welcome-message">
-                        <h2>해양 지식그래프 검색</h2>
-                        <p>선사·선박·항만·규제·사고를 잇는 관계 질문에 답합니다.</p>
+                        <h2>해양사고 재결 지식그래프</h2>
+                        <p>실제 재결서에서 추출한 사고-원인-선박-처분 그래프를 근거로 답합니다.</p>
                         <div className="example-queries">
                             <p>예시 질문:</p>
                             <ul>
-                                <li>부산항에 기항하는 컨테이너선을 운영하는 선사는?</li>
-                                <li>울산항에서 사고를 낸 선박에 적용되는 환경 규제는?</li>
-                                <li>충돌 사고에서 가장 흔한 원인 카테고리는? (실제 재결서)</li>
+                                <li>충돌 사고에서 가장 흔한 원인 카테고리는?</li>
+                                <li>경계 소홀이 원인으로 판시된 사고와 선박을 알려줘</li>
+                                <li>어선이 관련된 사고의 원인 분포는 어떻게 되나?</li>
                             </ul>
                         </div>
                     </div>

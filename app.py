@@ -1,26 +1,47 @@
+"""
+Maritime GraphRAG API — Q&A over the KMST marine-casualty knowledge graph.
+
+The corpus is 139 real adjudication reports (재결서) of the Korean Maritime
+Safety Tribunal, extracted into a two-layer graph:
+
+  document layer   (Accident)-[:HAS_CHUNK]->(AContent {chunk, embedding})
+  knowledge layer  (Accident)-[:INVOLVES]->(AVessel)  (Accident)-[:OCCURRED_IN]->(ALocation)
+                   (Accident)-[:HAS_CAUSE]->(Cause)-[:OF_TYPE]->(CauseCategory)
+                   (Cause)-[:LEADS_TO]->(Cause)   (Accident)-[:IMPOSED]->(Sanction)
+                   (Accident)-[:CITES]->(Law)     (Accident)-[:ADJUDICATED_BY]->(Court)
+
+Three retrievers sit behind an LLM router (ToolsRetriever):
+  vector        semantic search over verdict text chunks
+  vectorcypher  chunk hits expanded with the accident's causes/vessels/sanctions
+  text2cypher   direct graph queries for aggregation and multi-hop questions
+
+Every /search response also returns the evidence subgraph (nodes/edges) so the
+frontend can show HOW the answer is connected: chunk -> accident -> causes.
+"""
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
+import json
 import os
+import re
 import neo4j
 from dotenv import load_dotenv
 from neo4j_graphrag.llm import OpenAILLM
-from neo4j_graphrag.retrievers import VectorRetriever, VectorCypherRetriever, Text2CypherRetriever, ToolsRetriever
+from neo4j_graphrag.retrievers import (
+    VectorRetriever, VectorCypherRetriever, Text2CypherRetriever, ToolsRetriever)
 from neo4j_graphrag.embeddings.openai import OpenAIEmbeddings
 from neo4j_graphrag.generation import RagTemplate, GraphRAG
 
-# Load environment variables
 load_dotenv()
 
-# Configuration
 URI = os.getenv("NEO4J_URI", "neo4j://127.0.0.1:7687")
 AUTH = ("neo4j", os.getenv("NEO4J_PASSWORD", "12345678"))
-INDEX_NAME = "content_vector_index"
+INDEX_NAME = "accident_chunk_index"
+KMST_URL = "https://www.kmst.go.kr/web/verdictList.do?menuIdx=121"
 
-app = FastAPI(title="Maritime GraphRAG API")
+app = FastAPI(title="Maritime GraphRAG API — KMST casualty knowledge graph")
 
-# CORS 설정
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -29,11 +50,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Global variables
 driver = None
 rag = None
+ENTITY_INDEX = []   # (name, label) pairs for matching answer text to graph nodes
 
-# Request/Response Models
+
+# ---------------- response models ----------------
 class QueryRequest(BaseModel):
     query: str
 
@@ -52,276 +74,249 @@ class Section(BaseModel):
     content: str
     sourceIds: List[int]
 
+class GraphNode(BaseModel):
+    id: str
+    label: str
+    type: str
+
+class GraphEdge(BaseModel):
+    source: str
+    target: str
+    type: str
+
+class SubGraph(BaseModel):
+    nodes: List[GraphNode]
+    edges: List[GraphEdge]
+
 class QueryResponse(BaseModel):
     sections: List[Section]
     sources: List[Source]
+    graph: Optional[SubGraph] = None
 
-def get_schema(driver):
-    """Neo4j 데이터베이스의 스키마 정보를 가져옵니다"""
-    with driver.session() as session:
-        node_info = session.run("""
-            CALL db.schema.nodeTypeProperties()
-            YIELD nodeType, propertyName, propertyTypes
-            RETURN nodeType, collect(propertyName) as properties
-        """).data()
 
-        patterns = session.run("""
-            MATCH (n)-[r]->(m)
-            RETURN DISTINCT labels(n)[0] as source, type(r) as relationship, labels(m)[0] as target
-            LIMIT 20
-        """).data()
+# ---------------- evidence subgraph ----------------
+def load_entity_index(drv):
+    global ENTITY_INDEX
+    q = """
+    MATCH (n) WHERE any(l IN labels(n) WHERE l IN
+        ['AVessel','ALocation','CauseCategory','Court','Law','Accident'])
+    RETURN coalesce(n.name, n.verdict_no) AS name, labels(n)[0] AS label
+    """
+    with drv.session() as s:
+        ENTITY_INDEX = [(r['name'], r['label']) for r in s.run(q)
+                        if r['name'] and len(r['name']) >= 2]
+    print(f"엔티티 인덱스: {len(ENTITY_INDEX)}개")
 
-        schema_text = "=== Neo4j Schema ===\n"
-        schema_text += "\n노드 타입:\n"
-        for node in node_info:
-            schema_text += f"- {node['nodeType']}: {node['properties']}\n"
 
-        schema_text += "\n관계 패턴:\n"
-        for pattern in patterns:
-            schema_text += f"- ({pattern['source']})-[:{pattern['relationship']}]->({pattern['target']})\n"
+def build_subgraph(texts: str, max_nodes: int = 40):
+    """Evidence subgraph: retrieved chunks -> accidents -> causes/vessels/places."""
+    nodes, edges, seen = [], [], set()
 
-        return schema_text
+    def add_node(nid, label, ntype):
+        if nid not in seen and len(nodes) < max_nodes:
+            seen.add(nid)
+            nodes.append({'id': nid, 'label': label, 'type': ntype})
+
+    def add_edge(a, b, etype):
+        if a in seen and b in seen:
+            key = (a, b, etype)
+            if key not in {(e['source'], e['target'], e['type']) for e in edges}:
+                edges.append({'source': a, 'target': b, 'type': etype})
+
+    chunk_ids = list(dict.fromkeys(re.findall(r"[A-Z]{2}\d{4}-?\d*#\d+", texts)))[:8]
+    matched = [(n, l) for n, l in ENTITY_INDEX if n in texts]
+    vnos = list(dict.fromkeys(
+        [n for n, l in matched if l == 'Accident'] +
+        [re.sub(r'#\d+$', '', c) for c in chunk_ids] +
+        re.findall(r"[A-Z]{2}\d{4}-\d{3}(?!#)", texts)))[:12]
+    cats = [n for n, l in matched if l == 'CauseCategory']
+    vessels = [n for n, l in matched if l == 'AVessel']
+
+    with driver.session() as s:
+        # retrieved chunks (vector entry points)
+        if chunk_ids:
+            rows = s.run("""
+                MATCH (c:AContent) WHERE c.content_id IN $cids
+                MATCH (a:Accident)-[:HAS_CHUNK]->(c)
+                RETURN c.content_id AS cid
+            """, cids=chunk_ids).data()
+            for r in rows:
+                add_node('chunk:' + r['cid'], r['cid'].split('#')[0] + ' 본문', 'Chunk')
+
+        # accidents matched by verdict_no / name / cause category / vessel
+        rows = s.run("""
+            MATCH (acc:Accident)
+            WHERE acc.verdict_no IN $vnos OR acc.name IN $vnos
+               OR EXISTS { MATCH (acc)-[:HAS_CAUSE]->(:Cause)-[:OF_TYPE]->(cat:CauseCategory)
+                           WHERE cat.name IN $cats }
+               OR EXISTS { MATCH (acc)-[:INVOLVES]->(v:AVessel) WHERE v.name IN $vessels }
+            WITH acc, CASE WHEN acc.verdict_no IN $vnos OR acc.name IN $vnos
+                           THEN 0 ELSE 1 END AS prio
+            ORDER BY prio LIMIT 10
+            OPTIONAL MATCH (acc)-[:HAS_CAUSE]->(:Cause)-[:OF_TYPE]->(cat:CauseCategory)
+            OPTIONAL MATCH (acc)-[:INVOLVES]->(v:AVessel)
+            OPTIONAL MATCH (acc)-[:OCCURRED_IN]->(loc:ALocation)
+            RETURN acc.verdict_no AS vno, acc.name AS aname, acc.type AS atype,
+                   collect(DISTINCT cat.name) AS cats,
+                   collect(DISTINCT v.name) AS vessels,
+                   collect(DISTINCT loc.name) AS locs
+        """, vnos=vnos, cats=cats, vessels=vessels).data()
+        for r in rows:
+            acc_id = 'acc:' + r['vno']
+            add_node(acc_id, (r['aname'] or r['vno'])[:24], 'Accident')
+            for c in r['cats']:
+                if c:
+                    add_node('cat:' + c, c, 'CauseCategory')
+                    add_edge(acc_id, 'cat:' + c, 'HAS_CAUSE')
+            for v in r['vessels'][:3]:
+                if v:
+                    add_node('ves:' + v, v, 'AVessel')
+                    add_edge(acc_id, 'ves:' + v, 'INVOLVES')
+            for lo in r['locs'][:1]:
+                if lo:
+                    add_node('loc:' + lo, lo[:16], 'ALocation')
+                    add_edge(acc_id, 'loc:' + lo, 'OCCURRED_IN')
+            for cid in chunk_ids:
+                if cid.startswith(r['vno']):
+                    add_edge(acc_id, 'chunk:' + cid, 'HAS_CHUNK')
+
+    if not edges:
+        return None
+    used = {e['source'] for e in edges} | {e['target'] for e in edges}
+    nodes = [n for n in nodes if n['id'] in used]
+    return {'nodes': nodes, 'edges': edges}
+
+
+# ---------------- GraphRAG setup ----------------
+NEO4J_SCHEMA = """
+Nodes:
+  Accident {verdict_no, name, type, date, night, weather, human_factors, keywords}
+    # type: 충돌|접촉|좌초|전복|침몰|화재·폭발|기관손상|해양오염|인명사상|침수|운항저해|기타
+    # night: true(야간)/false(주간)/null
+  AContent {content_id, chunk}          # 재결서 본문 청크
+  AVessel {name, type, gross_tonnage}   # type: 어선|화물선|유조선|여객선|예인선|부선|수상레저기구|기타
+  ALocation {name}, Court {name}
+  Cause {description, order}
+  CauseCategory {name}   # 경계 소홀, 항행법규 위반, 조선 부적절, 정비·점검 소홀,
+                         # 작업안전수칙 미준수, 안전관리체제 미흡, 기기취급 불량 등
+  Sanction {type, months, target_role}, Law {name}
+Relationships:
+  (Accident)-[:HAS_CHUNK]->(AContent)
+  (Accident)-[:INVOLVES]->(AVessel)
+  (Accident)-[:OCCURRED_IN]->(ALocation)
+  (Accident)-[:ADJUDICATED_BY]->(Court)
+  (Accident)-[:HAS_CAUSE]->(Cause)
+  (Cause)-[:OF_TYPE]->(CauseCategory)
+  (Cause)-[:LEADS_TO]->(Cause)          # 판시된 원인 사슬 (선행 -> 직접 원인)
+  (Accident)-[:IMPOSED]->(Sanction)
+  (Accident)-[:CITES]->(Law)
+Rules:
+  - 선박 이름의 '호' 접미사는 name에 포함되지 않는다 ('삼우7호' -> AVessel name '삼우7')
+  - RETURN 절에는 답과 함께 사고의 verdict_no, name도 반환하라
+"""
+
+T2C_EXAMPLES = [
+    "USER INPUT: '충돌 사고에서 가장 흔한 원인 카테고리는?' "
+    "QUERY: MATCH (a:Accident {type: '충돌'})-[:HAS_CAUSE]->(:Cause)-[:OF_TYPE]->(cat:CauseCategory) "
+    "RETURN cat.name, count(*) AS n ORDER BY n DESC LIMIT 5",
+    "USER INPUT: '경계 소홀이 원인인 사고와 선박을 알려줘' "
+    "QUERY: MATCH (a:Accident)-[:HAS_CAUSE]->(:Cause)-[:OF_TYPE]->(:CauseCategory {name: '경계 소홀'}) "
+    "MATCH (a)-[:INVOLVES]->(v:AVessel) RETURN a.verdict_no, a.name, v.name LIMIT 10",
+    "USER INPUT: '야간에 발생한 충돌 사고는 몇 건인가?' "
+    "QUERY: MATCH (a:Accident {type: '충돌', night: true}) RETURN count(*)",
+    "USER INPUT: '어선이 관련된 사고의 원인 분포는?' "
+    "QUERY: MATCH (a:Accident)-[:INVOLVES]->(:AVessel {type: '어선'}) "
+    "MATCH (a)-[:HAS_CAUSE]->(:Cause)-[:OF_TYPE]->(cat:CauseCategory) "
+    "RETURN cat.name, count(DISTINCT a) AS n ORDER BY n DESC",
+    "USER INPUT: '업무정지 처분이 가장 무거웠던 사고는?' "
+    "QUERY: MATCH (a:Accident)-[:IMPOSED]->(s:Sanction) WHERE s.months IS NOT NULL "
+    "RETURN a.verdict_no, a.name, s.type, s.months ORDER BY s.months DESC LIMIT 5",
+]
+
+VECTOR_CYPHER_QUERY = """
+WITH node AS content, score
+MATCH (acc:Accident)-[:HAS_CHUNK]->(content)
+OPTIONAL MATCH (acc)-[:HAS_CAUSE]->(cause:Cause)-[:OF_TYPE]->(cat:CauseCategory)
+OPTIONAL MATCH (acc)-[:INVOLVES]->(v:AVessel)
+OPTIONAL MATCH (acc)-[:OCCURRED_IN]->(loc:ALocation)
+OPTIONAL MATCH (acc)-[:IMPOSED]->(s:Sanction)
+RETURN content.content_id AS content_id,
+       content.chunk AS chunk,
+       acc.verdict_no AS verdict_no, acc.name AS accident_name,
+       acc.type AS accident_type, acc.date AS date, acc.night AS night,
+       collect(DISTINCT cat.name) AS cause_categories,
+       collect(DISTINCT cause.description)[0..4] AS causes,
+       collect(DISTINCT v.name + '(' + coalesce(v.type,'') + ')') AS vessels,
+       collect(DISTINCT loc.name) AS locations,
+       collect(DISTINCT coalesce(s.type,'') + coalesce(toString(s.months),''))[0..4] AS sanctions,
+       score
+"""
+
 
 def initialize_graphrag():
-    """GraphRAG 시스템 초기화"""
     global driver, rag
-    
+    print("Initializing Maritime GraphRAG (KMST accident graph)...")
     try:
         driver = neo4j.GraphDatabase.driver(URI, auth=AUTH)
         driver.verify_connectivity()
         print("✓ Neo4j 연결 성공")
     except Exception as e:
-        print(f"✗ Neo4j 연결 실패: {e}")
+        print(f"Neo4j 연결 실패: {e}")
         return False
 
-    llm = OpenAILLM(
-        model_name="gpt-4o",
-        model_params={"temperature": 0}
-    )
+    llm = OpenAILLM(model_name="gpt-4o", model_params={"temperature": 0})
     embedder = OpenAIEmbeddings(model="text-embedding-3-small")
-    
-    # 벡터 임베딩 생성 (없는 경우)
-    print("벡터 임베딩 확인 중...")
-    from neo4j_graphrag.indexes import create_vector_index
-    
-    with driver.session() as session:
-        # 임베딩 없는 Content 노드 확인
-        result = session.run("MATCH (c:Content) WHERE c.embedding IS NULL RETURN elementId(c) AS id, c.chunk AS text")
-        records = result.data()
-        
-        if records:
-            print(f"  → {len(records)}개 청크에 임베딩 생성 중...")
-            for i, record in enumerate(records):
-                node_id = record["id"]
-                text = record["text"]
-                try:
-                    vector = embedder.embed_query(text)
-                    if hasattr(vector, 'tolist'):
-                        vector = vector.tolist()
-                    
-                    session.run("""
-                        MATCH (c) WHERE elementId(c) = $id
-                        SET c.embedding = $embedding
-                        """, {"id": node_id, "embedding": vector})
-                    
-                    if (i+1) % 10 == 0:
-                        print(f"  → 처리됨: {i+1}/{len(records)}")
-                except Exception as e:
-                    print(f"  ✗ 청크 {node_id} 임베딩 오류: {e}")
-            print("✓ 임베딩 생성 완료")
-        else:
-            print("✓ 모든 청크에 임베딩 존재")
-    
-    # 벡터 인덱스 생성
-    try:
-        create_vector_index(
-            driver,
-            INDEX_NAME,
-            label="Content",
-            embedding_property="embedding",
-            dimensions=1536,
-            similarity_fn="cosine",
-        )
-        print("✓ 벡터 인덱스 생성/확인 완료")
-    except Exception as e:
-        print(f"  ℹ 인덱스 정보: {e}")
 
-    # Vector Retriever (결과 개수 증가)
     vector_retriever = VectorRetriever(
-        driver=driver,
-        index_name=INDEX_NAME,
-        embedder=embedder
-    )
-    
-    # VectorCypher Retriever
-    retrieval_query = """
-    WITH node AS content, score
-    MATCH (content)<-[:HAS_CHUNK]-(article:Article)
-    OPTIONAL MATCH (article)-[:BELONGS_TO]->(category:Category)
-    OPTIONAL MATCH (article)-[:PUBLISHED_BY]->(media:Media)
-    OPTIONAL MATCH (article)-[:MENTIONS]->(entity)
-    OPTIONAL MATCH (entity)-[rel:OPERATES|CALLS_AT|APPLIES_TO|INVOLVED_IN|OCCURRED_AT]-(neighbor)
-    WITH content, score, article, category, media,
-        collect(DISTINCT coalesce(entity.name, entity.incident_id)) AS mentioned_entities,
-        collect(DISTINCT CASE WHEN neighbor IS NULL THEN NULL ELSE
-            coalesce(entity.name, entity.incident_id) + ' -' + type(rel) + '- ' +
-            coalesce(neighbor.name, neighbor.incident_id) END) AS entity_facts
-    RETURN
-        content.content_id AS content_id,
-        content.chunk AS chunk,
-        article.article_id AS article_id,
-        article.title AS article_title,
-        article.url AS article_url,
-        article.published_date AS article_date,
-        category.name AS category_name,
-        media.name AS media_name,
-        score AS similarity_score,
-        [m IN mentioned_entities WHERE m IS NOT NULL] AS mentioned_entities,
-        [f IN entity_facts WHERE f IS NOT NULL] AS entity_facts
-    """
-    
+        driver=driver, index_name=INDEX_NAME, embedder=embedder)
     vector_cypher_retriever = VectorCypherRetriever(
-        driver=driver,
-        index_name=INDEX_NAME,
-        retrieval_query=retrieval_query,
-        embedder=embedder
-    )
-
-    # Text2Cypher Retriever — curated schema (auto-extracted schema produced
-    # malformed Cypher and empty retrievals; this text is what the benchmark validated)
-    neo4j_schema = """
-Nodes:
-  Article {article_id, title, url, published_date}
-  Content {content_id, chunk}
-  Media {name}, Category {name}
-  Vessel {name, type}   # type: 컨테이너선|유조선|LNG운반선|벌크선
-  Company {name}, Port {name}
-  Regulation {name, applies_to_type, description}
-  Incident {incident_id, description}
-Naming rules:
-  - 선박 이름 뒤의 '호'는 저장된 name에 포함되지 않는다 (질문의 '대양스피릿호' -> Vessel name '대양스피릿')
-  - RETURN 절에는 답이 되는 값과 함께 그 주체의 이름(v.name 등)도 반환하라
-Relationships:
-  (Article)-[:HAS_CHUNK]->(Content)
-  (Article)-[:PUBLISHED_BY]->(Media)
-  (Article)-[:BELONGS_TO]->(Category)
-  (Article)-[:MENTIONS]->(Vessel|Company|Port|Regulation|Incident)
-  (Company)-[:OPERATES]->(Vessel)
-  (Vessel)-[:CALLS_AT]->(Port)
-  (Regulation)-[:APPLIES_TO]->(Vessel)
-  (Vessel)-[:INVOLVED_IN]->(Incident)
-  (Incident)-[:OCCURRED_AT]->(Port)
-
-KMST accident layer (실제 해양안전심판원 재결서에서 추출):
-  Accident {verdict_no, name, type, date, night, weather, human_factors, keywords}
-    # type: 충돌|접촉|좌초|전복|침몰|화재·폭발|기관손상|해양오염|인명사상|침수|운항저해|기타
-  AVessel {name, type, gross_tonnage}, ALocation {name}, Court {name}
-  Cause {description, order}, CauseCategory {name}, Sanction {type, months, target_role}, Law {name}
-  (Accident)-[:INVOLVES]->(AVessel)   (Accident)-[:OCCURRED_IN]->(ALocation)
-  (Accident)-[:ADJUDICATED_BY]->(Court)   (Accident)-[:HAS_CAUSE]->(Cause)
-  (Cause)-[:OF_TYPE]->(CauseCategory)   (Cause)-[:LEADS_TO]->(Cause)
-  (Accident)-[:IMPOSED]->(Sanction)   (Accident)-[:CITES]->(Law)
-"""
-    
-    examples = [
-        """
-        USER INPUT: 한서파이오니어호를 운영하는 선사는 어디인가요?
-        CYPHER QUERY:
-        MATCH (c:Company)-[:OPERATES]->(v:Vessel {name: "한서파이오니어"})
-        RETURN c.name
-        """,
-        """
-        USER INPUT: 부산항에 기항하는 컨테이너선을 운영하는 선사를 알려주세요
-        CYPHER QUERY:
-        MATCH (c:Company)-[:OPERATES]->(v:Vessel {type: "컨테이너선"})-[:CALLS_AT]->(:Port {name: "부산항"})
-        RETURN DISTINCT c.name, v.name
-        """,
-        """
-        USER INPUT: 울산항에서 발생한 사고와 관련 기사를 알려주세요
-        CYPHER QUERY:
-        MATCH (i:Incident)-[:OCCURRED_AT]->(:Port {name: "울산항"})
-        OPTIONAL MATCH (a:Article)-[:MENTIONS]->(i)
-        RETURN i.incident_id, i.description, a.title, a.url
-        """,
-        """
-        USER INPUT: 충돌 사고에서 가장 흔한 원인 카테고리는 무엇인가요?
-        CYPHER QUERY:
-        MATCH (a:Accident {type: "충돌"})-[:HAS_CAUSE]->(:Cause)-[:OF_TYPE]->(cat:CauseCategory)
-        RETURN cat.name, count(*) AS n ORDER BY n DESC LIMIT 5
-        """,
-        """
-        USER INPUT: 경계 소홀이 원인인 사고들의 선박과 장소를 알려주세요
-        CYPHER QUERY:
-        MATCH (a:Accident)-[:HAS_CAUSE]->(:Cause)-[:OF_TYPE]->(:CauseCategory {name: "경계 소홀"})
-        MATCH (a)-[:INVOLVES]->(v:AVessel) OPTIONAL MATCH (a)-[:OCCURRED_IN]->(l:ALocation)
-        RETURN a.name, v.name, l.name LIMIT 10
-        """,
-        """
-        USER INPUT: 규제/환경 분야 기사 개수를 알려주세요
-        CYPHER QUERY:
-        MATCH (a:Article)-[:BELONGS_TO]->(c:Category)
-        RETURN c.name as category, count(a) as article_count
-        ORDER BY article_count DESC
-        """,
-    ]
-    
+        driver=driver, index_name=INDEX_NAME,
+        retrieval_query=VECTOR_CYPHER_QUERY, embedder=embedder)
     text2cypher_retriever = Text2CypherRetriever(
-        driver=driver,
-        llm=llm,
-        neo4j_schema=neo4j_schema,
-        examples=examples,
-    )
+        driver=driver, llm=llm, neo4j_schema=NEO4J_SCHEMA, examples=T2C_EXAMPLES)
 
-    # Tools Setup
     vector_tool = vector_retriever.convert_to_tool(
         name="vector_retriever",
-        description="벡터 기반 검색. 해양 뉴스 본문 내용(사건 경위, 정책 설명 등)을 의미 기반으로 찾을 때 사용합니다."
-    )
+        description="재결서 본문을 의미 기반으로 검색합니다. 특정 사고의 경위·상황 설명을 찾을 때 사용합니다.")
     vector_cypher_tool = vector_cypher_retriever.convert_to_tool(
         name="vectorcypher_retriever",
-        description="벡터 검색 결과 기사에 언급된 엔티티(선박/선사/항만/규제/사고)와 그 관계(운영, 기항, 적용, 사고)를 함께 반환합니다. 관계를 따라가야 하는 질문에 사용합니다."
-    )
+        description="재결서 본문 검색 결과에 해당 사고의 원인 사슬, 관련 선박, 장소, 처분을 함께 붙여 반환합니다. 사고의 전체 맥락이 필요할 때 사용합니다.")
     text2cypher_tool = text2cypher_retriever.convert_to_tool(
         name="text2cypher_retriever",
-        description="자연어를 Cypher로 변환해 그래프를 직접 질의합니다. 선사-선박-항만-규제-사고를 잇는 멀티홉 질문이나 개수 집계에 사용합니다."
-    )
+        description="자연어를 Cypher로 변환해 사고 그래프를 직접 질의합니다. 여러 사고에 걸친 집계(가장 흔한 원인, 건수, 평균 처분)나 조건 검색(야간·어선·특정 원인)에 사용합니다.")
 
     tools_retriever = ToolsRetriever(
-        driver=driver,
-        llm=llm,
-        tools=[vector_tool, vector_cypher_tool, text2cypher_tool],
-    )
+        driver=driver, llm=llm,
+        tools=[vector_tool, vector_cypher_tool, text2cypher_tool])
 
-    # GraphRAG Setup
     prompt_template = RagTemplate(
-        template="""당신은 해양 산업(해운·항만·규제) 정보를 제공하는 전문 어시스턴트입니다.
+        template="""당신은 해양안전심판원 재결서 139건의 지식그래프를 근거로 답하는 해양사고 분석 어시스턴트입니다.
 
 질문: {query_text}
 
-검색된 문서 정보:
+검색된 재결 정보:
 {context}
 
 지침:
-1. 제공된 검색 결과에 근거해 질문에 직접 답한 뒤, 근거 기사를 함께 제시하세요.
-2. 답의 근거가 되는 엔티티(선사/선박/항만/규제)를 명시하세요.
-3. 각 근거 기사마다 제목, URL, 발행일, 카테고리, 언론사, 요약(1-2문장)을 포함하세요.
-4. 검색 결과에 없는 내용은 절대 추측하거나 지어내지 마세요. 출처(제목/URL/날짜)를 창작하는 것은 금지됩니다.
-5. 검색 결과가 비어 있거나 질문과 무관하면 content에 "관련 정보를 찾을 수 없습니다"라고 쓰고 sources는 빈 배열로 두세요.
-6. 다음 JSON 형식으로만 답변하세요 (마크다운 코드 블록 없이):
+1. 검색 결과에 근거해 질문에 직접 답하세요. 사고를 인용할 때는 재결번호와 사건명을 명시하세요.
+2. 원인을 언급할 때는 원인 카테고리(경계 소홀, 작업안전수칙 미준수 등)를 사용하세요.
+3. 검색 결과에 없는 내용은 절대 지어내지 마세요. 재결번호·사건명·날짜를 창작하는 것은 금지입니다.
+4. 검색 결과가 비어 있거나 무관하면 content에 "관련 재결을 찾을 수 없습니다"라고 쓰고 sources는 빈 배열로 두세요.
+5. 다음 JSON 형식으로만 답변하세요 (마크다운 코드 블록 없이):
 
 {{
   "sections": [
     {{
-      "title": "검색 결과",
-      "content": "",
+      "title": "분석 결과",
+      "content": "질문에 대한 직접 답변 (근거 사고의 재결번호 포함)",
       "sources": [
         {{
-          "title": "기사 제목",
-          "url": "기사 URL",
-          "date": "발행일",
-          "category": "카테고리",
-          "media": "언론사",
-          "summary": "기사 요약 (2-3문장)"
+          "title": "사건명",
+          "verdict_no": "재결번호",
+          "date": "사고일 또는 재결일",
+          "category": "사고유형",
+          "court": "관할 심판원",
+          "summary": "이 사고가 답의 근거가 되는 이유 (1-2문장)"
         }}
       ]
     }}
@@ -329,41 +324,22 @@ KMST accident layer (실제 해양안전심판원 재결서에서 추출):
 }}
 
 답변:""",
-        expected_inputs=["context", "query_text"]
-    )
+        expected_inputs=["context", "query_text"])
 
-    rag = GraphRAG(
-        llm=llm,
-        retriever=tools_retriever,
-        prompt_template=prompt_template
-    )
-    
-    print("✓ GraphRAG 시스템 초기화 완료")
+    rag = GraphRAG(llm=llm, retriever=tools_retriever, prompt_template=prompt_template)
+    load_entity_index(driver)
+    print("✓ Maritime GraphRAG 초기화 완료 (재결서 코퍼스)")
     return True
+
 
 @app.on_event("startup")
 async def startup_event():
-    """서버 시작 시 GraphRAG 초기화"""
-    success = initialize_graphrag()
-    if not success:
-        print("⚠ Warning: GraphRAG 초기화 실패")
+    if not initialize_graphrag():
+        print("경고: GraphRAG 초기화 실패 — /search 사용 불가")
 
-@app.on_event("shutdown")
-async def shutdown_event():
-    """서버 종료 시 연결 해제"""
-    global driver
-    if driver:
-        driver.close()
-        print("✓ Neo4j 연결 종료")
-
-@app.get("/")
-async def root():
-    return {"message": "RAG Search API is running"}
 
 @app.get("/health")
-async def health_check():
-    """헬스 체크 엔드포인트"""
-    global driver
+async def health():
     try:
         if driver:
             driver.verify_connectivity()
@@ -372,93 +348,65 @@ async def health_check():
     except Exception as e:
         return {"status": "unhealthy", "error": str(e)}
 
+
 @app.post("/search", response_model=QueryResponse)
 async def search(request: QueryRequest):
-    """검색 쿼리 처리"""
-    global rag
-    
     if not rag:
         raise HTTPException(status_code=503, detail="GraphRAG system not initialized")
-    
     try:
-        # GraphRAG 검색 실행
         result = rag.search(query_text=request.query, return_context=True)
-        
-        # 응답에서 마크다운 코드 블록 제거
+
         answer_text = result.answer.strip()
-        
-        # ```json ... ``` 형식 제거
         if answer_text.startswith('```'):
-            # 첫 줄 제거 (```json)
             lines = answer_text.split('\n')
             if lines[0].startswith('```'):
                 lines = lines[1:]
-            # 마지막 줄 제거 (```)
             if lines and lines[-1].strip() == '```':
                 lines = lines[:-1]
             answer_text = '\n'.join(lines).strip()
-        
-        # JSON 파싱
-        import json
+
         try:
-            parsed_result = json.loads(answer_text)
+            parsed = json.loads(answer_text)
         except Exception as e:
             print(f"JSON 파싱 실패: {e}")
-            print(f"응답 내용: {answer_text[:500]}")
-            # JSON 파싱 실패 시 기본 형태로 반환
-            parsed_result = {
-                "sections": [{
-                    "title": "검색 결과",
-                    "content": result.answer,
-                    "sources": []
-                }]
-            }
-        
-        # 출처 정보 변환
-        sources = []
-        source_id = 1
-        
-        for section in parsed_result.get("sections", []):
+            parsed = {"sections": [{"title": "분석 결과",
+                                    "content": result.answer, "sources": []}]}
+
+        sources, source_id = [], 1
+        for section in parsed.get("sections", []):
             source_ids = []
-            for source_data in section.get("sources", []):
+            for src in section.get("sources", []):
                 sources.append({
                     "id": source_id,
-                    "shortName": source_data.get("media", "unknown"),
-                    "title": source_data.get("title", ""),
-                    "category": source_data.get("category", "기타"),
-                    "date": source_data.get("date", ""),
-                    "url": source_data.get("url", ""),
-                    "summary": source_data.get("summary", ""),
-                    "icon": get_icon_for_category(source_data.get("category", ""))
+                    "shortName": src.get("court", "해심"),
+                    "title": src.get("title", ""),
+                    "category": src.get("category", "기타"),
+                    "date": src.get("date", "") or "",
+                    "url": KMST_URL,
+                    "summary": (f"[{src.get('verdict_no', '')}] " if src.get('verdict_no') else "")
+                               + src.get("summary", ""),
+                    "icon": "",
                 })
                 source_ids.append(source_id)
                 source_id += 1
-            
             section["sourceIds"] = source_ids
-            # sources 키 제거 (프론트엔드에서 sourceIds 사용)
             section.pop("sources", None)
-        
-        return {
-            "sections": parsed_result.get("sections", []),
-            "sources": sources
-        }
-        
+
+        try:
+            ctx_text = " ".join(str(i.content) for i in result.retriever_result.items) \
+                if result.retriever_result else ""
+            graph = build_subgraph(ctx_text + " " + result.answer + " " + request.query)
+        except Exception as ge:
+            print(f"서브그래프 생성 실패: {ge}")
+            graph = None
+
+        return {"sections": parsed.get("sections", []),
+                "sources": sources, "graph": graph}
     except Exception as e:
         print(f"검색 오류: {e}")
         raise HTTPException(status_code=500, detail=f"Search failed: {str(e)}")
 
-def get_icon_for_category(category: str) -> str:
-    """카테고리에 따른 아이콘 반환"""
-    icons = {
-        "정치": "🏛️",
-        "경제": "💼",
-        "사회": "👥",
-        "생활/문화": "🎭",
-        "IT/과학": "💻",
-        "세계": "🌍",
-    }
-    return icons.get(category, "📰")
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)

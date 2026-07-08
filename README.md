@@ -100,9 +100,8 @@ files into `data/kmst/manual/` and run `ingest/parse_manual_verdicts.py`) →
 `evaluation/accident_insights.py`. The extracted structured records
 (`data/kmst/accidents_graph.json`) are committed, so the graph and analysis are
 reproducible without refetching or an OpenAI key. Source documents are
-public-sector works (KOGL) of the Korean Maritime Safety Tribunal. The accident
-layer is also wired into the app's Text2Cypher schema, so the frontend answers
-real-data questions alongside the synthetic corpus.
+public-sector works (KOGL) of the Korean Maritime Safety Tribunal. The application (below) runs entirely on this real corpus; the synthetic world
+of Part 1 is used only by the retrieval benchmark.
 
 ## Graph schema
 
@@ -120,15 +119,21 @@ For the bundled corpus the knowledge layer loads from ground-truth tables
 (`data/corpus/entities.json`); for real documents `ingest/extract_entities.py`
 produces the same structure with an LLM extractor.
 
-## Application
+## Application — Q&A over the real accident graph
 
-FastAPI backend with three retrievers behind an LLM router
-(`ToolsRetriever` picks vector / graph-expansion / Text2Cypher per question),
-answering in a citation-grounded JSON contract rendered by a React frontend:
+The application serves the **real KMST corpus** (Part 2): a FastAPI backend runs
+three retrievers behind an LLM router (`ToolsRetriever` picks verdict-text vector
+search / graph-expanded context / direct Text2Cypher per question) over the
+139-adjudication graph. Every answer returns its **evidence subgraph** — the
+retrieved verdict chunks, the accidents they belong to, and the causes, vessels
+and locations they connect to — rendered as an interactive force-directed view
+(d3-force) so the retrieval path is visible, not implied:
 
-| Search | Multi-hop answer |
+![Aggregate query with evidence graph](docs/images/result_screen.png)
+
+| Landing | Single-accident question — chunks → accident → causes |
 |---|---|
-| ![Search screen](docs/images/search_screen.png) | ![Result screen](docs/images/result_screen.png) |
+| ![Search screen](docs/images/search_screen.png) | ![Accident result](docs/images/result_accident.png) |
 
 ## Quick start
 

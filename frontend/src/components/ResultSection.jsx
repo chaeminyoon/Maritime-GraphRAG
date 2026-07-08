@@ -12,6 +12,9 @@ function ResultSection({ section, sources }) {
         <div className="result-section">
             <h2 className="section-title">{section.title}</h2>
             <div className="section-content">
+                {section.content && (
+                    <p className="answer-text">{section.content}</p>
+                )}
                 {sectionSources.length > 0 ? (
                     <ul className="article-list">
                         {sectionSources.map((source, idx) => (
@@ -22,7 +25,7 @@ function ResultSection({ section, sources }) {
                         ))}
                     </ul>
                 ) : (
-                    <p className="no-sources">관련 기사가 없습니다.</p>
+                    !section.content && <p className="no-sources">관련 기사가 없습니다.</p>
                 )}
             </div>
         </div>

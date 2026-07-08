@@ -1,0 +1,75 @@
+.graph-view {
+    margin-top: 24px;
+    background: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 18px 20px 12px 20px;
+}
+
+.graph-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.graph-header h3 {
+    margin: 0 0 6px 0;
+    font-size: 1rem;
+    color: #0B3C61;
+}
+
+.graph-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.75rem;
+    color: #475569;
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.graph-svg {
+    width: 100%;
+    height: auto;
+    background: #F8FAFC;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.node-label {
+    font-size: 10.5px;
+    text-anchor: middle;
+    fill: #1E293B;
+    pointer-events: none;
+}
+
+.edge-label {
+    font-size: 8.5px;
+    text-anchor: middle;
+    fill: transparent;
+    pointer-events: none;
+}
+
+.edge-label.active {
+    fill: #0F4C81;
+    font-weight: 600;
+}
+
+.graph-caption {
+    font-size: 0.78rem;
+    color: #64748B;
+    margin: 8px 2px 2px 2px;
+}

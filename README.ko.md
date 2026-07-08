@@ -95,8 +95,8 @@
 `evaluation/accident_insights.py`. 추출된 구조화 레코드
 (`data/kmst/accidents_graph.json`)가 커밋되어 있어 재수집이나 OpenAI 키 없이도
 그래프와 분석을 재현할 수 있습니다. 원문서는 해양안전심판원의 공공저작물
-(공공누리)입니다. 사고 레이어는 앱의 Text2Cypher 스키마에도 연결되어,
-프론트엔드가 합성 코퍼스와 함께 실데이터 질문에도 답합니다.
+(공공누리)입니다. 아래 애플리케이션은 전적으로 이 실데이터 코퍼스 위에서 동작하며, 1부의 합성
+세계는 검색 벤치마크 전용입니다.
 
 ## 그래프 스키마
 
@@ -113,15 +113,20 @@
 동봉 코퍼스의 지식 계층은 정답 테이블(`data/corpus/entities.json`)에서 적재하고,
 실제 문서에는 `ingest/extract_entities.py`(LLM 추출기)가 같은 구조를 생성합니다.
 
-## 애플리케이션
+## 애플리케이션 — 실제 사고 그래프 Q&A
 
-FastAPI 백엔드가 3개 검색기를 LLM 라우터(`ToolsRetriever`) 뒤에 두고 질문마다
-벡터 / 그래프 확장 / Text2Cypher를 선택하며, 인용 근거가 있는 JSON 계약으로
-답해 React 프론트엔드가 렌더링합니다:
+애플리케이션은 **실데이터(2부) 코퍼스**를 서빙합니다: FastAPI 백엔드가 재결서
+139건 그래프 위에서 3개 검색기(재결서 본문 벡터 검색 / 원인·선박·처분이 결합된
+그래프 확장 / Text2Cypher 직접 질의)를 LLM 라우터로 선택합니다. 모든 답변은
+**근거 서브그래프** — 검색에 사용된 재결서 청크, 그 청크가 속한 사고, 사고에
+연결된 원인·선박·장소 — 를 함께 반환하고, 프론트엔드가 d3-force 인터랙티브
+그래프로 렌더링해 검색 경로가 눈에 보이게 합니다:
 
-| 검색 화면 | 멀티홉 답변 |
+![Aggregate query with evidence graph](docs/images/result_screen.png)
+
+| 랜딩 | 개별 사고 질문 — 청크 → 사고 → 원인 |
 |---|---|
-| ![Search screen](docs/images/search_screen.png) | ![Result screen](docs/images/result_screen.png) |
+| ![Search screen](docs/images/search_screen.png) | ![Accident result](docs/images/result_accident.png) |
 
 ## 빠른 시작
 

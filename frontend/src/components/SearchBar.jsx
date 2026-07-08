@@ -17,7 +17,7 @@ function SearchBar({ onSearch, loading }) {
                 <input
                     type="text"
                     className="search-input"
-                    placeholder="해양 산업 질문을 입력하세요... (예: 사고 이력이 있는 선박의 운영 선사는?)"
+                    placeholder="해양사고 질문을 입력하세요... (예: 야간 충돌 사고의 주요 원인은?)"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     disabled={loading}

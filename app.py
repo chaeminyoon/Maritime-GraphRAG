@@ -338,6 +338,22 @@ async def startup_event():
         print("경고: GraphRAG 초기화 실패 — /search 사용 불가")
 
 
+@app.get("/stats")
+async def stats():
+    """Corpus stats for the frontend meta strip."""
+    if not driver:
+        raise HTTPException(status_code=503, detail="not initialized")
+    with driver.session() as s:
+        row = s.run("""
+            MATCH (a:Accident) WITH count(a) AS accidents
+            MATCH (c:Cause) WITH accidents, count(c) AS causes
+            MATCH (v:AVessel) WITH accidents, causes, count(v) AS vessels
+            MATCH ()-[r:LEADS_TO]->() RETURN accidents, causes, vessels, count(r) AS chains
+        """).single()
+    return {"accidents": row["accidents"], "causes": row["causes"],
+            "vessels": row["vessels"], "chains": row["chains"]}
+
+
 @app.get("/health")
 async def health():
     try:
@@ -376,6 +392,9 @@ async def search(request: QueryRequest):
         for section in parsed.get("sections", []):
             source_ids = []
             for src in section.get("sources", []):
+                # drop placeholder sources the LLM sometimes emits for aggregates
+                if not src.get("title") or src.get("verdict_no") in (None, "", "재결번호"):
+                    continue
                 sources.append({
                     "id": source_id,
                     "shortName": src.get("court", "해심"),

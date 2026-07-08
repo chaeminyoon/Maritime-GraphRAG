@@ -27,7 +27,7 @@ function SearchBar({ onSearch, loading }) {
                     className="search-button"
                     disabled={loading || !query.trim()}
                 >
-                    {loading ? '검색 중...' : '🔍 검색'}
+                    {loading ? '검색 중...' : '검색'}
                 </button>
             </div>
         </form>

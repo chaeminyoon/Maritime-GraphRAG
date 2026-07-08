@@ -58,6 +58,20 @@ function GraphView({ graph }) {
                 </div>
             </div>
             <svg viewBox={`0 0 ${W} ${H}`} className="graph-svg">
+                <defs>
+                    <pattern id="dotgrid" width="22" height="22" patternUnits="userSpaceOnUse">
+                        <circle cx="1" cy="1" r="1" fill="#E3E9F2" />
+                    </pattern>
+                    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4"
+                        markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 0 L 8 4 L 0 8 z" fill="#B9C4D4" />
+                    </marker>
+                    <marker id="arrow-active" viewBox="0 0 8 8" refX="7" refY="4"
+                        markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 0 L 8 4 L 0 8 z" fill="#0F4C81" />
+                    </marker>
+                </defs>
+                <rect width={W} height={H} fill="url(#dotgrid)" />
                 {layout.links.map((l, i) => {
                     const active = hover && (l.source.id === hover || l.target.id === hover);
                     return (
@@ -65,8 +79,9 @@ function GraphView({ graph }) {
                             <line
                                 x1={l.source.x} y1={l.source.y}
                                 x2={l.target.x} y2={l.target.y}
-                                stroke={active ? '#0F4C81' : '#CBD5E1'}
-                                strokeWidth={active ? 2 : 1.2}
+                                stroke={active ? '#0F4C81' : '#C6D0DE'}
+                                strokeWidth={active ? 1.8 : 1.1}
+                                markerEnd={active ? 'url(#arrow-active)' : 'url(#arrow)'}
                             />
                             <text
                                 x={(l.source.x + l.target.x) / 2}
@@ -86,10 +101,17 @@ function GraphView({ graph }) {
                         onMouseLeave={() => setHover(null)}
                     >
                         <circle
+                            r={(n.type === 'Chunk' ? 7 : 11) + 3.5}
+                            fill={styleOf(n.type).color}
+                            opacity={hover === n.id ? 0.18 : 0}
+                            style={{ transition: 'opacity 0.15s' }}
+                        />
+                        <circle
                             r={n.type === 'Chunk' ? 7 : 11}
                             fill={styleOf(n.type).color}
-                            opacity={hover && hover !== n.id ? 0.45 : 1}
-                            stroke="#fff" strokeWidth="1.5"
+                            opacity={hover && hover !== n.id ? 0.38 : 1}
+                            stroke="#fff" strokeWidth="2"
+                            style={{ transition: 'opacity 0.15s' }}
                         />
                         <text y={n.type === 'Chunk' ? 18 : 24} className="node-label">
                             {n.label.length > 14 ? `${n.label.slice(0, 13)}…` : n.label}

@@ -10,6 +10,12 @@ function App() {
     const [error, setError] = useState(null);
     const [isSearching, setIsSearching] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [stats, setStats] = useState(null);
+
+    React.useEffect(() => {
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8001';
+        fetch(`${apiUrl}/stats`).then(r => r.json()).then(setStats).catch(() => {});
+    }, []);
 
     const handleSearch = async (query) => {
         if (!query.trim()) return;
@@ -57,7 +63,6 @@ function App() {
 
                 {error && (
                     <div className="error-message">
-                        <span>⚠️</span>
                         <p>{error}</p>
                     </div>
                 )}
@@ -89,6 +94,26 @@ function App() {
                     <div className="welcome-message">
                         <h2>해양사고 재결 지식그래프</h2>
                         <p>실제 재결서에서 추출한 사고-원인-선박-처분 그래프를 근거로 답합니다.</p>
+                        {stats && (
+                            <div className="stats-strip">
+                                <div className="stat-item">
+                                    <span className="stat-value">{stats.accidents}</span>
+                                    <span className="stat-label">재결서</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-value">{stats.causes}</span>
+                                    <span className="stat-label">판시 원인</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-value">{stats.chains}</span>
+                                    <span className="stat-label">원인 사슬</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-value">{stats.vessels}</span>
+                                    <span className="stat-label">관련 선박</span>
+                                </div>
+                            </div>
+                        )}
                         <div className="example-queries">
                             <p>예시 질문:</p>
                             <ul>

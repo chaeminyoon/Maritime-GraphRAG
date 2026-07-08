@@ -17,7 +17,6 @@ function SourceTooltip({ source }) {
             {showTooltip && (
                 <div className="source-tooltip">
                     <div className="tooltip-header">
-                        <span className="tooltip-icon">{source.icon}</span>
                         <div className="tooltip-title-group">
                             <strong className="tooltip-source">{source.shortName}</strong>
                             <span className="tooltip-category">{source.category}</span>
@@ -29,7 +28,7 @@ function SourceTooltip({ source }) {
                     <p className="tooltip-summary">{source.summary}</p>
 
                     <div className="tooltip-footer">
-                        <span className="tooltip-date">📅 {source.date}</span>
+                        <span className="tooltip-date">{source.date}</span>
                         <a
                             href={source.url}
                             target="_blank"
@@ -37,7 +36,7 @@ function SourceTooltip({ source }) {
                             className="tooltip-link"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            🔗 원문 보기
+                            원문 보기
                         </a>
                     </div>
                 </div>

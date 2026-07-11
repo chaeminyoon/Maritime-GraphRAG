@@ -192,4 +192,4 @@ cd frontend && npm install && npm run dev   # frontend at localhost:5173
 ## Related projects
 
 - [Parse-Everything](https://github.com/chaeminyoon/Parse-Everything) — self-healing document parsing (upstream of any RAG corpus)
-- [Vehicle-Anomaly-Algorithm](https://github.com/chaeminyoon/Vehicle-Anomaly-Algorithm) · [AIS-Traffic-Model](https://github.com/chaeminyoon/AIS-Traffic-Model) · [cbm-anomaly-detection](https://github.com/chaeminyoon/cbm-anomaly-detection) — the maritime/transport AI line this project extends into knowledge retrieval
+- [Vehicle-Anomaly-Algorithm](https://github.com/chaeminyoon/Vehicle-Anomaly-Algorithm) · [AIS-Traffic-Model](https://github.com/chaeminyoon/AIS-Traffic-Model) · [CBM-Anomaly-Dashboard](https://github.com/chaeminyoon/CBM-Anomaly-Dashboard) — the maritime/transport AI line this project extends into knowledge retrieval

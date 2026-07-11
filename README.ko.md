@@ -184,4 +184,4 @@ cd frontend && npm install && npm run dev # 프론트엔드 (localhost:5173)
 ## 관련 프로젝트
 
 - [Parse-Everything](https://github.com/chaeminyoon/Parse-Everything) — 자가 치유 문서 파싱 (RAG 코퍼스의 상류 공정)
-- [Vehicle-Anomaly-Algorithm](https://github.com/chaeminyoon/Vehicle-Anomaly-Algorithm) · [AIS-Traffic-Model](https://github.com/chaeminyoon/AIS-Traffic-Model) · [cbm-anomaly-detection](https://github.com/chaeminyoon/cbm-anomaly-detection) — 이 프로젝트가 지식 검색으로 확장하는 해양·교통 AI 라인
+- [Vehicle-Anomaly-Algorithm](https://github.com/chaeminyoon/Vehicle-Anomaly-Algorithm) · [AIS-Traffic-Model](https://github.com/chaeminyoon/AIS-Traffic-Model) · [CBM-Anomaly-Dashboard](https://github.com/chaeminyoon/CBM-Anomaly-Dashboard) — 이 프로젝트가 지식 검색으로 확장하는 해양·교통 AI 라인

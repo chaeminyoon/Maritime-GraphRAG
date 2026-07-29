@@ -4,21 +4,21 @@
 
 <h1 align="center">Maritime GraphRAG</h1>
 
-<p align="center">해양 도메인(선박·선사·항만·규제·사고) 특화 Neo4j 지식그래프 RAG 엔진 — 정답 있는 멀티홉 검색 벤치마크(벡터 0.70 → 그래프 질의 0.85) + 실제 해양안전심판 재결서 139건의 크로스 문서 원인 분석</p>
+<p align="center">해양 도메인(선박·선사·항만·규제·사고) 특화 Neo4j 지식그래프 RAG 엔진 — 정답 있는 멀티홉 검색 벤치마크(벡터 0.70 → 앙상블 0.90) + 실제 해양안전심판 재결서 139건의 크로스 문서 원인 분석</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/Neo4j-Knowledge_Graph-008CC1?logo=neo4j&logoColor=white" alt="Neo4j">
   <img src="https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white" alt="FastAPI">
   <img src="https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=black" alt="React">
-  <img src="https://img.shields.io/badge/Benchmark-0.70%E2%86%920.85-green.svg" alt="Benchmark">
+  <img src="https://img.shields.io/badge/Benchmark-0.70%E2%86%920.90-green.svg" alt="Benchmark">
 </p>
 
 해양 산업의 질문은 본질적으로 관계형입니다: *"부산항에 컨테이너선을 기항시키는
 선사는?"* 은 선사→선박→항만 조인이고, *"울산항 사고 선박에 적용되는 환경 규제는?"*
 은 사고→선박→선종→규제 체인입니다. 순수 벡터 검색은 각 엔티티에 대한 문서는
 찾아도 이 조인을 수행하지 못합니다. 이 프로젝트는 해양 뉴스 위에 2계층 Neo4j
-그래프(문서 + 타입 엔티티)를 구축하고, 에이전틱 검색기 라우터(FastAPI + React)로
+그래프(문서 + 타입 엔티티)를 구축하고, best-of 검색기 앙상블(FastAPI + React)로
 서빙하며, **그래프가 실제로 얼마나 기여하는지 측정**합니다.
 
 ## 검색 벤치마크 — 그래프는 값을 하는가?
@@ -39,7 +39,9 @@
 | 무검색 (대조군) | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 | 벡터 (top-5 청크) | 0.73 | 0.70 | 0.91 | 0.38 | 1.00 |
 | 그래프 확장 (VectorCypher) | 0.82 | 0.75 | 0.91 | 0.50 | 1.00 |
-| **Text2Cypher (그래프 직접 질의)** | **0.85** | **0.85** | **1.00** | **0.75** | 0.00 |
+| Text2Cypher (그래프 직접 질의) | 0.85 | 0.85 | 1.00 | 0.75 | 0.00 |
+| LLM 라우터 (사전 선택) | 0.45 | 0.45 | 0.64 | 0.12 | 1.00 |
+| **앙상블 (전부 실행 + 심판)** | **0.92** | **0.90** | **1.00** | **0.75** | **1.00** |
 
 ![Retrieval benchmark](docs/analysis/retrieval_benchmark.png)
 
@@ -49,12 +51,20 @@
   검색 가능한 어떤 청크에도 없기 때문입니다.
 - **그래프 확장이 일부를 회복합니다** (0.50): 검색된 청크에 언급 엔티티의 관계
   사실(`X -OPERATES- Y`)을 덧붙이면 LLM이 컨텍스트 안에서 일부 조인을 수행합니다.
-- **그래프 직접 질의가 전체 최고입니다** (strict 0.85, 1홉 1.00) — 질문이 Cypher
-  패턴에 대응되면 조인이 LLM이 아니라 데이터베이스에서 일어납니다.
-- **단, Text2Cypher는 복잡한 체인에 취약합니다**: 3홉 문항과 일부 2홉 변형에서
-  형태는 그럴듯하지만 결과가 빈 Cypher가 생성됐습니다(더 싼 검색기가 맞힌 문제에서
-  0점). 어떤 검색기도 전 구간을 지배하지 못한다는 것 — 이것이 질문마다 전략을
-  고르는 앱의 **에이전틱 라우터**(`ToolsRetriever`)의 실증적 근거입니다.
+- **단일 검색기 중에서는 그래프 직접 질의가 최고입니다** (strict 0.85, 1홉 1.00) —
+  질문이 Cypher 패턴에 대응되면 조인이 LLM이 아니라 데이터베이스에서 일어납니다.
+  단, 복잡한 체인에는 취약해서 3홉 문항에서 형태는 그럴듯하지만 결과가 빈 Cypher가
+  생성됐습니다. 어떤 검색기도 전 구간을 지배하지 못합니다.
+- **사전 라우팅은 오히려 최악입니다** (strict 0.45 — 모든 단일 검색기보다 낮음).
+  라우터는 결과를 보기 전에 최적 검색기를 *예측*해야 하는데, 예측이 틀리면 선택된
+  검색기가 빈 결과를 내고 답은 "정보 없음"이 됩니다(20문항 중 11개). 바로 그 예측이
+  이 문제의 어려운 부분입니다.
+- **검색 후 선택이 이를 해결합니다** (strict 0.90, 전 홉 구간 최고): 세 검색기를
+  병렬로 모두 실행하고, LLM 심판이 각 컨텍스트의 근거 충실도를 채점해 승자로 답을
+  생성합니다. 비어 있거나 무관한 컨텍스트는 선택될 수 없으므로 단일 검색기의 맹점이
+  실패 모드가 되지 않습니다. 이것이 현재 앱의 아키텍처이며, 20문항에서 심판은
+  text2cypher 13회, graph 6회, vector 1회를 선택했습니다(문항당 평균 3.7초 vs 단일
+  검색기 1.2~1.9초 — 전부 실행의 비용이며 병렬화로 완화).
 
 과정에서 발견·수정한 것: Text2Cypher 답변의 근거화(grounding)에는 값과 함께
 **주체를 반환**해야 합니다(`RETURN v.name, v.type` — 값만 반환하면 답변 LLM이
@@ -117,7 +127,9 @@
 
 애플리케이션은 **실데이터(2부) 코퍼스**를 서빙합니다: FastAPI 백엔드가 재결서
 139건 그래프 위에서 3개 검색기(재결서 본문 벡터 검색 / 원인·선박·처분이 결합된
-그래프 확장 / Text2Cypher 직접 질의)를 LLM 라우터로 선택합니다. 모든 답변은
+그래프 확장 / Text2Cypher 직접 질의)를 **질문마다 병렬로 모두 실행**하고, LLM
+심판이 각 컨텍스트의 근거 충실도를 채점해 승자의 컨텍스트로 답을 생성합니다.
+심판의 선택·점수·사유는 응답의 `retrieval` 필드로 함께 반환됩니다. 모든 답변은
 **근거 서브그래프** — 검색에 사용된 재결서 청크, 그 청크가 속한 사고, 사고에
 연결된 원인·선박·장소 — 를 함께 반환하고, 프론트엔드가 d3-force 인터랙티브
 그래프로 렌더링해 검색 경로가 눈에 보이게 합니다:
@@ -162,7 +174,7 @@ cd frontend && npm install && npm run dev # 프론트엔드 (localhost:5173)
 | `ingest/fetch_kmst_verdicts.py`, `ingest/parse_manual_verdicts.py` | 재결서 수집 (웹 + 수동 PDF/HWP/HWPX 파싱) |
 | `ingest/extract_accidents.py` | 원인 사슬을 고정 분류 체계로 LLM 추출 |
 | `graph/build_accident_graph.py`, `evaluation/accident_insights.py` | 사고 레이어 구축 + 크로스 문서 원인 분석 |
-| `app.py` | FastAPI + 에이전틱 검색기 라우터 + 인용 근거 생성 |
+| `app.py` | FastAPI + best-of 검색기 앙상블(병렬 실행 + LLM 심판) + 인용 근거 생성 |
 | `frontend/` | React (Vite) 검색 UI |
 | `data/` | 커밋된 코퍼스, 엔티티 테이블, QA 벤치마크 |
 

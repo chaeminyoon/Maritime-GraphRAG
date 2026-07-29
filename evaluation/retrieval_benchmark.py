@@ -1,7 +1,8 @@
 """
-Retrieval benchmark: pure vector search vs graph-aware retrieval vs Text2Cypher.
+Retrieval benchmark: pure vector search vs graph-aware retrieval vs Text2Cypher,
+plus the two orchestration strategies built on top of them.
 
-Runs the ground-truth QA set (data/benchmark/qa_benchmark.json) against four
+Runs the ground-truth QA set (data/benchmark/qa_benchmark.json) against six
 configurations and scores the GENERATED ANSWER against gold entities:
 
   no-retrieval   gpt-4o with no context (control: entities are fictional, so
@@ -12,6 +13,11 @@ configurations and scores the GENERATED ANSWER against gold entities:
                  Article -> MENTIONS -> entity -> typed relations (1 hop)
                  and return chunks + structured facts
   text2cypher    Text2CypherRetriever: LLM writes Cypher against the schema
+  router         ToolsRetriever: an LLM predicts which single retriever to
+                 run per question (upfront routing — the app's old strategy)
+  ensemble       run all three retrievers in parallel, an LLM judge scores
+                 each context for evidential support, generate from the
+                 winner (best-of selection — the app's current strategy)
 
 Metrics per configuration:
   entity recall  mean fraction of gold entities present in the answer
@@ -28,6 +34,7 @@ import json
 import os
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor
 
 import neo4j
 from dotenv import load_dotenv
@@ -38,7 +45,7 @@ import numpy as np
 
 from neo4j_graphrag.llm import OpenAILLM
 from neo4j_graphrag.retrievers import (
-    VectorRetriever, VectorCypherRetriever, Text2CypherRetriever)
+    VectorRetriever, VectorCypherRetriever, Text2CypherRetriever, ToolsRetriever)
 from neo4j_graphrag.embeddings.openai import OpenAIEmbeddings
 from openai import OpenAI
 
@@ -172,11 +179,86 @@ def ctx_t2c(question):
     return f"[실행한 그래프 질의] {cypher}\n[질의 결과]\n{rows}"
 
 
+# -------- router (upfront prediction — the app's old strategy) --------
+router_retriever = ToolsRetriever(
+    driver=driver, llm=t2c_llm,
+    tools=[
+        vector_retriever.convert_to_tool(
+            name="vector_retriever",
+            description="기사 본문을 의미 기반으로 검색합니다. 특정 사건의 서술적 설명을 찾을 때 사용합니다."),
+        graph_retriever.convert_to_tool(
+            name="graph_retriever",
+            description="본문 검색 결과에 언급된 엔티티와 그 관계(운영, 기항, 규제, 사고)를 함께 붙여 반환합니다. 연결된 사실이 필요할 때 사용합니다."),
+        t2c_retriever.convert_to_tool(
+            name="text2cypher_retriever",
+            description="자연어를 Cypher로 변환해 그래프를 직접 질의합니다. 집계(건수, 순위)나 다중 홉 조건 검색에 사용합니다."),
+    ])
+
+
+def ctx_router(question):
+    items = router_retriever.search(query_text=question).items
+    return "\n\n".join(str(i.content) for i in items if i.content)
+
+
+# -------- ensemble (run all + judge selection — the app's current strategy) --------
+JUDGE_CTX_CHARS = 3500
+ENSEMBLE_PICKS = []   # winning method per question, printed after the run
+
+
+def judge_pick(question, contexts):
+    """Score each context for evidential support; return the winning name."""
+    candidates = {n: c for n, c in contexts.items() if c and c.strip()
+                  and '[질의 결과] (0건)' not in c}
+    if not candidates:
+        return 'graph'
+    if len(candidates) == 1:
+        return next(iter(candidates))
+    blocks = "\n\n".join(f"### {n}\n{c[:JUDGE_CTX_CHARS]}" for n, c in candidates.items())
+    prompt = (
+        "당신은 검색 품질 심판입니다. 아래 질문에 답하기 위한 근거로 어느 검색 결과가 "
+        "가장 충실한지 평가하세요.\n"
+        "- 질문에 직접 답할 수 있는 정보(엔티티 이름, 수치)가 실제로 들어 있는가\n"
+        "- 집계·건수·순위 질문이면 그래프 질의 결과가 본문 발췌보다 신뢰할 수 있다\n"
+        f"후보: {', '.join(candidates)}\n"
+        '다음 JSON만 출력하세요: {"best": "이름", "reason": "한 문장"}\n\n'
+        f"[질문] {question}\n\n{blocks}")
+    try:
+        resp = client.chat.completions.create(
+            model="gpt-4o", temperature=0,
+            messages=[{"role": "user", "content": prompt}])
+        raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", resp.choices[0].message.content.strip())
+        best = json.loads(raw).get('best')
+        if best in candidates:
+            return best
+    except Exception as e:
+        print(f"  (judge error: {e})")
+    return 'graph' if 'graph' in candidates else next(iter(candidates))
+
+
+def ctx_ensemble(question):
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        futures = {n: pool.submit(f, question)
+                   for n, f in (('vector', ctx_vector), ('graph', ctx_graph),
+                                ('text2cypher', ctx_t2c))}
+        contexts = {}
+        for n, fut in futures.items():
+            try:
+                contexts[n] = fut.result(timeout=90)
+            except Exception as e:
+                contexts[n] = ""
+                print(f"  ({n} error: {e})")
+    picked = judge_pick(question, contexts)
+    ENSEMBLE_PICKS.append(picked)
+    return contexts[picked]
+
+
 CONFIGS = {
     'no-retrieval': lambda q: "",
     'vector': ctx_vector,
     'graph (VectorCypher)': ctx_graph,
     'text2cypher': ctx_t2c,
+    'router': ctx_router,
+    'ensemble (judge)': ctx_ensemble,
 }
 
 # ---------------- run ----------------
@@ -217,13 +299,17 @@ for name, rows in results.items():
           " ".join(f"{by_hops[h][1]:.2f}" for h in (1, 2, 3)) +
           f"   (avg {lat:.1f}s)")
 
+if ENSEMBLE_PICKS:
+    from collections import Counter
+    print(f"ensemble picks: {dict(Counter(ENSEMBLE_PICKS))}")
+
 with open(os.path.join(OUT_DIR, 'benchmark_details.json'), 'w', encoding='utf-8') as f:
     json.dump(results, f, ensure_ascii=False, indent=2)
 
 # ---------------- figure ----------------
-fig, axs = plt.subplots(1, 2, figsize=(14, 5))
+fig, axs = plt.subplots(1, 2, figsize=(16, 5))
 names = list(CONFIGS)
-colors = ['#94A3B8', '#2E6F9E', '#0F4C81', '#C4762E']
+colors = ['#94A3B8', '#2E6F9E', '#0F4C81', '#C4762E', '#7A5CA8', '#2F7D5C']
 
 x = np.arange(len(names))
 axs[0].bar(x - 0.18, [table[n]['recall'] for n in names], 0.36,
@@ -231,16 +317,16 @@ axs[0].bar(x - 0.18, [table[n]['recall'] for n in names], 0.36,
 axs[0].bar(x + 0.18, [table[n]['strict'] for n in names], 0.36,
            color=colors, label='strict accuracy')
 axs[0].set_xticks(x)
-axs[0].set_xticklabels(names, rotation=8, fontsize=9)
+axs[0].set_xticklabels(names, rotation=12, fontsize=8)
 axs[0].set_ylim(0, 1.05)
 axs[0].set_title('Answer quality by retrieval strategy (20 QA, gold entities)')
 axs[0].legend(fontsize=9)
 axs[0].grid(alpha=0.3, axis='y')
 
 hops = [1, 2, 3]
-w = 0.2
+w = 0.13
 for i, n in enumerate(names):
-    axs[1].bar(np.arange(len(hops)) + (i - 1.5) * w,
+    axs[1].bar(np.arange(len(hops)) + (i - (len(names) - 1) / 2) * w,
                [table[n]['by_hops'][h][1] for h in hops], w,
                color=colors[i], label=n)
 axs[1].set_xticks(np.arange(len(hops)))

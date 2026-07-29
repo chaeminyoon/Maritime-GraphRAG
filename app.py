@@ -10,10 +10,16 @@ Safety Tribunal, extracted into a two-layer graph:
                    (Cause)-[:LEADS_TO]->(Cause)   (Accident)-[:IMPOSED]->(Sanction)
                    (Accident)-[:CITES]->(Law)     (Accident)-[:ADJUDICATED_BY]->(Court)
 
-Three retrievers sit behind an LLM router (ToolsRetriever):
+Three retrievers run as a best-of ensemble:
   vector        semantic search over verdict text chunks
   vectorcypher  chunk hits expanded with the accident's causes/vessels/sanctions
   text2cypher   direct graph queries for aggregation and multi-hop questions
+
+All three run in parallel for every query; an LLM judge scores each context
+for evidential support and the answer is generated from the winner. This
+replaces upfront routing (predicting which retriever will be best) with
+selection after the fact — a routing mistake can no longer send a query to
+a retriever whose context cannot answer it.
 
 Every /search response also returns the evidence subgraph (nodes/edges) so the
 frontend can show HOW the answer is connected: chunk -> accident -> causes.
@@ -21,7 +27,8 @@ frontend can show HOW the answer is connected: chunk -> accident -> causes.
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import Dict, List, Optional
+from concurrent.futures import ThreadPoolExecutor
 import json
 import os
 import re
@@ -29,9 +36,8 @@ import neo4j
 from dotenv import load_dotenv
 from neo4j_graphrag.llm import OpenAILLM
 from neo4j_graphrag.retrievers import (
-    VectorRetriever, VectorCypherRetriever, Text2CypherRetriever, ToolsRetriever)
+    VectorRetriever, VectorCypherRetriever, Text2CypherRetriever)
 from neo4j_graphrag.embeddings.openai import OpenAIEmbeddings
-from neo4j_graphrag.generation import RagTemplate, GraphRAG
 
 load_dotenv()
 
@@ -51,7 +57,8 @@ app.add_middleware(
 )
 
 driver = None
-rag = None
+llm = None
+RETRIEVERS: Dict[str, object] = {}   # name -> retriever (ensemble members)
 ENTITY_INDEX = []   # (name, label) pairs for matching answer text to graph nodes
 
 
@@ -88,10 +95,17 @@ class SubGraph(BaseModel):
     nodes: List[GraphNode]
     edges: List[GraphEdge]
 
+class RetrievalInfo(BaseModel):
+    method: str                      # winning retriever
+    reason: str                      # judge's one-line justification
+    scores: Optional[Dict[str, int]] = None   # judge scores per retriever
+    errors: Optional[Dict[str, str]] = None   # retrievers that failed, if any
+
 class QueryResponse(BaseModel):
     sections: List[Section]
     sources: List[Source]
     graph: Optional[SubGraph] = None
+    retrieval: Optional[RetrievalInfo] = None
 
 
 # ---------------- evidence subgraph ----------------
@@ -253,44 +267,7 @@ RETURN content.content_id AS content_id,
 """
 
 
-def initialize_graphrag():
-    global driver, rag
-    print("Initializing Maritime GraphRAG (KMST accident graph)...")
-    try:
-        driver = neo4j.GraphDatabase.driver(URI, auth=AUTH)
-        driver.verify_connectivity()
-        print("✓ Neo4j 연결 성공")
-    except Exception as e:
-        print(f"Neo4j 연결 실패: {e}")
-        return False
-
-    llm = OpenAILLM(model_name="gpt-4o", model_params={"temperature": 0})
-    embedder = OpenAIEmbeddings(model="text-embedding-3-small")
-
-    vector_retriever = VectorRetriever(
-        driver=driver, index_name=INDEX_NAME, embedder=embedder)
-    vector_cypher_retriever = VectorCypherRetriever(
-        driver=driver, index_name=INDEX_NAME,
-        retrieval_query=VECTOR_CYPHER_QUERY, embedder=embedder)
-    text2cypher_retriever = Text2CypherRetriever(
-        driver=driver, llm=llm, neo4j_schema=NEO4J_SCHEMA, examples=T2C_EXAMPLES)
-
-    vector_tool = vector_retriever.convert_to_tool(
-        name="vector_retriever",
-        description="재결서 본문을 의미 기반으로 검색합니다. 특정 사고의 경위·상황 설명을 찾을 때 사용합니다.")
-    vector_cypher_tool = vector_cypher_retriever.convert_to_tool(
-        name="vectorcypher_retriever",
-        description="재결서 본문 검색 결과에 해당 사고의 원인 사슬, 관련 선박, 장소, 처분을 함께 붙여 반환합니다. 사고의 전체 맥락이 필요할 때 사용합니다.")
-    text2cypher_tool = text2cypher_retriever.convert_to_tool(
-        name="text2cypher_retriever",
-        description="자연어를 Cypher로 변환해 사고 그래프를 직접 질의합니다. 여러 사고에 걸친 집계(가장 흔한 원인, 건수, 평균 처분)나 조건 검색(야간·어선·특정 원인)에 사용합니다.")
-
-    tools_retriever = ToolsRetriever(
-        driver=driver, llm=llm,
-        tools=[vector_tool, vector_cypher_tool, text2cypher_tool])
-
-    prompt_template = RagTemplate(
-        template="""당신은 해양안전심판원 재결서 139건의 지식그래프를 근거로 답하는 해양사고 분석 어시스턴트입니다.
+ANSWER_TEMPLATE = """당신은 해양안전심판원 재결서 139건의 지식그래프를 근거로 답하는 해양사고 분석 어시스턴트입니다.
 
 질문: {query_text}
 
@@ -323,13 +300,132 @@ def initialize_graphrag():
   ]
 }}
 
-답변:""",
-        expected_inputs=["context", "query_text"])
+답변:"""
 
-    rag = GraphRAG(llm=llm, retriever=tools_retriever, prompt_template=prompt_template)
+# Judge context caps: enough to show what evidence a retriever found without
+# paying for full chunks three times over.
+JUDGE_CTX_CHARS = 3500
+# Fallback when the judge cannot decide: highest measured accuracy on the
+# retrieval benchmark (graph-aware retrieval), see evaluation/.
+FALLBACK_METHOD = "vectorcypher"
+
+
+def initialize_graphrag():
+    global driver, llm
+    print("Initializing Maritime GraphRAG (KMST accident graph)...")
+    try:
+        driver = neo4j.GraphDatabase.driver(URI, auth=AUTH)
+        driver.verify_connectivity()
+        print("✓ Neo4j 연결 성공")
+    except Exception as e:
+        print(f"Neo4j 연결 실패: {e}")
+        return False
+
+    llm = OpenAILLM(model_name="gpt-4o", model_params={"temperature": 0})
+    embedder = OpenAIEmbeddings(model="text-embedding-3-small")
+
+    RETRIEVERS["vector"] = VectorRetriever(
+        driver=driver, index_name=INDEX_NAME, embedder=embedder)
+    RETRIEVERS["vectorcypher"] = VectorCypherRetriever(
+        driver=driver, index_name=INDEX_NAME,
+        retrieval_query=VECTOR_CYPHER_QUERY, embedder=embedder)
+    RETRIEVERS["text2cypher"] = Text2CypherRetriever(
+        driver=driver, llm=llm, neo4j_schema=NEO4J_SCHEMA, examples=T2C_EXAMPLES)
+
     load_entity_index(driver)
-    print("✓ Maritime GraphRAG 초기화 완료 (재결서 코퍼스)")
+    print("✓ Maritime GraphRAG 초기화 완료 (앙상블: vector / vectorcypher / text2cypher)")
     return True
+
+
+# ---------------- best-of ensemble ----------------
+def _retrieve(name: str, query: str):
+    """Run one retriever, return (context_text, is_empty)."""
+    retriever = RETRIEVERS[name]
+    if name == "text2cypher":
+        res = retriever.search(query_text=query)
+        cypher = (res.metadata or {}).get("cypher", "")
+        rows = "\n".join(str(i.content) for i in res.items if i.content)
+        if not rows:
+            return f"[실행한 그래프 질의] {cypher}\n[질의 결과] (0건)", True
+        return f"[실행한 그래프 질의] {cypher}\n[질의 결과]\n{rows}", False
+    res = retriever.search(query_text=query, top_k=5)
+    text = "\n\n".join(str(i.content) for i in res.items if i.content)
+    return text, not text
+
+
+def run_all_retrievers(query: str) -> Dict[str, dict]:
+    """Run every retriever in parallel; a failure disables that candidate
+    instead of failing the request."""
+    results = {}
+    with ThreadPoolExecutor(max_workers=len(RETRIEVERS)) as pool:
+        futures = {name: pool.submit(_retrieve, name, query) for name in RETRIEVERS}
+        for name, future in futures.items():
+            try:
+                context, empty = future.result(timeout=90)
+                results[name] = {"context": context, "empty": empty, "error": None}
+            except Exception as e:
+                print(f"retriever {name} 실패: {e}")
+                results[name] = {"context": "", "empty": True, "error": str(e)}
+    return results
+
+
+def judge_select(query: str, results: Dict[str, dict]) -> dict:
+    """Score each retriever's context for evidential support and pick the best.
+
+    Returns {"method", "reason", "scores"}. Falls back to FALLBACK_METHOD
+    (or the only live candidate) when the judge cannot run or answers
+    something unusable.
+    """
+    candidates = [n for n, r in results.items() if not r["empty"]]
+    if not candidates:
+        return {"method": FALLBACK_METHOD, "reason": "모든 검색 결과가 비어 있음", "scores": None}
+    if len(candidates) == 1:
+        return {"method": candidates[0], "reason": "유일하게 결과를 반환한 검색 방법", "scores": None}
+
+    blocks = []
+    for name in candidates:
+        ctx = results[name]["context"][:JUDGE_CTX_CHARS]
+        blocks.append(f"### {name}\n{ctx}")
+    prompt = (
+        "당신은 검색 품질 심판입니다. 아래 질문에 답하기 위한 근거로 어느 검색 결과가 "
+        "가장 충실한지 평가하세요.\n"
+        "평가 기준:\n"
+        "- 질문에 직접 답할 수 있는 정보(사고, 원인, 수치, 재결번호)가 실제로 들어 있는가\n"
+        "- 집계·건수·순위 질문이면 그래프 질의 결과([질의 결과]에 행이 있는 경우)가 "
+        "본문 발췌보다 신뢰할 수 있다\n"
+        "- 질문과 무관하거나 근거가 빈약한 결과는 낮게 평가하라\n"
+        f"각 결과에 0-10점을 매기고 최고점 하나를 고르세요. 후보: {', '.join(candidates)}\n"
+        '다음 JSON만 출력하세요: {"scores": {"이름": 점수}, "best": "이름", "reason": "한 문장"}\n\n'
+        f"[질문] {query}\n\n" + "\n\n".join(blocks)
+    )
+    try:
+        raw = llm.invoke(prompt).content.strip()
+        raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw)
+        verdict = json.loads(raw)
+        best = verdict.get("best")
+        if best not in candidates:
+            raise ValueError(f"judge picked unknown candidate: {best}")
+        return {"method": best,
+                "reason": verdict.get("reason", ""),
+                "scores": {k: int(v) for k, v in (verdict.get("scores") or {}).items()
+                           if k in results}}
+    except Exception as e:
+        print(f"심판 실패({e}) — 폴백: {FALLBACK_METHOD}")
+        fallback = FALLBACK_METHOD if FALLBACK_METHOD in candidates else candidates[0]
+        return {"method": fallback, "reason": f"심판 실패로 기본 검색 방법 사용 ({e})",
+                "scores": None}
+
+
+def ensemble_search(query: str):
+    """Run all retrievers, judge the contexts, generate from the winner."""
+    results = run_all_retrievers(query)
+    choice = judge_select(query, results)
+    context = results[choice["method"]]["context"]
+    answer = llm.invoke(
+        ANSWER_TEMPLATE.format(query_text=query, context=context or "(검색 결과 없음)")
+    ).content
+    errors = {n: r["error"] for n, r in results.items() if r["error"]}
+    return answer, context, {**choice, "errors": errors or None}
 
 
 @app.on_event("startup")
@@ -366,13 +462,13 @@ async def health():
 
 
 @app.post("/search", response_model=QueryResponse)
-async def search(request: QueryRequest):
-    if not rag:
+def search(request: QueryRequest):
+    if not RETRIEVERS or llm is None:
         raise HTTPException(status_code=503, detail="GraphRAG system not initialized")
     try:
-        result = rag.search(query_text=request.query, return_context=True)
+        answer, context_text, retrieval_info = ensemble_search(request.query)
 
-        answer_text = result.answer.strip()
+        answer_text = answer.strip()
         if answer_text.startswith('```'):
             lines = answer_text.split('\n')
             if lines[0].startswith('```'):
@@ -386,7 +482,7 @@ async def search(request: QueryRequest):
         except Exception as e:
             print(f"JSON 파싱 실패: {e}")
             parsed = {"sections": [{"title": "분석 결과",
-                                    "content": result.answer, "sources": []}]}
+                                    "content": answer, "sources": []}]}
 
         sources, source_id = [], 1
         for section in parsed.get("sections", []):
@@ -412,15 +508,14 @@ async def search(request: QueryRequest):
             section.pop("sources", None)
 
         try:
-            ctx_text = " ".join(str(i.content) for i in result.retriever_result.items) \
-                if result.retriever_result else ""
-            graph = build_subgraph(ctx_text + " " + result.answer + " " + request.query)
+            graph = build_subgraph(context_text + " " + answer + " " + request.query)
         except Exception as ge:
             print(f"서브그래프 생성 실패: {ge}")
             graph = None
 
         return {"sections": parsed.get("sections", []),
-                "sources": sources, "graph": graph}
+                "sources": sources, "graph": graph,
+                "retrieval": retrieval_info}
     except Exception as e:
         print(f"검색 오류: {e}")
         raise HTTPException(status_code=500, detail=f"Search failed: {str(e)}")

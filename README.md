@@ -4,14 +4,14 @@
 
 <h1 align="center">Maritime GraphRAG</h1>
 
-<p align="center">A Neo4j knowledge-graph RAG engine for the maritime domain — vessels, operators, ports, regulations and incidents — a ground-truth multi-hop retrieval benchmark (vector 0.70 → graph query 0.85), and cross-document causal insights from 139 real KMST casualty adjudications</p>
+<p align="center">A Neo4j knowledge-graph RAG engine for the maritime domain — vessels, operators, ports, regulations and incidents — a ground-truth multi-hop retrieval benchmark (vector 0.70 → best-of ensemble 0.90), and cross-document causal insights from 139 real KMST casualty adjudications</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/Neo4j-Knowledge_Graph-008CC1?logo=neo4j&logoColor=white" alt="Neo4j">
   <img src="https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white" alt="FastAPI">
   <img src="https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=black" alt="React">
-  <img src="https://img.shields.io/badge/Benchmark-0.70%E2%86%920.85-green.svg" alt="Benchmark">
+  <img src="https://img.shields.io/badge/Benchmark-0.70%E2%86%920.90-green.svg" alt="Benchmark">
 </p>
 
 Maritime questions are relational by nature: *"Which operators call container ships
@@ -19,7 +19,7 @@ at Busan?"* joins operator→vessel→port; *"Which environmental rule applies t
 ship that had the Ulsan incident?"* chains incident→vessel→type→regulation. Pure
 vector search retrieves documents about each entity but cannot join them.
 This project builds a two-layer Neo4j graph (documents + typed entities) over
-maritime news, serves it through an agentic retriever router (FastAPI + React),
+maritime news, serves it through a best-of retriever ensemble (FastAPI + React),
 and **measures** how much the graph actually helps.
 
 ## Retrieval benchmark — does the graph earn its keep?
@@ -40,7 +40,9 @@ Score = gold entities present in the generated answer. Reproduce with
 | No retrieval (control) | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 | Vector (top-5 chunks) | 0.73 | 0.70 | 0.91 | 0.38 | 1.00 |
 | Graph expansion (VectorCypher) | 0.82 | 0.75 | 0.91 | 0.50 | 1.00 |
-| **Text2Cypher (direct graph query)** | **0.85** | **0.85** | **1.00** | **0.75** | 0.00 |
+| Text2Cypher (direct graph query) | 0.85 | 0.85 | 1.00 | 0.75 | 0.00 |
+| LLM router (pick one upfront) | 0.45 | 0.45 | 0.64 | 0.12 | 1.00 |
+| **Ensemble (run all + judge)** | **0.92** | **0.90** | **1.00** | **0.75** | **1.00** |
 
 ![Retrieval benchmark](docs/analysis/retrieval_benchmark.png)
 
@@ -51,13 +53,23 @@ Score = gold entities present in the generated answer. Reproduce with
 - **Graph expansion recovers part of it** (0.50): appending entity facts
   (`X -OPERATES- Y`) from mentioned entities to each retrieved chunk lets the LLM
   do some joins in-context.
-- **Direct graph querying wins overall** (0.85 strict, 1.00 on 1-hop) — when the
-  question maps to a Cypher pattern, the join happens in the database, not the LLM.
-- **But Text2Cypher is brittle on complex chains**: the 3-hop question and one
-  2-hop variant produced valid-looking but empty Cypher (score 0 where the cheaper
-  retrievers succeeded). No single retriever dominates — which is the empirical
-  justification for the app's **agentic router** (`ToolsRetriever`) that picks a
-  strategy per question.
+- **Direct graph querying wins overall among single retrievers** (0.85 strict,
+  1.00 on 1-hop) — when the question maps to a Cypher pattern, the join happens
+  in the database, not the LLM. But it is brittle on complex chains: the 3-hop
+  question produced valid-looking but empty Cypher. No single retriever dominates.
+- **Upfront routing makes things worse, not better** (0.45 strict — below every
+  single retriever). A router must *predict* the best retriever before seeing any
+  results; when it guesses wrong, the chosen retriever returns nothing useful and
+  the answer is "정보 없음" (11/20 questions). The prediction is exactly the
+  hard part.
+- **Selection after retrieval fixes this** (0.90 strict, best in every hop
+  bucket): run all three retrievers in parallel, let an LLM judge score each
+  context for evidential support, and generate from the winner. An empty or
+  irrelevant context can never be chosen, so a single retriever's blind spot
+  stops being a failure mode. This is the app's current architecture; the judge
+  picked text2cypher 13×, graph 6×, vector 1× across the 20 questions
+  (avg 3.7s/question vs 1.2–1.9s for single retrievers — the price of running
+  everything, mitigated by parallel execution).
 
 Found along the way (fixed and kept honest): grounding Text2Cypher answers requires
 returning the *subject* alongside the value (`RETURN v.name, v.type` — a bare
@@ -122,9 +134,11 @@ produces the same structure with an LLM extractor.
 ## Application — Q&A over the real accident graph
 
 The application serves the **real KMST corpus** (Part 2): a FastAPI backend runs
-three retrievers behind an LLM router (`ToolsRetriever` picks verdict-text vector
-search / graph-expanded context / direct Text2Cypher per question) over the
-139-adjudication graph. Every answer returns its **evidence subgraph** — the
+three retrievers (verdict-text vector search / graph-expanded context / direct
+Text2Cypher) **in parallel for every question** over the 139-adjudication graph;
+an LLM judge scores each context for evidential support and the answer is
+generated from the winner, with the judge's choice and scores returned in the
+response. Every answer returns its **evidence subgraph** — the
 retrieved verdict chunks, the accidents they belong to, and the causes, vessels
 and locations they connect to — rendered as an interactive force-directed view
 (d3-force) so the retrieval path is visible, not implied:
@@ -169,7 +183,7 @@ cd frontend && npm install && npm run dev   # frontend at localhost:5173
 | `ingest/fetch_kmst_verdicts.py`, `ingest/parse_manual_verdicts.py` | KMST verdict collection (web + manual PDF/HWP/HWPX parsing) |
 | `ingest/extract_accidents.py` | LLM extraction of causal chains onto a fixed taxonomy |
 | `graph/build_accident_graph.py`, `evaluation/accident_insights.py` | Accident-layer build + cross-document causal analysis |
-| `app.py` | FastAPI + agentic retriever router + citation-grounded generation |
+| `app.py` | FastAPI + best-of retriever ensemble (parallel run + LLM judge) + citation-grounded generation |
 | `frontend/` | React (Vite) search UI |
 | `data/` | Committed corpus, entity tables, QA benchmark |
 

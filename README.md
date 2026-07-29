@@ -138,7 +138,11 @@ three retrievers (verdict-text vector search / graph-expanded context / direct
 Text2Cypher) **in parallel for every question** over the 139-adjudication graph;
 an LLM judge scores each context for evidential support and the answer is
 generated from the winner, with the judge's choice and scores returned in the
-response. Every answer returns its **evidence subgraph** — the
+response.
+
+![Best-of retriever ensemble](docs/images/ensemble-architecture.svg)
+
+Every answer returns its **evidence subgraph** — the
 retrieved verdict chunks, the accidents they belong to, and the causes, vessels
 and locations they connect to — rendered as an interactive force-directed view
 (d3-force) so the retrieval path is visible, not implied:
